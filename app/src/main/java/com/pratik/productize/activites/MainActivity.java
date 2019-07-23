@@ -3,6 +3,8 @@ package com.pratik.productize.activites;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -10,6 +12,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private PrefManager prefManager;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private FloatingActionButton fab;
+    private BottomAppBar bottomAppBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +45,27 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+
+        CoordinatorLayout layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        fab = findViewById(R.id.fab);
+        bottomAppBar = findViewById(R.id.bottom_app_bar);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                if(bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER){
+                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+                    fab.setImageResource(R.drawable.ic_arrow_down);
+                    bottomSheetBehavior.setState( BottomSheetBehavior.STATE_EXPANDED);
+                }
+                else{
+                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+                    fab.setImageResource(R.drawable.ic_edit);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -54,6 +75,29 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+
+                if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED){
+                    fab.setImageResource(R.drawable.ic_arrow_down);
+                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+                }else {
+                    fab.setImageResource(R.drawable.ic_edit);
+                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+                }
+
+
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
 
 
         prefManager = new PrefManager(this);
@@ -71,7 +115,13 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED){
+                fab.setImageResource(R.drawable.ic_edit);
+                bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+            else
+                super.onBackPressed();
         }
     }
 
@@ -106,8 +156,11 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_stats : break;
             case R.id.nav_schedule_task :
-                startActivity(new Intent(MainActivity.this,ScheduleTask.class));
-                finish();
+                Intent intent = new Intent(MainActivity.this,ScheduleTask.class);
+                intent.putExtra("nav_schedule",1);
+                startActivity(intent);
+                if(!prefManager.isTaskScheduled())
+                    finish();
                 break;
             case R.id.nav_home : break;
             case R.id.nav_work : break;
