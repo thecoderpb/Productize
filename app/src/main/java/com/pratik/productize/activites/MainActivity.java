@@ -26,6 +26,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
+
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,21 +58,12 @@ public class MainActivity extends AppCompatActivity
 
         prefManager = new PrefManager(this);
         if(!prefManager.isTaskScheduled()){
-            startActivityForResult(new Intent(this,ScheduleTask.class),0);
+            startActivity(new Intent(this,ScheduleTask.class));
+            finish();
+
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == 0 && resultCode == RESULT_OK){
-            if(prefManager.isTaskScheduled()){
-                //navigate to default fragment
-            }else
-                startActivityForResult(new Intent(this,ScheduleTask.class),0);
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -112,7 +105,10 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_stats : break;
-            case R.id.nav_schedule_task : break;
+            case R.id.nav_schedule_task :
+                startActivity(new Intent(MainActivity.this,ScheduleTask.class));
+                finish();
+                break;
             case R.id.nav_home : break;
             case R.id.nav_work : break;
             case R.id.nav_other : break;

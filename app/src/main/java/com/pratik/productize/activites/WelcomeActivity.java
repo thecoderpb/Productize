@@ -126,8 +126,12 @@ public class WelcomeActivity extends AppCompatActivity {
             dotsLayout.addView(dots[i]);
         }
 
-        if (dots.length > 0)
+        if (dots.length > 0){
             dots[currentPage].setTextColor(colorsActive[currentPage]);
+            btnNext.setTextColor(colorsInactive[currentPage]);
+            btnSkip.setTextColor(colorsInactive[currentPage]);
+        }
+
     }
 
     private int getItem(int i) {
