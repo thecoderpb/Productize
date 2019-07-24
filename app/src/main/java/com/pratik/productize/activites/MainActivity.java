@@ -6,12 +6,10 @@ import android.os.Bundle;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -88,14 +86,10 @@ public class MainActivity extends AppCompatActivity
                     fab.setImageResource(R.drawable.ic_edit);
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                 }
-
-
-
             }
 
             @Override
             public void onSlide(@NonNull View view, float v) {
-
             }
         });
 
