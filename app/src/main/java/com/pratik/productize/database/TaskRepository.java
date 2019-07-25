@@ -13,7 +13,7 @@ import java.util.List;
 public class TaskRepository {
 
     private TaskDAO taskDAO;
-    private LiveData<List<Tasks>> allTasks;
+    private LiveData<List<Tasks>> allTasks,homeTasks,workTasks,otherTasks;
     private TasksDB db;
 
     public TaskRepository(Application application){
@@ -22,6 +22,10 @@ public class TaskRepository {
 
         taskDAO = db.taskDAO();
         allTasks = taskDAO.getAllActiveTasks();
+        homeTasks = taskDAO.getSortedTaskByTag(0);
+        workTasks = taskDAO.getSortedTaskByTag(1);
+        otherTasks = taskDAO.getSortedTaskByTag(-1);
+
 
 
     }
@@ -29,6 +33,12 @@ public class TaskRepository {
     public LiveData<List<Tasks>> getAllTasks(){
         return allTasks;
     }
+
+    public LiveData<List<Tasks>> getHomeTasks() { return homeTasks; }
+
+    public LiveData<List<Tasks>> getWorkTasks() { return workTasks; }
+
+    public LiveData<List<Tasks>> getOtherTasks() { return otherTasks; }
 
     public void delete(final Tasks tasks){
 

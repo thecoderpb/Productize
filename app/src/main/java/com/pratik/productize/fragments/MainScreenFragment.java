@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +28,7 @@ import java.util.List;
 public class MainScreenFragment extends Fragment implements RecyclerViewClickListener{
 
     private TaskViewModel viewModel;
-    private static TaskRecyclerAdapter adapter;
+    private  TaskRecyclerAdapter adapter;
 
     public MainScreenFragment() {
         // Required empty public constructor
@@ -43,10 +44,12 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
         viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView recyclerView = view.findViewById(R.id.my_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.my_recycler_view_main);
         adapter = new TaskRecyclerAdapter(getActivity(), this);
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(false);
 
         viewModel.getAllTasks().observe(this, new Observer<List<Tasks>>() {
             @Override
@@ -65,7 +68,7 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
                 Toast.makeText(getActivity(), "delete note" + position, Toast.LENGTH_SHORT).show();
                 Tasks task = adapter.getTaskAtPosition(position);
                 viewModel.delete(task);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRangeChanged(0,adapter.getItemCount());
                 break;
             case R.id.editNote:
                 Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();

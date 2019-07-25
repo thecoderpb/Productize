@@ -1,7 +1,6 @@
 package com.pratik.productize.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +15,19 @@ import com.pratik.productize.database.Tasks;
 
 import java.util.List;
 
-import static com.pratik.productize.Utils.Constants.TAG;
-
-public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.MyViewHolder> {
-
+public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.MyViewHolder> {
 
     private List<Tasks> tasksList;
     private Context context;
     private RecyclerViewClickListener itemClickListener;
 
-
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView reminderText,durationText,locationText,priorityText,idText;
         private ImageView deleteTaskImage,editTaskImage;
 
         private MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
             reminderText = itemView.findViewById(R.id.reminderCardView);
             durationText = itemView.findViewById(R.id.durationTextCV);
             locationText = itemView.findViewById(R.id.locationTextCV);
@@ -43,9 +39,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             editTaskImage.setOnClickListener(this);
             deleteTaskImage.setOnClickListener(this);
 
-
         }
-
 
         @Override
         public void onClick(View view) {
@@ -54,26 +48,21 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     }
 
 
-    public TaskRecyclerAdapter(Context context,RecyclerViewClickListener itemListener){
-
+    public HomeRecyclerAdapter(Context context,RecyclerViewClickListener itemClickListener){
         this.context = context;
-        this.itemClickListener = itemListener;
+        this.itemClickListener = itemClickListener;
     }
-
 
     @NonNull
     @Override
-    public TaskRecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.card_layout,parent,false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
-
         return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-
 
         if(tasksList!=null){
             Tasks currentTask = tasksList.get(position);
@@ -83,16 +72,15 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             holder.locationText.setText(String.valueOf(currentTask.getTags()));
             holder.idText.setText(String.valueOf(currentTask.getTimeStamp()));
         }
+
     }
 
     @Override
     public int getItemCount() {
-
         if(tasksList != null)
             return tasksList.size();
         else
             return 0;
-
     }
 
     public void setTasksList(List<Tasks> tasksList) {
@@ -103,4 +91,6 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     public Tasks getTaskAtPosition(int position){
         return tasksList.get(position);
     }
+
+
 }

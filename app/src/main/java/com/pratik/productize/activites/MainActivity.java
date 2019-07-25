@@ -1,5 +1,6 @@
 package com.pratik.productize.activites;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,7 +24,10 @@ import com.pratik.productize.Utils.PrefManager;
 import com.pratik.productize.adapters.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.database.Tasks;
+import com.pratik.productize.fragments.HomeScreenFragment;
 import com.pratik.productize.fragments.MainScreenFragment;
+import com.pratik.productize.fragments.OtherScreenFragment;
+import com.pratik.productize.fragments.WorkScreenFragment;
 import com.pratik.productize.ui.TaskViewModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -193,9 +197,15 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        bottomAppBar.setVisibility(View.VISIBLE);
+        fab.setVisibility(View.VISIBLE);
+
+        int backStack = getSupportFragmentManager().getBackStackEntryCount();
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -204,7 +214,11 @@ public class MainActivity extends AppCompatActivity
                 bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
-            else
+            else if(backStack > 1){
+                for(int i=0; i < backStack; i++ ){
+                    getSupportFragmentManager().popBackStack();
+                }
+            }else
                 super.onBackPressed();
         }
     }
@@ -232,10 +246,12 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = null;
 
         switch (id){
             case R.id.nav_stats : break;
@@ -246,16 +262,38 @@ public class MainActivity extends AppCompatActivity
                 if(!prefManager.isTaskScheduled())
                     finish();
                 break;
-            case R.id.nav_home : break;
-            case R.id.nav_work : break;
-            case R.id.nav_other : break;
+            case R.id.nav_home :
+                fragment = new HomeScreenFragment();
+                displayFragment(fragment);
+                bottomAppBar.setVisibility(View.GONE);
+                fab.setVisibility(View.GONE);
+                break;
+            case R.id.nav_work :
+                fragment = new WorkScreenFragment();
+                displayFragment(fragment);
+                bottomAppBar.setVisibility(View.GONE);
+                fab.setVisibility(View.GONE);
+                break;
+            case R.id.nav_other :
+                fragment = new OtherScreenFragment();
+                displayFragment(fragment);
+                bottomAppBar.setVisibility(View.GONE);
+                fab.setVisibility(View.GONE);
+                break;
             case R.id.nav_share : break;
             case R.id.nav_about : break;
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void displayFragment(Fragment fragment){
+        if(fragment!=null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("FRAG_BACK").commit();
+        }
     }
 
     public void saveUserDetailBottomSheet(View view){

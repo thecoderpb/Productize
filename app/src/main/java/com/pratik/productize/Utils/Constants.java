@@ -11,6 +11,10 @@ public class Constants {
     public static final String IS_TASK_ACTIVE = "IsTaskActive";
     public static final String IS_TASK_SCHEDULED = "IsTaskSchedule";
 
-    //Intent request codes
+    //Recycler ViewType
 
+    public static final int RECYCLER_VIEW_MAIN = 0;
+    public static final int RECYCLER_VIEW_HOME = 1;
+    public static final int RECYCLER_VIEW_WORK = 2;
+    public static final int RECYCLER_VIEW_OTHER = 3;
 }

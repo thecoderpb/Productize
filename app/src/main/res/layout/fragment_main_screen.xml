@@ -7,7 +7,7 @@
     tools:context=".fragments.MainScreenFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/my_recycler_view_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
