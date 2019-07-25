@@ -2,6 +2,8 @@ package com.pratik.productize.Utils;
 
 public class Constants {
 
+    public static final String TAG = "com.pratik.debug" ;
+
     public static final String PREF_NAME = "com.pratik.productize";
 
     // Preferences name

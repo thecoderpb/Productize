@@ -18,36 +18,75 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.pratik.productize.R;
+import com.pratik.productize.Utils.Converters;
 import com.pratik.productize.Utils.PrefManager;
+import com.pratik.productize.adapters.RecyclerViewClickListener;
+import com.pratik.productize.adapters.TaskRecyclerAdapter;
+import com.pratik.productize.database.Tasks;
+import com.pratik.productize.ui.TaskViewModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
+import java.sql.Date;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, RecyclerViewClickListener {
 
     private PrefManager prefManager;
     private BottomSheetBehavior bottomSheetBehavior;
     private FloatingActionButton fab;
     private BottomAppBar bottomAppBar;
+    private TaskViewModel viewModel;
+    private EditText bottomSheetString;
+    private SeekBar bottomSheetPriority;
+    private SeekBar bottomSheetDuration;
+    private Button bottomSheetHomeButton,bottomSheetWorkButton;
+    private int priority,duration,tags = -1;
+    private TaskRecyclerAdapter adapter;
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        prefManager = new PrefManager(this);
+        if(!prefManager.isTaskScheduled()){
+            startActivity(new Intent(this,ScheduleTask.class));
+            finish();
+
+        }
+
+
         CoordinatorLayout layoutBottomSheet = findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         fab = findViewById(R.id.fab);
         bottomAppBar = findViewById(R.id.bottom_app_bar);
+        bottomSheetString = findViewById(R.id.bottomSheetText);
+        bottomSheetDuration = findViewById(R.id.seekBarDuration);
+        bottomSheetPriority = findViewById(R.id.seekBarPriority);
+        bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
+        bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +105,56 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        bottomSheetDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+                duration = i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        bottomSheetPriority.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                priority = i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        bottomSheetWorkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tags =1;
+            }
+        });
+
+        bottomSheetHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tags=0;
+            }
+        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -94,12 +183,22 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        prefManager = new PrefManager(this);
-        if(!prefManager.isTaskScheduled()){
-            startActivity(new Intent(this,ScheduleTask.class));
-            finish();
 
-        }
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
+        adapter = new TaskRecyclerAdapter(this,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        viewModel.getAllTasks().observe(this, new Observer<List<Tasks>>() {
+            @Override
+            public void onChanged(List<Tasks> tasks) {
+                adapter.setTasksList(tasks);
+            }
+        });
+
     }
 
 
@@ -166,5 +265,35 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void saveUserDetailBottomSheet(View view){
+
+        Date date = Converters.toDate(System.currentTimeMillis());
+        String taskText = bottomSheetString.getText().toString();
+        if(taskText.equals("")){
+            Toast.makeText(this, "Task cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+        final Tasks task = new Tasks(date,taskText,priority,duration,tags,false,false);
+
+        viewModel.insert(task);
+
+    }
+
+    @Override
+    public void recyclerViewClicked(View v, int position) {
+
+       switch (v.getId()){
+           case R.id.deleteNotes:
+               Toast.makeText(this, "delete note" + position, Toast.LENGTH_SHORT).show();
+               Tasks task = adapter.getTaskAtPosition(position);
+               viewModel.delete(task);
+               adapter.notifyDataSetChanged();
+               break;
+           case R.id.editNote:
+               Toast.makeText(this, "edit note" + position, Toast.LENGTH_SHORT).show();
+               break;
+       }
+
     }
 }

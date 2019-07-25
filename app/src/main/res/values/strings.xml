@@ -26,16 +26,16 @@
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Be The Change</string>
-    <string name="slide_1_desc">True <b>Productivity</b> come\'s only when you set your <b>Priorities</b> right</string>
+    <string name="slide_1_desc">True <b>Productivity</b> come\'s only when you set your <b>Priorities</b> right.</string>
 
     <string name="slide_2_title">Stepping Stones</string>
-    <string name="slide_2_desc">The first step begins by making small changes in your daily habits. Any task in mind? Write it down in our app</string>
+    <string name="slide_2_desc">The first step begins by making small changes in your daily habits. Any task in mind? Write it down.</string>
 
     <string name="slide_3_title">Work Towards It</string>
     <string name="slide_3_desc">Fix some amount of time in a day and complete the tasks.</string>
 
     <string name="slide_4_title">Analyse Your Progress</string>
-    <string name="slide_4_desc">At the end of the day, you can know how much <b>Productized</b> you were! </string>
+    <string name="slide_4_desc">At the end of the day, you can always know how much <b>Productized</b> you were! </string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>

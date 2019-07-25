@@ -63,8 +63,8 @@
                 android:id="@+id/reminderCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="5dp"
+                android:layout_gravity="start"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="0dp"
                 android:text="Reminder Text"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -81,8 +81,6 @@
                     android:id="@+id/durationTextCV"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="false"
-                    android:layout_centerVertical="false"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:paddingTop="0dp"
@@ -108,22 +106,22 @@
 
                 <ImageView
                     android:id="@+id/editNote"
+                    android:contentDescription="edit note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:foregroundGravity="left"
-                    android:onClick="deleteReminder"
-                    android:paddingRight="5dp"
+                    android:paddingEnd="5dp"
                     android:paddingBottom="5dp"
                     android:src="@drawable/ic_edit" />
 
                 <ImageView
+                    android:contentDescription="Delete note"
                     android:id="@+id/deleteNotes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:onClick="deleteReminder"
-                    android:paddingRight="5dp"
+                    android:layout_gravity="end"
+                    android:paddingEnd="5dp"
                     android:paddingBottom="5dp"
                     android:src="@drawable/ic_delete" />
             </LinearLayout>
