@@ -23,13 +23,16 @@ import com.pratik.productize.Utils.PrefManager;
 import com.pratik.productize.adapters.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.database.Tasks;
+import com.pratik.productize.fragments.MainScreenFragment;
 import com.pratik.productize.ui.TaskViewModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +49,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, RecyclerViewClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private PrefManager prefManager;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     private SeekBar bottomSheetDuration;
     private Button bottomSheetHomeButton,bottomSheetWorkButton;
     private int priority,duration,tags = -1;
-    private TaskRecyclerAdapter adapter;
+
 
 
 
@@ -74,6 +77,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this,ScheduleTask.class));
             finish();
 
+        }else{
+            Fragment fragment = new MainScreenFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commitNow();
         }
 
 
@@ -184,21 +190,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
-        adapter = new TaskRecyclerAdapter(this,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
-
-
-        viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
-        viewModel.getAllTasks().observe(this, new Observer<List<Tasks>>() {
-            @Override
-            public void onChanged(List<Tasks> tasks) {
-                adapter.setTasksList(tasks);
-            }
-        });
-
     }
 
 
@@ -276,24 +267,12 @@ public class MainActivity extends AppCompatActivity
         }
         final Tasks task = new Tasks(date,taskText,priority,duration,tags,false,false);
 
+        MainScreenFragment fragment = (MainScreenFragment) getSupportFragmentManager().findFragmentById(R.id.content_main);
+        assert fragment != null;
+        TaskViewModel viewModel = fragment.getFragmentViewModel();
+        TaskRecyclerAdapter adapter = fragment.getAdapter();
         viewModel.insert(task);
-
-    }
-
-    @Override
-    public void recyclerViewClicked(View v, int position) {
-
-       switch (v.getId()){
-           case R.id.deleteNotes:
-               Toast.makeText(this, "delete note" + position, Toast.LENGTH_SHORT).show();
-               Tasks task = adapter.getTaskAtPosition(position);
-               viewModel.delete(task);
-               adapter.notifyDataSetChanged();
-               break;
-           case R.id.editNote:
-               Toast.makeText(this, "edit note" + position, Toast.LENGTH_SHORT).show();
-               break;
-       }
+        adapter.notifyDataSetChanged();
 
     }
 }

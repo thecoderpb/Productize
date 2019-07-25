@@ -44,7 +44,7 @@ public class TaskRepository {
 
         AppExecutor.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void run() {
+            public void run() { 
                 taskDAO.insertTask(task);
             }
         });

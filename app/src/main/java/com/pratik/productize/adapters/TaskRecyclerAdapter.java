@@ -74,6 +74,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+
+
         if(tasksList!=null){
             Tasks currentTask = tasksList.get(position);
             holder.reminderText.setText(currentTask.getTaskText());
