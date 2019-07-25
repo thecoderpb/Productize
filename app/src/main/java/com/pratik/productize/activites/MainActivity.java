@@ -11,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -59,12 +60,12 @@ public class MainActivity extends AppCompatActivity
     private BottomSheetBehavior bottomSheetBehavior;
     private FloatingActionButton fab;
     private BottomAppBar bottomAppBar;
-    private TaskViewModel viewModel;
     private EditText bottomSheetString;
     private SeekBar bottomSheetPriority;
     private SeekBar bottomSheetDuration;
     private Button bottomSheetHomeButton,bottomSheetWorkButton;
     private int priority,duration,tags = -1;
+
 
 
 
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity
                     fab.setImageResource(R.drawable.ic_edit);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
+
+                bottomAppBar.setVisibility(View.VISIBLE);
 
             }
         });

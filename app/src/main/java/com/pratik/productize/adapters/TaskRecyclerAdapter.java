@@ -1,7 +1,6 @@
 package com.pratik.productize.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import com.pratik.productize.database.Tasks;
 
 import java.util.List;
 
-import static com.pratik.productize.Utils.Constants.TAG;
 
 public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.MyViewHolder> {
-
 
     private List<Tasks> tasksList;
     private Context context;
@@ -28,7 +25,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView reminderText,durationText,locationText,priorityText,idText;
-        private ImageView deleteTaskImage,editTaskImage;
+        private ImageView deleteTaskImage,editTaskImage,locationTagImage;
 
         private MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -37,12 +34,13 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             locationText = itemView.findViewById(R.id.locationTextCV);
             priorityText = itemView.findViewById(R.id.priorityTextCV);
             idText = itemView.findViewById(R.id.IdTextCV);
+
             deleteTaskImage = itemView.findViewById(R.id.deleteNotes);
             editTaskImage = itemView.findViewById(R.id.editNote);
+            locationTagImage = itemView.findViewById(R.id.locationCVImage);
 
             editTaskImage.setOnClickListener(this);
             deleteTaskImage.setOnClickListener(this);
-
 
         }
 
@@ -65,9 +63,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     @Override
     public TaskRecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.card_layout,parent,false);
-        MyViewHolder myViewHolder = new MyViewHolder(view);
 
-        return myViewHolder;
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -80,8 +77,9 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             holder.reminderText.setText(currentTask.getTaskText());
             holder.durationText.setText(String.valueOf(currentTask.getDuration()));
             holder.priorityText.setText(String.valueOf(currentTask.getPriority()));
-            holder.locationText.setText(String.valueOf(currentTask.getTags()));
+            holder.locationText.setText(convTagToText(currentTask.getTags()));
             holder.idText.setText(String.valueOf(currentTask.getTimeStamp()));
+            holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
         }
     }
 
@@ -103,4 +101,37 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     public Tasks getTaskAtPosition(int position){
         return tasksList.get(position);
     }
+
+    private int getLocationTagImage(int tag){
+
+        int resId;
+
+        switch (tag){
+            case -1 :
+                resId = R.drawable.ic_nav_other_fill;
+                break;
+            case 0 :
+                resId = R.drawable.ic_nav_home_fill;
+                break;
+            case 1 :
+                resId = R.drawable.ic_nav_work_fill;
+                break;
+            default: resId = R.drawable.ic_nav_other_hollow;
+        }
+
+        return resId;
+    }
+
+    private String convTagToText(int tag){
+
+        if( tag == 0){
+            return "Home";
+        }else if( tag == 1){
+            return " Work";
+        }
+
+        return "Others";
+
+    }
+
 }

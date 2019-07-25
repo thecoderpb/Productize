@@ -17,4 +17,9 @@ public class Constants {
     public static final int RECYCLER_VIEW_HOME = 1;
     public static final int RECYCLER_VIEW_WORK = 2;
     public static final int RECYCLER_VIEW_OTHER = 3;
+
+    //Tags
+    public static final int TAG_HOME = 0;
+    public static final int TAG_WORK = 1;
+    public static final int TAG_OTHER = -1;
 }

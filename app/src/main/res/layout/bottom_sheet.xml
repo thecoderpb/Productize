@@ -17,7 +17,7 @@
         android:layout_gravity="top"
         android:layout_marginTop="32dp"
         android:background="@drawable/bottom_bar_rounded"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="#388E3C"
         app:hideOnScroll="true"
         app:fabAlignmentMode="center" />
 
@@ -25,6 +25,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#388E3C"
         android:src="@drawable/ic_edit"
         android:hapticFeedbackEnabled="true"
         app:layout_anchor="@id/bottom_app_bar" />

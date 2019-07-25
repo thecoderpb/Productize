@@ -6,18 +6,20 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.pratik.productize.R;
+import com.pratik.productize.activites.MainActivity;
 import com.pratik.productize.adapters.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.database.Tasks;
@@ -25,10 +27,13 @@ import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.List;
 
+import static com.pratik.productize.Utils.Constants.TAG;
+
 public class MainScreenFragment extends Fragment implements RecyclerViewClickListener{
 
     private TaskViewModel viewModel;
-    private  TaskRecyclerAdapter adapter;
+    private TaskRecyclerAdapter adapter;
+
 
     public MainScreenFragment() {
         // Required empty public constructor
@@ -37,13 +42,16 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_main_screen,container,false);
+        final View view = inflater.inflate(R.layout.fragment_main_screen,container,false);
+
+        final BottomAppBar bottomAppBar = ((MainActivity)getActivity()).findViewById(R.id.bottom_app_bar);
+
 
         viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.my_recycler_view_main);
         adapter = new TaskRecyclerAdapter(getActivity(), this);
         recyclerView.setAdapter(adapter);
@@ -51,14 +59,60 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(false);
 
+
         viewModel.getAllTasks().observe(this, new Observer<List<Tasks>>() {
             @Override
             public void onChanged(List<Tasks> tasks) {
                 adapter.setTasksList(tasks);
+                if(adapter.getItemCount() == 0)
+                    view.findViewById(R.id.empty_notes_view).setVisibility(View.VISIBLE);
+                 else
+                     view.findViewById(R.id.empty_notes_view).setVisibility(View.INVISIBLE);
+
+            }
+        });
+
+        viewModel.getAllTaskCount().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                Log.i(TAG,"all tasks "+ integer);
+            }
+        });
+
+        viewModel.getAllDurationCount().observe(this, new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                Log.i(TAG,"all duration "+ aLong);
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(dy>0){
+                    bottomAppBar.setVisibility(View.INVISIBLE);
+                    Log.i(TAG,"scroll up");
+                }else {
+                    bottomAppBar.setVisibility(View.VISIBLE);
+                    Log.i(TAG,"scroll down");
+                }
+
+
             }
         });
 
         return view;
+
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface TaskDAO {
 
-    @Query("SELECT * FROM TASKS WHERE isTaskExpired = 0 ")
+    @Query("SELECT * FROM TASKS WHERE isTaskExpired = 0 ORDER BY priority DESC ")
     LiveData<List<Tasks>> getAllActiveTasks();
 
     @Insert
@@ -31,17 +31,20 @@ public interface TaskDAO {
     @Query("SELECT * FROM TASKS WHERE tags=:tag AND isTaskExpired = 0 AND isTaskComplete = 0 ORDER BY priority DESC, duration DESC ")
     LiveData<List<Tasks>> getSortedTaskByTag(int tag);
 
-    @Query("SELECT COUNT(*) FROM TASKS WHERE isTaskExpired = 0")
-    int getAllActiveTaskCount();
+    @Query("SELECT COUNT(taskText) FROM TASKS WHERE isTaskExpired = 0")
+    LiveData<Integer> getAllActiveTaskCount();
 
     @Query("SELECT COUNT(*) FROM TASKS WHERE tags=:tag AND isTaskExpired = 0")
-    int getTaskCountByTag(int tag);
+    LiveData<Integer> getTaskCountByTag(int tag);
 
     @Query("SELECT SUM(duration) FROM TASKS WHERE isTaskExpired = 0")
-    int getAllTaskDuration();
+    LiveData<Long> getAllTaskDuration();
 
     @Query("SELECT SUM(duration) FROM TASKS WHERE tags=:tag AND isTaskExpired = 0")
-    int getTaskDurationByTag(int tag);
+    LiveData<Long> getTaskDurationByTag(int tag);
+
+    @Query("DELETE FROM TASKS")
+    void nukeTable();
 
 
 }
