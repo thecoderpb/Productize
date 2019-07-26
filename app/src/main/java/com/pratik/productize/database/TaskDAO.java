@@ -34,6 +34,9 @@ public interface TaskDAO {
     @Query("SELECT COUNT(taskText) FROM TASKS WHERE isTaskExpired = 0")
     LiveData<Integer> getAllActiveTaskCount();
 
+    @Query("SELECT COUNT(taskText) FROM TASKS WHERE isTaskExpired = 0")
+    int getActiveTaskCount();
+
     @Query("SELECT COUNT(*) FROM TASKS WHERE tags=:tag AND isTaskExpired = 0")
     LiveData<Integer> getTaskCountByTag(int tag);
 
@@ -42,6 +45,9 @@ public interface TaskDAO {
 
     @Query("SELECT SUM(duration) FROM TASKS WHERE tags=:tag AND isTaskExpired = 0")
     LiveData<Long> getTaskDurationByTag(int tag);
+
+    @Query("SELECT SUM(duration) FROM TASKS WHERE tags=:tag AND isTaskExpired = 0")
+    long getTaskDurationByTags(int tag);
 
     @Query("DELETE FROM TASKS")
     void nukeTable();

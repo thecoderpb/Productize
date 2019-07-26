@@ -82,15 +82,15 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
                 else
                      view.findViewById(R.id.empty_notes_view).setVisibility(View.INVISIBLE);
 
-                for(Tasks activeTask : tasks){
-                     if (activeTask.getTags() == pref.getActiveTag()){
+                for(Tasks task : tasks){
+                     if (task.getTags() == pref.getActiveTag()){
                          Alarm alarm = new Alarm();
                          JobHandler jobHandler = new JobHandler();
 
                          String time = getTagTime();
-                         Log.i(TAG,"user set time " + time);
+                         Log.i(TAG,"active time " + time);
                          jobHandler.manageJob(context,adapter.getItemCount());
-                         if(time!=null || !time.equals(""))
+                         if(time!=null)
                              alarm.manageAlarm(context,adapter.getItemCount(),time);
 
                          break;

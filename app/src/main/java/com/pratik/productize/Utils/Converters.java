@@ -28,7 +28,8 @@ public class Converters {
 
     public long formatToMill(String s) {
 
-        SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy"); //TODO:check this if alarm manager has issues
+
         try {
             java.util.Date date = df.parse(s);
             Log.i(TAG2 , String.valueOf(System.currentTimeMillis()));
@@ -42,7 +43,7 @@ public class Converters {
         return 0;
     }
 
-    public long time24HrToMillsec(String s) {
+    public long time24HrToMillSec(String s) {
 
         java.util.Date currdate = GregorianCalendar.getInstance().getTime();
 

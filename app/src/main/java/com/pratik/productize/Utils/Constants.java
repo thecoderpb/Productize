@@ -15,6 +15,11 @@ public class Constants {
     public static final String ACTIVE_TAG = "activeTag";
     public static final String HOME_TIME = "homeTime";
     public static final String WORK_TIME = "workTime";
+    public static final String TASK_HOURS = "taskHours";
+
+    //intent request code
+    public static final String ALARM_INTENT_RC = "alarmRequestCode";
+    public static final String ALARM_INTENT_FLAG = "alarmIntentFlag";
 
     //Recycler ViewType
 
@@ -42,6 +47,15 @@ public class Constants {
 
     public static final int FLAG_ALARM2 = 1;
     public static final int REQUEST_CODE_ALARM2 = 1;
+
+    public static final int FLAG_ALARM3 = 2;
+    public static final int REQUEST_CODE_ALARM3 =2;
+
+    //notification channel ID
+    public static final String CHANNEL_ID = "Reminders";
+
+    //notification ID
+    public static final int NOTIFICATION_ID = 32;
 
 
 }

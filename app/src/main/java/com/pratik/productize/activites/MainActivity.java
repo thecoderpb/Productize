@@ -27,6 +27,7 @@ import com.pratik.productize.fragments.HomeScreenFragment;
 import com.pratik.productize.fragments.MainScreenFragment;
 import com.pratik.productize.fragments.OtherScreenFragment;
 import com.pratik.productize.fragments.WorkScreenFragment;
+import com.pratik.productize.ui.NotificationHandler;
 import com.pratik.productize.ui.TaskViewModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -86,6 +87,9 @@ public class MainActivity extends AppCompatActivity
         bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
         bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
 
+        NotificationHandler notificationHandler = new NotificationHandler(this);
+        notificationHandler.createNotificationChannel();
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +114,6 @@ public class MainActivity extends AppCompatActivity
         bottomSheetDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
                 duration = i;
             }
 
@@ -182,8 +185,6 @@ public class MainActivity extends AppCompatActivity
             public void onSlide(@NonNull View view, float v) {
             }
         });
-
-
 
     }
 

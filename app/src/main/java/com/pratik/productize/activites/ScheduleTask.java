@@ -150,6 +150,7 @@ public class ScheduleTask extends AppCompatActivity {
 
                 prefManager.setTaskScheduled(true);
                 prefManager.setActiveTag(activeTag);
+                prefManager.setHours(minutes*60*1000);
 
                 Intent intent2 = getIntent();
                 Intent intent = new Intent(ScheduleTask.this,MainActivity.class);

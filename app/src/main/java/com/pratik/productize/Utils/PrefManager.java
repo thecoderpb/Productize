@@ -10,6 +10,7 @@ import static com.pratik.productize.Utils.Constants.IS_TASK_ACTIVE;
 import static com.pratik.productize.Utils.Constants.IS_TASK_SCHEDULED;
 import static com.pratik.productize.Utils.Constants.PREF_NAME;
 import static com.pratik.productize.Utils.Constants.TAG_HOME;
+import static com.pratik.productize.Utils.Constants.TASK_HOURS;
 import static com.pratik.productize.Utils.Constants.WORK_TIME;
 
 public class PrefManager {
@@ -57,6 +58,11 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void setHours(long hours){
+        editor.putLong(TASK_HOURS,hours);
+        editor.commit();
+    }
+
     public boolean isTaskScheduled(){return pref.getBoolean(IS_TASK_SCHEDULED,false);}
     public boolean isTaskActive(){ return pref.getBoolean(IS_TASK_ACTIVE,false);}
     public boolean isFirstTimeLaunch() {
@@ -65,5 +71,4 @@ public class PrefManager {
     public int getActiveTag(){return  pref.getInt(ACTIVE_TAG,TAG_HOME);}
     public String getHomeTime(){return pref.getString(HOME_TIME,"");}
     public String getWorkTime(){return pref.getString(WORK_TIME,"");}
-
-}
+    public long getHours() { return pref.getLong(TASK_HOURS,0);} }
