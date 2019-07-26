@@ -52,6 +52,7 @@ public class ScheduleTask extends AppCompatActivity {
         button15m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 minutes+= 15;
                 minTextView.setText(minutes + " min");
             }
