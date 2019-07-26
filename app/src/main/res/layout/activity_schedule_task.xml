@@ -7,16 +7,164 @@
     tools:context=".activites.ScheduleTask">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Button"
+        android:text="begin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.973"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/onboarding_loc_text"
+        android:layout_width="0dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center|start"
+        android:text="@string/onboarding_text_pref_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="0dp"
+        android:layout_height="101dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center|start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/onboarding_loc_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/onboarding_loc_text"
+        app:layout_constraintTop_toBottomOf="@+id/onboarding_loc_text"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/home_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_home" />
+
+        <RadioButton
+            android:id="@+id/work_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_work" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/onboarding_hours_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="@string/onboarding_text_pref_hours"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <Button
+        android:id="@+id/button15m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="15 min"
+        app:layout_constraintEnd_toStartOf="@+id/button30m"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/onboarding_hours_text"
+        app:layout_constraintTop_toBottomOf="@+id/onboarding_hours_text" />
+
+    <Button
+        android:id="@+id/button30m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="30 min"
+        app:layout_constraintEnd_toStartOf="@+id/button60m"
+        app:layout_constraintTop_toTopOf="@+id/button15m" />
+
+    <Button
+        android:id="@+id/button60m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:text="1 hour"
+        app:layout_constraintEnd_toEndOf="@+id/onboarding_hours_text"
+        app:layout_constraintTop_toTopOf="@+id/button30m" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="0 min"
+        app:layout_constraintBottom_toBottomOf="@+id/button60m"
+        app:layout_constraintEnd_toEndOf="@+id/onboarding_hours_text"
+        app:layout_constraintStart_toEndOf="@+id/button60m"
+        app:layout_constraintTop_toTopOf="@+id/button60m" />
+
+    <TextView
+        android:id="@+id/onboarding_time_text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingBottom="5dp"
+        android:text="@string/onboarding_text_pref_time1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/button60m"
+        app:layout_constraintStart_toStartOf="@+id/button15m"
+        app:layout_constraintTop_toBottomOf="@+id/button30m" />
+
+    <Button
+        android:id="@+id/setTimeHome"
+        android:layout_width="94dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:text="Set time"
+        app:layout_constraintEnd_toEndOf="@+id/onboarding_time_text1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/onboarding_time_text1"
+        app:layout_constraintTop_toBottomOf="@+id/onboarding_time_text1" />
+
+    <Button
+        android:id="@+id/setTimeWork"
+        android:layout_width="94dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:text="Set time"
+        app:layout_constraintEnd_toEndOf="@+id/onboarding_time_text1"
+        app:layout_constraintHorizontal_bias="0.006"
+        app:layout_constraintStart_toStartOf="@+id/onboarding_time_text1"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center|start"
+        android:text="@string/onboarding_text_pref_time2"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/setTimeHome"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="@+id/setTimeHome"
+        app:layout_constraintTop_toBottomOf="@+id/setTimeHome" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

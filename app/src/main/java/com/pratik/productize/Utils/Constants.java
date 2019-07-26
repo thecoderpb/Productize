@@ -10,6 +10,9 @@ public class Constants {
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     public static final String IS_TASK_ACTIVE = "IsTaskActive";
     public static final String IS_TASK_SCHEDULED = "IsTaskSchedule";
+    public static final String ACTIVE_TAG = "activeTag";
+    public static final String HOME_TIME = "homeTime";
+    public static final String WORK_TIME = "workTime";
 
     //Recycler ViewType
 
