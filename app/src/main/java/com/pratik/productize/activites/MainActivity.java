@@ -11,7 +11,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,7 +21,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.pratik.productize.R;
 import com.pratik.productize.Utils.Converters;
 import com.pratik.productize.Utils.PrefManager;
-import com.pratik.productize.adapters.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.database.Tasks;
 import com.pratik.productize.fragments.HomeScreenFragment;
@@ -36,11 +34,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.widget.Button;
@@ -49,8 +42,6 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.sql.Date;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -65,9 +56,6 @@ public class MainActivity extends AppCompatActivity
     private SeekBar bottomSheetDuration;
     private Button bottomSheetHomeButton,bottomSheetWorkButton;
     private int priority,duration,tags = -1;
-
-
-
 
 
     @Override

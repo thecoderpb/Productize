@@ -1,6 +1,8 @@
 package com.pratik.productize.fragments;
 
 
+
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,20 +21,29 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.pratik.productize.R;
+import com.pratik.productize.Utils.PrefManager;
 import com.pratik.productize.activites.MainActivity;
 import com.pratik.productize.adapters.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
+import com.pratik.productize.asynchronous.Alarm;
+import com.pratik.productize.asynchronous.JobHandler;
 import com.pratik.productize.database.Tasks;
 import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.List;
 
 import static com.pratik.productize.Utils.Constants.TAG;
+import static com.pratik.productize.Utils.Constants.TAG1;
+import static com.pratik.productize.Utils.Constants.TAG_HOME;
+import static com.pratik.productize.Utils.Constants.TAG_WORK;
 
 public class MainScreenFragment extends Fragment implements RecyclerViewClickListener{
 
     private TaskViewModel viewModel;
     private TaskRecyclerAdapter adapter;
+    private Context context;
+    private PrefManager pref;
+
 
 
     public MainScreenFragment() {
@@ -59,6 +70,8 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(false);
 
+        pref = new PrefManager(context);
+
 
         viewModel.getAllTasks().observe(this, new Observer<List<Tasks>>() {
             @Override
@@ -66,8 +79,24 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
                 adapter.setTasksList(tasks);
                 if(adapter.getItemCount() == 0)
                     view.findViewById(R.id.empty_notes_view).setVisibility(View.VISIBLE);
-                 else
+                else
                      view.findViewById(R.id.empty_notes_view).setVisibility(View.INVISIBLE);
+
+                for(Tasks activeTask : tasks){
+                     if (activeTask.getTags() == pref.getActiveTag()){
+                         Alarm alarm = new Alarm();
+                         JobHandler jobHandler = new JobHandler();
+
+                         String time = getTagTime();
+                         Log.i(TAG,"user set time " + time);
+                         jobHandler.manageJob(context,adapter.getItemCount());
+                         if(time!=null || !time.equals(""))
+                             alarm.manageAlarm(context,adapter.getItemCount(),time);
+
+                         break;
+
+                     }
+                }
 
             }
         });
@@ -92,7 +121,6 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-
             }
 
             @Override
@@ -101,12 +129,11 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
                 if(dy>0){
                     bottomAppBar.setVisibility(View.INVISIBLE);
-                    Log.i(TAG,"scroll up");
+                    Log.i(TAG1,"scroll up");
                 }else {
                     bottomAppBar.setVisibility(View.VISIBLE);
-                    Log.i(TAG,"scroll down");
+                    Log.i(TAG1,"scroll down");
                 }
-
 
             }
         });
@@ -115,11 +142,30 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
     }
 
+    private String getTagTime() {
+
+
+        int activeTag = pref.getActiveTag();
+        Log.i(TAG,"active tag " + activeTag);
+        switch (activeTag){
+            case TAG_HOME :
+                return pref.getHomeTime();
+            case TAG_WORK :
+                return pref.getWorkTime();
+        }
+        return pref.getHomeTime();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
     @Override
     public void recyclerViewClicked(View v, int position) {
         switch (v.getId()){
             case R.id.deleteNotes:
-                Toast.makeText(getActivity(), "delete note" + position, Toast.LENGTH_SHORT).show();
                 Tasks task = adapter.getTaskAtPosition(position);
                 viewModel.delete(task);
                 adapter.notifyItemRangeChanged(0,adapter.getItemCount());

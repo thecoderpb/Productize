@@ -3,6 +3,8 @@ package com.pratik.productize.Utils;
 public class Constants {
 
     public static final String TAG = "com.pratik.debug" ;
+    public static final String TAG1 = "com.pratik.debu" ;
+    public static final String TAG2 = "com.pratik.myapp" ;
 
     public static final String PREF_NAME = "com.pratik.productize";
 
@@ -25,4 +27,21 @@ public class Constants {
     public static final int TAG_HOME = 0;
     public static final int TAG_WORK = 1;
     public static final int TAG_OTHER = -1;
+
+    //Job ids
+    public static final int JOB_ID_TASK = 69;
+    public static final int JOB_ID_WIPE = 7;
+
+    //Job intervals
+    public static final long JOB_INTERVAL = 1000*60*20;
+    public static final long JOB_FLEX_INTERVAL = 1000*60*15;
+
+    //alarm flags and request codes
+    public static final int FLAG_ALARM1 = 0;
+    public static final int REQUEST_CODE_ALARM1 = 0;
+
+    public static final int FLAG_ALARM2 = 1;
+    public static final int REQUEST_CODE_ALARM2 = 1;
+
+
 }
