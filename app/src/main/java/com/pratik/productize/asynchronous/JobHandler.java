@@ -9,25 +9,21 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
-
-import com.pratik.productize.Utils.Constants;
-import com.pratik.productize.Utils.Converters;
-import com.pratik.productize.Utils.PrefManager;
+import com.pratik.productize.utils.Constants;
+import com.pratik.productize.utils.Converters;
+import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.database.TasksDB;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM1;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM3;
-import static com.pratik.productize.Utils.Constants.JOB_FLEX_INTERVAL;
-import static com.pratik.productize.Utils.Constants.JOB_ID_TASK;
-import static com.pratik.productize.Utils.Constants.JOB_INTERVAL;
-import static com.pratik.productize.Utils.Constants.REQUEST_CODE_ALARM1;
-import static com.pratik.productize.Utils.Constants.REQUEST_CODE_ALARM3;
-import static com.pratik.productize.Utils.Constants.TAG1;
-import static com.pratik.productize.Utils.Constants.TAG_HOME;
-import static com.pratik.productize.Utils.Constants.TAG_WORK;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM3;
+import static com.pratik.productize.utils.Constants.JOB_FLEX_INTERVAL;
+import static com.pratik.productize.utils.Constants.JOB_ID_TASK;
+import static com.pratik.productize.utils.Constants.JOB_INTERVAL;
+import static com.pratik.productize.utils.Constants.REQUEST_CODE_ALARM1;
+import static com.pratik.productize.utils.Constants.REQUEST_CODE_ALARM3;
+import static com.pratik.productize.utils.Constants.TAG_HOME;
+import static com.pratik.productize.utils.Constants.TAG_WORK;
 
 public class JobHandler extends JobService {
 

@@ -1,17 +1,17 @@
-package com.pratik.productize.Utils;
+package com.pratik.productize.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import static com.pratik.productize.Utils.Constants.ACTIVE_TAG;
-import static com.pratik.productize.Utils.Constants.HOME_TIME;
-import static com.pratik.productize.Utils.Constants.IS_FIRST_TIME_LAUNCH;
-import static com.pratik.productize.Utils.Constants.IS_TASK_ACTIVE;
-import static com.pratik.productize.Utils.Constants.IS_TASK_SCHEDULED;
-import static com.pratik.productize.Utils.Constants.PREF_NAME;
-import static com.pratik.productize.Utils.Constants.TAG_HOME;
-import static com.pratik.productize.Utils.Constants.TASK_HOURS;
-import static com.pratik.productize.Utils.Constants.WORK_TIME;
+import static com.pratik.productize.utils.Constants.ACTIVE_TAG;
+import static com.pratik.productize.utils.Constants.HOME_TIME;
+import static com.pratik.productize.utils.Constants.IS_FIRST_TIME_LAUNCH;
+import static com.pratik.productize.utils.Constants.IS_TASK_ACTIVE;
+import static com.pratik.productize.utils.Constants.IS_TASK_SCHEDULED;
+import static com.pratik.productize.utils.Constants.PREF_NAME;
+import static com.pratik.productize.utils.Constants.TAG_HOME;
+import static com.pratik.productize.utils.Constants.TASK_HOURS;
+import static com.pratik.productize.utils.Constants.WORK_TIME;
 
 public class PrefManager {
 

@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.pratik.productize.Utils.Converters;
+import com.pratik.productize.utils.Converters;
 
 import java.sql.Date;
 

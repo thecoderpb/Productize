@@ -15,12 +15,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.pratik.productize.R;
-import com.pratik.productize.Utils.PrefManager;
+import com.pratik.productize.utils.PrefManager;
 
 import java.util.Calendar;
 
 import static android.graphics.Color.WHITE;
-import static com.pratik.productize.Utils.Constants.TAG_HOME;
+import static com.pratik.productize.utils.Constants.TAG_HOME;
 
 public class ScheduleTask extends AppCompatActivity {
 

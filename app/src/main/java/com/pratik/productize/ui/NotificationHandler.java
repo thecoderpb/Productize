@@ -12,16 +12,16 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.pratik.productize.R;
-import com.pratik.productize.Utils.PrefManager;
+import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.activites.MainActivity;
 import com.pratik.productize.activites.WelcomeActivity;
 
-import static com.pratik.productize.Utils.Constants.CHANNEL_ID;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM1;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM2;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM3;
-import static com.pratik.productize.Utils.Constants.NOTIFICATION_ID;
-import static com.pratik.productize.Utils.Constants.TAG;
+import static com.pratik.productize.utils.Constants.CHANNEL_ID;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM2;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM3;
+import static com.pratik.productize.utils.Constants.NOTIFICATION_ID;
+import static com.pratik.productize.utils.Constants.TAG;
 
 public class NotificationHandler {
 

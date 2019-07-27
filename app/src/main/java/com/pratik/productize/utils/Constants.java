@@ -1,4 +1,4 @@
-package com.pratik.productize.Utils;
+package com.pratik.productize.utils;
 
 public class Constants {
 

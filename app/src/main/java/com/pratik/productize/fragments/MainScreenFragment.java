@@ -21,9 +21,9 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.pratik.productize.R;
-import com.pratik.productize.Utils.PrefManager;
+import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.activites.MainActivity;
-import com.pratik.productize.adapters.RecyclerViewClickListener;
+import com.pratik.productize.ui.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.asynchronous.Alarm;
 import com.pratik.productize.asynchronous.JobHandler;
@@ -32,10 +32,10 @@ import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.List;
 
-import static com.pratik.productize.Utils.Constants.TAG;
-import static com.pratik.productize.Utils.Constants.TAG1;
-import static com.pratik.productize.Utils.Constants.TAG_HOME;
-import static com.pratik.productize.Utils.Constants.TAG_WORK;
+import static com.pratik.productize.utils.Constants.TAG;
+import static com.pratik.productize.utils.Constants.TAG1;
+import static com.pratik.productize.utils.Constants.TAG_HOME;
+import static com.pratik.productize.utils.Constants.TAG_WORK;
 
 public class MainScreenFragment extends Fragment implements RecyclerViewClickListener{
 

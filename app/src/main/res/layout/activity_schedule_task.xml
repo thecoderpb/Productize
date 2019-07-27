@@ -81,10 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:text="15 min"
-        app:layout_constraintEnd_toStartOf="@+id/button30m"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/onboarding_hours_text"
         app:layout_constraintTop_toBottomOf="@+id/onboarding_hours_text" />
 
@@ -92,18 +89,21 @@
         android:id="@+id/button30m"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="30 min"
-        app:layout_constraintEnd_toStartOf="@+id/button60m"
+        app:layout_constraintStart_toEndOf="@+id/button15m"
         app:layout_constraintTop_toTopOf="@+id/button15m" />
 
     <Button
         android:id="@+id/button60m"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="88dp"
         android:text="1 hour"
         app:layout_constraintEnd_toEndOf="@+id/onboarding_hours_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/button30m"
         app:layout_constraintTop_toTopOf="@+id/button30m" />
 
     <TextView

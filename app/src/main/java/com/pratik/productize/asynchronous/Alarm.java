@@ -10,18 +10,18 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.pratik.productize.Utils.Converters;
+import com.pratik.productize.utils.Converters;
 import com.pratik.productize.ui.NotificationHandler;
 
-import static com.pratik.productize.Utils.Constants.ALARM_INTENT_FLAG;
-import static com.pratik.productize.Utils.Constants.ALARM_INTENT_RC;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM1;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM2;
-import static com.pratik.productize.Utils.Constants.FLAG_ALARM3;
-import static com.pratik.productize.Utils.Constants.REQUEST_CODE_ALARM1;
-import static com.pratik.productize.Utils.Constants.REQUEST_CODE_ALARM2;
-import static com.pratik.productize.Utils.Constants.REQUEST_CODE_ALARM3;
-import static com.pratik.productize.Utils.Constants.TAG;
+import static com.pratik.productize.utils.Constants.ALARM_INTENT_FLAG;
+import static com.pratik.productize.utils.Constants.ALARM_INTENT_RC;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM2;
+import static com.pratik.productize.utils.Constants.FLAG_ALARM3;
+import static com.pratik.productize.utils.Constants.REQUEST_CODE_ALARM1;
+import static com.pratik.productize.utils.Constants.REQUEST_CODE_ALARM2;
+import static com.pratik.productize.utils.Constants.REQUEST_CODE_ALARM3;
+import static com.pratik.productize.utils.Constants.TAG;
 
 public class Alarm extends BroadcastReceiver {
     @Override

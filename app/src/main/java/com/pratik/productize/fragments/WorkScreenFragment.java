@@ -19,14 +19,14 @@ import android.widget.Toast;
 
 import com.pratik.productize.R;
 
-import com.pratik.productize.adapters.RecyclerViewClickListener;
+import com.pratik.productize.ui.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.database.Tasks;
 import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.List;
 
-import static com.pratik.productize.Utils.Constants.TAG;
+import static com.pratik.productize.utils.Constants.TAG;
 
 /**
  * A simple {@link Fragment} subclass.

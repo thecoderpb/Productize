@@ -5,14 +5,14 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.pratik.productize.Utils.Constants;
+import com.pratik.productize.utils.Constants;
 import com.pratik.productize.asynchronous.AppExecutor;
 
 import java.util.List;
 
-import static com.pratik.productize.Utils.Constants.TAG_HOME;
-import static com.pratik.productize.Utils.Constants.TAG_OTHER;
-import static com.pratik.productize.Utils.Constants.TAG_WORK;
+import static com.pratik.productize.utils.Constants.TAG_HOME;
+import static com.pratik.productize.utils.Constants.TAG_OTHER;
+import static com.pratik.productize.utils.Constants.TAG_WORK;
 
 public class TaskRepository {
 

@@ -1,4 +1,4 @@
-package com.pratik.productize.adapters;
+package com.pratik.productize.ui;
 
 import android.view.View;
 

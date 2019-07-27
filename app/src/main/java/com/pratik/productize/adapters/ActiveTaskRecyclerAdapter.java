@@ -1,6 +1,7 @@
 package com.pratik.productize.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +14,48 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pratik.productize.R;
 import com.pratik.productize.database.Tasks;
 import com.pratik.productize.ui.RecyclerViewClickListener;
+import com.pratik.productize.utils.Constants;
 
+
+import java.util.Collections;
 import java.util.List;
 
 
-public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.MyViewHolder> {
+public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRecyclerAdapter.MyViewHolder>
+        implements ItemTouchHelperAdapter {
 
-    private List<Tasks> tasksList;
     private Context context;
+    public static List<Tasks> tasksList;
     private RecyclerViewClickListener itemClickListener;
+    private View view;
+    private MyViewHolder myViewHolder;
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(tasksList, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(tasksList, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+
+
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        tasksList.remove(position);
+        notifyItemRemoved(position);
+    }
+
 
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         private TextView reminderText,durationText,locationText,priorityText,idText;
         private ImageView deleteTaskImage,editTaskImage,locationTagImage;
 
@@ -40,8 +71,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             editTaskImage = itemView.findViewById(R.id.editNote);
             locationTagImage = itemView.findViewById(R.id.locationCVImage);
 
-            editTaskImage.setOnClickListener(this);
             deleteTaskImage.setOnClickListener(this);
+            editTaskImage.setOnClickListener(this);
 
         }
 
@@ -50,28 +81,29 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         public void onClick(View view) {
             itemClickListener.recyclerViewClicked(view,getLayoutPosition());
         }
+
+
+
     }
 
-
-    public TaskRecyclerAdapter(Context context,RecyclerViewClickListener itemListener){
-
+    public ActiveTaskRecyclerAdapter(Context context,RecyclerViewClickListener itemListener){
         this.context = context;
         this.itemClickListener = itemListener;
-    }
+       // this.itemSwipeListener = itemSwipeListener;
 
+    }
 
     @NonNull
     @Override
-    public TaskRecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_layout,parent,false);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        return new MyViewHolder(view);
+        view = LayoutInflater.from(context).inflate(R.layout.card_layout,parent,false);
+        myViewHolder = new MyViewHolder(view);
+        return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-
 
         if(tasksList!=null){
             Tasks currentTask = tasksList.get(position);
@@ -84,6 +116,15 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         }
     }
 
+    public void setTasksList(List<Tasks> tasksList) {
+        ActiveTaskRecyclerAdapter.tasksList = tasksList;
+        notifyDataSetChanged();
+    }
+
+    public Tasks getTaskAtPosition(int position){
+        return tasksList.get(position);
+    }
+
     @Override
     public int getItemCount() {
 
@@ -92,15 +133,6 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         else
             return 0;
 
-    }
-
-    public void setTasksList(List<Tasks> tasksList) {
-        this.tasksList = tasksList;
-        notifyDataSetChanged();
-    }
-
-    public Tasks getTaskAtPosition(int position){
-        return tasksList.get(position);
     }
 
     private int getLocationTagImage(int tag){
@@ -134,5 +166,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         return "Others";
 
     }
+
+
+
 
 }

@@ -19,8 +19,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.pratik.productize.R;
-import com.pratik.productize.Utils.Converters;
-import com.pratik.productize.Utils.PrefManager;
+import com.pratik.productize.utils.Converters;
+import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.database.Tasks;
 import com.pratik.productize.fragments.HomeScreenFragment;
@@ -273,7 +273,9 @@ public class MainActivity extends AppCompatActivity
                 fab.setVisibility(View.GONE);
                 break;
             case R.id.nav_share : break;
-            case R.id.nav_about : break;
+            case R.id.nav_about :
+                prefManager.setTaskActive(true);
+                break;
 
         }
 

@@ -1,4 +1,4 @@
-package com.pratik.productize.Utils;
+package com.pratik.productize.utils;
 
 
 import android.util.Log;
@@ -9,9 +9,8 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
-import static com.pratik.productize.Utils.Constants.TAG2;
+import static com.pratik.productize.utils.Constants.TAG2;
 
 
 public class Converters {

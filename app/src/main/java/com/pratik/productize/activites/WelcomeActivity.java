@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pratik.productize.R;
-import com.pratik.productize.Utils.PrefManager;
+import com.pratik.productize.utils.PrefManager;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -107,7 +107,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void launchTaskScreen() {
 
-        startActivity(new Intent(WelcomeActivity.this, TaskActivity.class));
+        startActivity(new Intent(WelcomeActivity.this, ActiveTaskActivity.class));
         finish();
     }
 
