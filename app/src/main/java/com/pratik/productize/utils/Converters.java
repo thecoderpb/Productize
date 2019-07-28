@@ -1,6 +1,7 @@
 package com.pratik.productize.utils;
 
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.room.TypeConverter;
@@ -9,6 +10,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 import static com.pratik.productize.utils.Constants.TAG2;
 
@@ -62,6 +64,26 @@ public class Converters {
         }
 
         return newTime ;//- (1000 * 60 * 5);
+    }
+
+    @SuppressLint("DefaultLocale")
+    public String unitConversion(long l){
+
+        if(l/(60*1000) > 60 )
+            return String.format("%02d:%02d:%02d",
+                    TimeUnit.MILLISECONDS.toHours(l),
+                    TimeUnit.MILLISECONDS.toMinutes(l) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(l)),
+                    TimeUnit.MILLISECONDS.toSeconds(l) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(l)));
+        else
+            return String.format("%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(l) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(l)),
+                    TimeUnit.MILLISECONDS.toSeconds(l) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(l)));
+
+
     }
 
 }

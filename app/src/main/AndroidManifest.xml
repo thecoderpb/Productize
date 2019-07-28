@@ -3,15 +3,22 @@
     package="com.pratik.productize">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:fullBackupContent="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activites.ActiveTaskActivity"/>
+        <activity
+            android:name=".activites.OnGoingTaskActivitiy"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Task -/-"
+            android:theme="@style/FullscreenTheme"/>
+        <activity android:name=".activites.ActiveTaskActivity" />
         <activity
             android:name=".activites.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -22,36 +29,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activites.ScheduleTask"
-            android:theme="@style/AppTheme.StyledTitleBar"
-            android:label="Let's start!"/>
+        <activity
+            android:name=".activites.ScheduleTask"
+            android:label="Let&apos;s start!"
+            android:theme="@style/AppTheme.StyledTitleBar" />
         <activity
             android:name=".activites.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <receiver android:name=".asynchronous.Alarm"
-            android:exported="true"
-            android:enabled="true">
+        <receiver
+            android:name=".asynchronous.Alarm"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.pratik.productize.SET_ALARM"/>
+                <action android:name="com.pratik.productize.SET_ALARM" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".asynchronous.JobHandler"
+        <service
+            android:name=".asynchronous.JobHandler"
             android:exported="true"
-            android:process=":productizeJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service android:name=".asynchronous.TaskService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":productizeJobService" />
+        <service
+            android:name=".asynchronous.OnGoingTaskService"
             android:enabled="true"
-            android:exported="true"/>
-
+            android:exported="true" />
     </application>
 
 </manifest>

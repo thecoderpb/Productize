@@ -52,5 +52,10 @@ public interface TaskDAO {
     @Query("DELETE FROM TASKS")
     void nukeTable();
 
+    @Query("UPDATE TASKS SET isTaskExpired = 1 WHERE id =:ids")
+    void updateTaskExpiryTrue(long ids);
+
+
+
 
 }

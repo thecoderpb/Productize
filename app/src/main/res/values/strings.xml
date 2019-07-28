@@ -53,5 +53,9 @@
     <string name="channel_name">tasks</string>
     <string name="channel_description">Get notified when tasks are set</string>
 
+    <string name="title_activity_on_going_task_activitiy">OnGoingTaskActivitiy</string>
+    <string name="exit">Exit</string>
+    <string name="task_text">Task Text</string>
+
 
 </resources>

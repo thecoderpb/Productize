@@ -114,7 +114,20 @@ public class MainActivity extends AppCompatActivity
         bottomSheetDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                duration = i;
+
+                if(i <= 5) {
+                    duration = 1;//*60*1000;
+                }else if( i<=15){
+                    duration = 5;
+                }else if(i<25){
+                    duration = 10;
+                }else if(i<35){
+                    duration = 15;
+                }else if(i<45){
+                    duration = 20;
+                }else duration =30;
+
+                duration = duration*60*1000;
             }
 
             @Override

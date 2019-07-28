@@ -72,8 +72,11 @@ public class ActiveTaskActivity extends AppCompatActivity implements RecyclerVie
             @Override
             public void onClick(View view) {
 
-                //Intent intent = new Intent(ActiveTaskActivity.this,null);
-                //prefManager.setTaskActive(false);
+                Intent intent = new Intent(ActiveTaskActivity.this,OnGoingTaskActivitiy.class);
+                startActivity(intent);
+                prefManager.setTaskOngoing(true);
+                finish();
+
             }
         });
 

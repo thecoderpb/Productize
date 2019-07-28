@@ -7,6 +7,7 @@ import static com.pratik.productize.utils.Constants.ACTIVE_TAG;
 import static com.pratik.productize.utils.Constants.HOME_TIME;
 import static com.pratik.productize.utils.Constants.IS_FIRST_TIME_LAUNCH;
 import static com.pratik.productize.utils.Constants.IS_TASK_ACTIVE;
+import static com.pratik.productize.utils.Constants.IS_TASK_ONGOING;
 import static com.pratik.productize.utils.Constants.IS_TASK_SCHEDULED;
 import static com.pratik.productize.utils.Constants.PREF_NAME;
 import static com.pratik.productize.utils.Constants.TAG_HOME;
@@ -63,6 +64,12 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void setTaskOngoing(boolean ongoing){
+        editor.putBoolean(IS_TASK_ONGOING,ongoing);
+        editor.commit();
+    }
+
+    public boolean isTaskOngoing(){return pref.getBoolean(IS_TASK_ONGOING,false);}
     public boolean isTaskScheduled(){return pref.getBoolean(IS_TASK_SCHEDULED,false);}
     public boolean isTaskActive(){ return pref.getBoolean(IS_TASK_ACTIVE,false);}
     public boolean isFirstTimeLaunch() {

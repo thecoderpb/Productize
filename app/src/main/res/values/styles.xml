@@ -19,10 +19,25 @@
 
     </style>
 
-    <style name="AppTheme.ButtonStyle" parent="Theme.AppCompat"/>
+    <style name="AppTheme.ButtonStyle" parent="Theme.AppCompat" />
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="FullscreenTheme" parent="Theme.MaterialComponents.Light">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Theme.MaterialComponents.Light">
+
+    </style>
 
 </resources>

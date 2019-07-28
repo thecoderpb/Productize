@@ -1,7 +1,6 @@
 package com.pratik.productize.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pratik.productize.R;
+import com.pratik.productize.asynchronous.AppExecutor;
 import com.pratik.productize.database.Tasks;
+import com.pratik.productize.database.TasksDB;
 import com.pratik.productize.ui.RecyclerViewClickListener;
-import com.pratik.productize.utils.Constants;
 
 
 import java.util.Collections;
@@ -48,6 +48,15 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
 
     @Override
     public void onItemDismiss(int position) {
+        Tasks task = tasksList.get(position);
+        final long id = task.getId();
+        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                TasksDB db = TasksDB.getInstance(context);
+                db.taskDAO().updateTaskExpiryTrue(id);
+            }
+        });
         tasksList.remove(position);
         notifyItemRemoved(position);
     }

@@ -13,18 +13,18 @@ import java.sql.Date;
 public class Tasks {
 
     @PrimaryKey(autoGenerate = true)
-    int id;
+    public int id;
     @ColumnInfo
     private String taskText;
     private int priority;
-    private int duration;
+    private long duration;
     private int tags;
     private boolean isTaskComplete = false;
     private boolean isTaskExpired = false;
     @TypeConverters({Converters.class})
     private Date timeStamp;
 
-    public Tasks(Date timeStamp,String taskText, int priority, int duration, int tags,boolean isTaskExpired, boolean isTaskComplete){
+    public Tasks(Date timeStamp,String taskText, int priority, long duration, int tags,boolean isTaskExpired, boolean isTaskComplete){
 
         this.timeStamp = timeStamp;
         this.taskText = taskText;
@@ -40,6 +40,10 @@ public class Tasks {
         return getTimeStamp();
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getTaskText() {
         return taskText;
     }
@@ -48,7 +52,7 @@ public class Tasks {
         return priority;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 

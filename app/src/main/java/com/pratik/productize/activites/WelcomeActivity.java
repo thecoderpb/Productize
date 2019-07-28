@@ -41,7 +41,10 @@ public class WelcomeActivity extends AppCompatActivity {
         prefManager = new PrefManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
             if(prefManager.isTaskActive()){
-                launchTaskScreen();
+                if(prefManager.isTaskOngoing()){
+                    launchTaskOngoingScreen();
+                }else
+                    launchTaskScreen();
             }else {
                 prefManager.setTaskActive(false);
                 launchHomeScreen();
@@ -103,6 +106,11 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void launchTaskOngoingScreen() {
+        startActivity(new Intent(WelcomeActivity.this,OnGoingTaskActivitiy.class));
+        finish();
     }
 
     private void launchTaskScreen() {
