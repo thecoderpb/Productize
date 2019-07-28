@@ -23,7 +23,7 @@ public interface TaskDAO {
     void deleteTask(Tasks task);
 
     @Query("SELECT * FROM TASKS WHERE id=:id AND isTaskExpired = 0 AND isTaskComplete = 0")
-    Tasks getActiveTask(long id);
+    LiveData<Tasks> getActiveTask(long id);
 
     @Query("SELECT * FROM TASKS WHERE tags=:tag AND isTaskExpired = 0 AND isTaskComplete = 0 ORDER BY priority DESC")
     LiveData<List<Tasks>> getTaskByTag(int tag);

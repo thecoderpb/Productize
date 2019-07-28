@@ -51,7 +51,7 @@ public class JobHandler extends JobService {
 
                 if(userSetHours < calculatedHours){
                     Converters converters = new Converters();
-                    long time = converters.time24HrToMillSec(prefManager.getHomeTime());;
+                    long time = converters.time24HrToMillSec(prefManager.getHomeTime());
                     switch (prefManager.getActiveTag()){
                         case TAG_HOME :
                             time = converters.time24HrToMillSec(prefManager.getHomeTime());
@@ -98,14 +98,18 @@ public class JobHandler extends JobService {
                     .setOverrideDeadline(JOB_INTERVAL);
         }
 
-        jobScheduler.schedule(builder.build());
+        if (jobScheduler != null) {
+            jobScheduler.schedule(builder.build());
+        }
 
     }
 
     public void cancelJob(Context context,int JOB_ID){
 
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        jobScheduler.cancel(JOB_ID);
+        if (jobScheduler != null) {
+            jobScheduler.cancel(JOB_ID);
+        }
 
     }
 

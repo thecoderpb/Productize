@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pratik.productize.R;
-import com.pratik.productize.asynchronous.AppExecutor;
 import com.pratik.productize.database.Tasks;
-import com.pratik.productize.database.TasksDB;
+
 import com.pratik.productize.ui.RecyclerViewClickListener;
 
 
@@ -27,8 +26,6 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
     private Context context;
     public static List<Tasks> tasksList;
     private RecyclerViewClickListener itemClickListener;
-    private View view;
-    private MyViewHolder myViewHolder;
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
@@ -108,9 +105,8 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        view = LayoutInflater.from(context).inflate(R.layout.card_layout,parent,false);
-        myViewHolder = new MyViewHolder(view);
-        return myViewHolder;
+        View view = LayoutInflater.from(context).inflate(R.layout.card_layout, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -121,7 +117,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
             holder.reminderText.setText(currentTask.getTaskText());
             holder.durationText.setText(String.valueOf(currentTask.getDuration()));
             holder.priorityText.setText(String.valueOf(currentTask.getPriority()));
-            holder.locationText.setText(convTagToText(currentTask.getTags()));
+            holder.locationText.setText(convertTagToText(currentTask.getTags()));
             holder.idText.setText(String.valueOf(currentTask.getTimeStamp()));
             holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
         }
@@ -166,7 +162,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
         return resId;
     }
 
-    private String convTagToText(int tag){
+    private String convertTagToText(int tag){
 
         if( tag == 0){
             return "Home";

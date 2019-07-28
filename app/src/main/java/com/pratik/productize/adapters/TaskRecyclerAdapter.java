@@ -78,7 +78,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             holder.reminderText.setText(currentTask.getTaskText());
             holder.durationText.setText(String.valueOf(currentTask.getDuration()));
             holder.priorityText.setText(String.valueOf(currentTask.getPriority()));
-            holder.locationText.setText(convTagToText(currentTask.getTags()));
+            holder.locationText.setText(convertTagToText(currentTask.getTags()));
             holder.idText.setText(String.valueOf(currentTask.getTimeStamp()));
             holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
         }
@@ -123,7 +123,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         return resId;
     }
 
-    private String convTagToText(int tag){
+    private String convertTagToText(int tag){
 
         if( tag == 0){
             return "Home";

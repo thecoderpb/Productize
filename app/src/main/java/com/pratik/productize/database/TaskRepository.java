@@ -100,5 +100,14 @@ public class TaskRepository {
 
     }
 
+    public LiveData<Tasks> getTaskById(final long id,Application application){
+        TasksDB db = TasksDB.getInstance(application);
+
+        TaskDAO taskDAO = db.taskDAO();
+        return taskDAO.getActiveTask(id);
+
+
+    }
+
 
 }

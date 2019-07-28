@@ -45,7 +45,9 @@ public class NotificationHandler {
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
 
     }
@@ -80,7 +82,7 @@ public class NotificationHandler {
 
     }
 
-    public void displayNotfication(int flag){
+    public void displayNotification(int flag){
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

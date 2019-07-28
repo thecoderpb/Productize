@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private BottomAppBar bottomAppBar;
     private EditText bottomSheetString;
-    private SeekBar bottomSheetPriority;
-    private SeekBar bottomSheetDuration;
-    private Button bottomSheetHomeButton,bottomSheetWorkButton;
     private int priority,duration,tags = -1;
 
 
@@ -86,10 +83,10 @@ public class MainActivity extends AppCompatActivity
         fab = findViewById(R.id.fab);
         bottomAppBar = findViewById(R.id.bottom_app_bar);
         bottomSheetString = findViewById(R.id.bottomSheetText);
-        bottomSheetDuration = findViewById(R.id.seekBarDuration);
-        bottomSheetPriority = findViewById(R.id.seekBarPriority);
-        bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
-        bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
+        SeekBar bottomSheetDuration = findViewById(R.id.seekBarDuration);
+        SeekBar bottomSheetPriority = findViewById(R.id.seekBarPriority);
+        Button bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
+        Button bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
 
         NotificationHandler notificationHandler = new NotificationHandler(this);
         notificationHandler.createNotificationChannel();
@@ -260,7 +257,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = null;
+        Fragment fragment;
 
         switch (id){
             case R.id.nav_stats : break;

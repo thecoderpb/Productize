@@ -27,9 +27,10 @@ public class Converters {
         return date == null ? null : date.getTime();
     }
 
-    public long formatToMill(String s) {
+    private long formatToMill(String s) {
 
-        SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy"); //TODO:check this if alarm manager has issues
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy");
 
         try {
             java.util.Date date = df.parse(s);

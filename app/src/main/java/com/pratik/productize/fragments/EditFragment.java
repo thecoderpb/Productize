@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +16,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.pratik.productize.R;
-import com.pratik.productize.asynchronous.AppExecutor;
+
+
 import com.pratik.productize.database.Tasks;
-import com.pratik.productize.database.TasksDB;
+
+import com.pratik.productize.ui.TaskViewModel;
 
 import static com.pratik.productize.utils.Constants.TASK_ID;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class EditFragment extends Fragment {
 
-    private Tasks tasks ;
 
     public EditFragment() {
         // Required empty public constructor
@@ -35,13 +37,21 @@ public class EditFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final long id = getArguments().getLong(TASK_ID);
-        final TasksDB tasksDB = TasksDB.getInstance(getActivity());
-        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+
+        TaskViewModel viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        LiveData<Tasks> tasks = viewModel.getTask(id);
+        tasks.observe(this, new Observer<Tasks>() {
             @Override
-            public void run() {
-                Tasks tasks = tasksDB.taskDAO().getActiveTask(id);
+            public void onChanged(Tasks tasks) {
+
+                if(tasks!= null){
+                    setEditContent(tasks.getTaskText(),tasks.getDuration(),tasks.getPriority());
+                }else {
+                    Toast.makeText(getActivity(), "Expected null task", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
         return inflater.inflate(R.layout.fragment_edit, container, false);
     }
 

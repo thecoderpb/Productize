@@ -1,5 +1,6 @@
 package com.pratik.productize.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -17,14 +18,13 @@ import static com.pratik.productize.utils.Constants.WORK_TIME;
 public class PrefManager {
 
 
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    Context _context;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
 
 
+    @SuppressLint("CommitPrefEdits")
     public PrefManager(Context context) {
-        this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
     }
 

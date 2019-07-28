@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import com.pratik.productize.utils.Converters;
 import com.pratik.productize.ui.NotificationHandler;
 
+import java.util.Objects;
+
 import static com.pratik.productize.utils.Constants.ALARM_INTENT_FLAG;
 import static com.pratik.productize.utils.Constants.ALARM_INTENT_RC;
 import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
@@ -35,15 +37,15 @@ public class Alarm extends BroadcastReceiver {
             int reqCode = intent.getIntExtra(ALARM_INTENT_RC,-1);
 
             if(reqCode == REQUEST_CODE_ALARM1){
-                notificationHandler.displayNotfication(FLAG_ALARM1);
+                notificationHandler.displayNotification(FLAG_ALARM1);
                 setAlarm(context,FLAG_ALARM2,REQUEST_CODE_ALARM2,System.currentTimeMillis() + 1000*60);
             }else if (reqCode == REQUEST_CODE_ALARM2){
-                notificationHandler.displayNotfication(FLAG_ALARM2);
+                notificationHandler.displayNotification(FLAG_ALARM2);
             }else if (reqCode == REQUEST_CODE_ALARM3){
-                notificationHandler.displayNotfication(FLAG_ALARM3);
+                notificationHandler.displayNotification(FLAG_ALARM3);
             }
 
-        }else if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
+        }else if(Objects.equals(intent.getAction(), Intent.ACTION_BOOT_COMPLETED)){
             Log.i(TAG,"boot set alarm");
         }
 
@@ -63,8 +65,10 @@ public class Alarm extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             assert am != null;
             am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,time,pi);
-        }else
+        }else {
+            assert am != null;
             am.setExact(AlarmManager.RTC_WAKEUP,time,pi);
+        }
 
         Log.i(TAG,"alarm set");
 
@@ -86,6 +90,7 @@ public class Alarm extends BroadcastReceiver {
         intent.setAction("com.pratik.productize.SET_ALARM");
         PendingIntent pi = PendingIntent.getBroadcast(context,requestCode,intent,flags);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        assert am != null;
         am.cancel(pi);
         pi.cancel();
 

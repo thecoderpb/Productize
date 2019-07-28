@@ -1,13 +1,13 @@
 package com.pratik.productize.ui;
 
-import android.util.Log;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pratik.productize.adapters.ItemTouchHelperAdapter;
-import com.pratik.productize.utils.Constants;
+
 
 
 public class SimpleTouchHelper extends ItemTouchHelper.Callback  {
