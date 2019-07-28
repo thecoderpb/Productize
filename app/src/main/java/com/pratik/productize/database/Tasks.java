@@ -13,7 +13,7 @@ import java.sql.Date;
 public class Tasks {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public long id;
     @ColumnInfo
     private String taskText;
     private int priority;
@@ -40,7 +40,7 @@ public class Tasks {
         return getTimeStamp();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

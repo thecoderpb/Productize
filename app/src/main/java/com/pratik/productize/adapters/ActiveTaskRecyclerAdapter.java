@@ -48,15 +48,17 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
 
     @Override
     public void onItemDismiss(int position) {
-        Tasks task = tasksList.get(position);
-        final long id = task.getId();
-        AppExecutor.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                TasksDB db = TasksDB.getInstance(context);
-                db.taskDAO().updateTaskExpiryTrue(id);
-            }
-        });
+
+//        Tasks task = tasksList.get(position);
+//        final long id = task.getId();
+//        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                TasksDB db = TasksDB.getInstance(context);
+//                db.taskDAO().updateTaskExpiryTrue(id);
+//            }
+//        });
+
         tasksList.remove(position);
         notifyItemRemoved(position);
     }

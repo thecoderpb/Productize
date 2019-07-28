@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.pratik.productize.R;
 
+import com.pratik.productize.activites.MainActivity;
 import com.pratik.productize.ui.RecyclerViewClickListener;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
 import com.pratik.productize.database.Tasks;
@@ -86,15 +87,16 @@ public class OtherScreenFragment extends Fragment implements RecyclerViewClickLi
 
     @Override
     public void recyclerViewClicked(View v, int position) {
-
+        Tasks task = adapter.getTaskAtPosition(position);
         switch (v.getId()){
             case R.id.deleteNotes:
                 Toast.makeText(getActivity(), "delete note" + position, Toast.LENGTH_SHORT).show();
-                Tasks task = adapter.getTaskAtPosition(position);
                 viewModel.delete(task);
                 adapter.notifyItemRangeChanged(0,adapter.getItemCount());
                 break;
             case R.id.editNote:
+                long id = task.getId();
+                ((MainActivity)getActivity()).editTask(id);
                 Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
                 break;
         }

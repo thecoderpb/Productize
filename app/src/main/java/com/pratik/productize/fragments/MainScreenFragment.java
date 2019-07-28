@@ -164,13 +164,17 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
     @Override
     public void recyclerViewClicked(View v, int position) {
+
+        Tasks task = adapter.getTaskAtPosition(position);
         switch (v.getId()){
             case R.id.deleteNotes:
-                Tasks task = adapter.getTaskAtPosition(position);
+
                 viewModel.delete(task);
                 adapter.notifyItemRangeChanged(0,adapter.getItemCount());
                 break;
             case R.id.editNote:
+                long id = task.getId();
+                ((MainActivity)getActivity()).editTask(id);
                 Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
                 break;
         }

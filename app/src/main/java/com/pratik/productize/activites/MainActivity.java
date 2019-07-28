@@ -19,6 +19,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.pratik.productize.R;
+import com.pratik.productize.fragments.EditFragment;
 import com.pratik.productize.utils.Converters;
 import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
@@ -35,6 +36,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.widget.Button;
@@ -43,6 +45,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.sql.Date;
+
+import static com.pratik.productize.utils.Constants.TASK_ID;
 
 
 public class MainActivity extends AppCompatActivity
@@ -319,5 +323,17 @@ public class MainActivity extends AppCompatActivity
         viewModel.insert(task);
         adapter.notifyDataSetChanged();
 
+    }
+
+    public void editTask(long id){
+
+        Fragment fragment = new EditFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putLong(TASK_ID,id);
+
+        fragment.setArguments(args);
+        ft.replace(R.id.content_main,fragment).addToBackStack("FRAG_EDIT").commit();
     }
 }
