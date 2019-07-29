@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "197488208636",
+    "firebase_url": "https://productize-43a4a.firebaseio.com",
+    "project_id": "productize-43a4a",
+    "storage_bucket": "productize-43a4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197488208636:android:a4f8eb913e14f8d4",
+        "android_client_info": {
+          "package_name": "com.pratik.productize"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197488208636-908isom67ctc1aot3nl1tfi170n1l7tj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pratik.productize",
+            "certificate_hash": "13792937cf81e5497e52ce496e319558a5ea8739"
+          }
+        },
+        {
+          "client_id": "197488208636-jv7udb2dvmkkf4s663s7e2lcdrokvgp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX6_vUPxAcZBBH2IFlxzZ_rp8foO7gjYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197488208636-jv7udb2dvmkkf4s663s7e2lcdrokvgp6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
