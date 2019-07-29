@@ -43,10 +43,10 @@
     <string name="empty_task">It\'s empty here!</string>
 
     <string name="onboarding_text1">Before we begin, a few questions</string>
-    <string name="onboarding_text_pref_location"> Where do you prefer to work?</string>
-    <string name="onboarding_text_pref_hours"> How long can you work </string>
-    <string name="onboarding_text_pref_time1"> What time do you usually work at home?</string>
-    <string name="onboarding_text_pref_time2"> What time do you usually work at your work place?</string>
+    <string name="onboarding_text_pref_location"> Choose your preferred work space</string>
+    <string name="onboarding_text_pref_hours"> How long can you work at this work space?</string>
+    <string name="onboarding_text_pref_time1"> What time do you usually work at <b>HOME</b>?</string>
+    <string name="onboarding_text_pref_time2"> What time do you usually work at your <b>WORK</b> place?</string>
     <string name="onboarding_and"> and </string>
 
     <string name="edit_fragment">Edit fragment</string>
@@ -54,7 +54,7 @@
     <string name="channel_description">Get notified when tasks are set</string>
 
     <string name="title_activity_on_going_task_activitiy">OnGoingTaskActivitiy</string>
-    <string name="exit">Exit</string>
+    <string name="exit">Next</string>
     <string name="task_text">Task Text</string>
 
 

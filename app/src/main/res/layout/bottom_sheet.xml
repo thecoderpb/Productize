@@ -17,7 +17,7 @@
         android:layout_gravity="top"
         android:layout_marginTop="32dp"
         android:background="@drawable/bottom_bar_rounded"
-        app:backgroundTint="#388E3C"
+        app:backgroundTint="@color/colorPrimary"
         app:hideOnScroll="true"
         app:fabAlignmentMode="center" />
 
@@ -25,7 +25,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#388E3C"
+        android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/ic_edit"
         android:hapticFeedbackEnabled="true"
         app:layout_anchor="@id/bottom_app_bar" />
@@ -51,7 +51,7 @@
                 android:layout_weight="2"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:text="To do"
+                android:text="Remind me to"
                 android:textColor="#444"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -124,43 +124,63 @@
                 android:id="@+id/locationTags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tags : " />
+                android:text="Location : " />
 
-            <Button
-                android:id="@+id/bottomSheetHomeButton"
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/bottomSheetChipGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="HOME" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:id="@+id/bottomSheetHomeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipBackgroundColor="@color/colorSecondary"
+                    android:text="Home" />
 
 
 
-            <Button
-                android:id="@+id/bottomSheetWorkButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="Work" />
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:id="@+id/bottomSheetWorkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipBackgroundColor="@color/colorSecondary"
+                    android:text="Work" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:id="@+id/bottomSheetOtherButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipBackgroundColor="@color/colorSecondary"
+                    android:text="Other" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
             android:orientation="vertical">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:elevation="@dimen/activity_vertical_margin"
                 android:onClick="saveUserDetailBottomSheet"
                 android:text="SAVE"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

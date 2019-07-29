@@ -27,7 +27,7 @@ public class Converters {
         return date == null ? null : date.getTime();
     }
 
-    private long formatToMill(String s) {
+    private long strFormatToMill(String s) {
 
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy");
@@ -55,7 +55,7 @@ public class Converters {
         String s2 = currdate.toString().substring(16);
         String newVal = s1 + s + s2;
         Log.i(TAG2, newVal);
-        long newTime = formatToMill(newVal);
+        long newTime = strFormatToMill(newVal);
 
         if (newTime < System.currentTimeMillis()) {
             Log.i(TAG2, "Day has passed. Setting alarm for next day");
@@ -68,7 +68,7 @@ public class Converters {
     }
 
     @SuppressLint("DefaultLocale")
-    public String unitConversion(long l){
+    public String timeLongToTimerFormat(long l){
 
         if(l/(60*1000) > 60 )
             return String.format("%02d:%02d:%02d",
@@ -85,6 +85,11 @@ public class Converters {
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(l)));
 
 
+    }
+
+    public String timeMinToHours(String min){
+
+        return "";
     }
 
 }

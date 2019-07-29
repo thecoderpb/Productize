@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -19,6 +20,7 @@ import com.pratik.productize.utils.PrefManager;
 
 import java.util.Calendar;
 
+import static android.graphics.Color.TRANSPARENT;
 import static android.graphics.Color.WHITE;
 import static com.pratik.productize.utils.Constants.TAG_HOME;
 
@@ -31,6 +33,7 @@ public class ScheduleTask extends AppCompatActivity {
     private static int minutes = 0;
     private int activeTag = TAG_HOME;
     private RadioGroup radioGroup;
+    ImageView avatarImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +44,15 @@ public class ScheduleTask extends AppCompatActivity {
         getWindow().setStatusBarColor(WHITE);
 
         prefManager = new PrefManager(this);
-        button15m = findViewById(R.id.button15m);
-        button30m = findViewById(R.id.button30m);
-        button60m = findViewById(R.id.button60m);
+        button15m = findViewById(R.id.chip15m);
+        button30m = findViewById(R.id.chip30m);
+        button60m = findViewById(R.id.chip60m);
         minTextView = findViewById(R.id.textView4);
         radioGroup = findViewById(R.id.radioGroup);
         timeHome = findViewById(R.id.setTimeHome);
         timeWork = findViewById(R.id.setTimeWork);
+        avatarImage = findViewById(R.id.avatar_img);
+
 
         button15m.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +124,18 @@ public class ScheduleTask extends AppCompatActivity {
 
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
+            }
+        });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                //clearCheck();
+                radioGroup.check(i);
+                if(radioGroup.getCheckedRadioButtonId() == R.id.work_radio){
+                    avatarImage.setImageResource(R.drawable.work_avatar);
+                }else
+                    avatarImage.setImageResource(R.drawable.home_avatar);
             }
         });
 

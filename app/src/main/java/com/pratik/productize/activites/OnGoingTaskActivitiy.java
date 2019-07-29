@@ -147,7 +147,7 @@ public class OnGoingTaskActivitiy extends AppCompatActivity {
             Log.i(Constants.TAG,"current task " + (currentTaskCount +1) + " duration " + tasksList.get(currentTaskCount).getDuration());
 
             taskText.setText(tasksList.get(currentTaskCount).getTaskText());
-            String text = converters.unitConversion(tasksList.get(currentTaskCount).getDuration());
+            String text = converters.timeLongToTimerFormat(tasksList.get(currentTaskCount).getDuration());
             Log.i(Constants.TAG,"time " + text);
             timeText.setText(text);
             startTimer(tasksList.get(currentTaskCount).getDuration());
@@ -180,7 +180,7 @@ public class OnGoingTaskActivitiy extends AppCompatActivity {
             @Override
             public void onTick(long l) {
 
-                timeText.setText(converters.unitConversion(l));
+                timeText.setText(converters.timeLongToTimerFormat(l));
             }
 
             @Override

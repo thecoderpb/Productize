@@ -53,5 +53,8 @@ public class Constants {
     //notification ID
     public static final int NOTIFICATION_ID = 32;
 
+    public static final boolean SHOW = true;
+    public static final boolean HIDE = false;
+
 
 }

@@ -2,12 +2,15 @@ package com.pratik.productize.activites;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.os.Handler;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,11 @@ import android.widget.Toast;
 
 import java.sql.Date;
 
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.TRANSPARENT;
+import static android.graphics.Color.WHITE;
+import static com.pratik.productize.utils.Constants.HIDE;
+import static com.pratik.productize.utils.Constants.SHOW;
 import static com.pratik.productize.utils.Constants.TASK_ID;
 
 
@@ -57,7 +65,9 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private BottomAppBar bottomAppBar;
     private EditText bottomSheetString;
+    private boolean doubleBackToExitPressedOnce = false;
     private int priority,duration,tags = -1;
+    private ChipGroup chipGroup;
 
 
     @Override
@@ -87,6 +97,8 @@ public class MainActivity extends AppCompatActivity
         SeekBar bottomSheetPriority = findViewById(R.id.seekBarPriority);
         Button bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
         Button bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
+        Button bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
+        chipGroup = findViewById(R.id.bottomSheetChipGroup);
 
         NotificationHandler notificationHandler = new NotificationHandler(this);
         notificationHandler.createNotificationChannel();
@@ -100,11 +112,13 @@ public class MainActivity extends AppCompatActivity
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
                     fab.setImageResource(R.drawable.ic_arrow_down);
                     bottomSheetBehavior.setState( BottomSheetBehavior.STATE_EXPANDED);
+
                 }
                 else{
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                     fab.setImageResource(R.drawable.ic_edit);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
                 }
 
                 bottomAppBar.setVisibility(View.VISIBLE);
@@ -173,6 +187,23 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        bottomSheetOtherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tags =- 1;
+            }
+        });
+
+        chipGroup.setSingleSelection(true);
+
+        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup chipGroup, int i) {
+                chipGroup.check(i);
+
+            }
+        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -207,8 +238,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        bottomAppBar.setVisibility(View.VISIBLE);
-        fab.setVisibility(View.VISIBLE);
+        toggleBottomBarVisibility(SHOW);
 
         int backStack = getSupportFragmentManager().getBackStackEntryCount();
 
@@ -219,13 +249,18 @@ public class MainActivity extends AppCompatActivity
                 fab.setImageResource(R.drawable.ic_edit);
                 bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+
             }
             else if(backStack > 1){
                 for(int i=0; i < backStack; i++ ){
                     getSupportFragmentManager().popBackStack();
                 }
-            }else
-                super.onBackPressed();
+            }else{
+
+               super.onBackPressed();
+            }
+
         }
     }
 
@@ -252,6 +287,13 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toggleBottomBarVisibility(SHOW);
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -260,7 +302,9 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
 
         switch (id){
-            case R.id.nav_stats : break;
+            case R.id.nav_stats :
+                break;
+
             case R.id.nav_schedule_task :
                 Intent intent = new Intent(MainActivity.this,ScheduleTask.class);
                 intent.putExtra("nav_schedule",1);
@@ -268,31 +312,32 @@ public class MainActivity extends AppCompatActivity
                 if(!prefManager.isTaskScheduled())
                     finish();
                 break;
+
             case R.id.nav_home :
                 fragment = new HomeScreenFragment();
                 displayFragment(fragment);
-                bottomAppBar.setVisibility(View.GONE);
-                fab.setVisibility(View.GONE);
                 break;
+
             case R.id.nav_work :
                 fragment = new WorkScreenFragment();
                 displayFragment(fragment);
-                bottomAppBar.setVisibility(View.GONE);
-                fab.setVisibility(View.GONE);
                 break;
+
             case R.id.nav_other :
                 fragment = new OtherScreenFragment();
                 displayFragment(fragment);
-                bottomAppBar.setVisibility(View.GONE);
-                fab.setVisibility(View.GONE);
                 break;
-            case R.id.nav_share : break;
+
+            case R.id.nav_share :
+                break;
+
             case R.id.nav_about :
                 prefManager.setTaskActive(true);
                 break;
 
         }
 
+        toggleBottomBarVisibility(HIDE);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -310,15 +355,18 @@ public class MainActivity extends AppCompatActivity
         String taskText = bottomSheetString.getText().toString();
         if(taskText.equals("")){
             Toast.makeText(this, "Task cannot be empty", Toast.LENGTH_SHORT).show();
-        }
-        final Tasks task = new Tasks(date,taskText,priority,duration,tags,false,false);
+        }else{
+            final Tasks task = new Tasks(date,taskText,priority,duration,tags,false,false);
 
-        MainScreenFragment fragment = (MainScreenFragment) getSupportFragmentManager().findFragmentById(R.id.content_main);
-        assert fragment != null;
-        TaskViewModel viewModel = fragment.getFragmentViewModel();
-        TaskRecyclerAdapter adapter = fragment.getAdapter();
-        viewModel.insert(task);
-        adapter.notifyDataSetChanged();
+            MainScreenFragment fragment = (MainScreenFragment) getSupportFragmentManager().findFragmentById(R.id.content_main);
+            assert fragment != null;
+            TaskViewModel viewModel = fragment.getFragmentViewModel();
+            TaskRecyclerAdapter adapter = fragment.getAdapter();
+            viewModel.insert(task);
+            adapter.notifyItemRangeChanged(0,adapter.getItemCount());
+
+        }
+
 
     }
 
@@ -332,5 +380,18 @@ public class MainActivity extends AppCompatActivity
 
         fragment.setArguments(args);
         ft.replace(R.id.content_main,fragment).addToBackStack("FRAG_EDIT").commit();
+    }
+
+    @SuppressLint("RestrictedApi")
+    public void toggleBottomBarVisibility(boolean flag){
+
+        if(flag){
+            bottomAppBar.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
+        }else {
+            bottomAppBar.setVisibility(View.GONE);
+            fab.setVisibility(View.GONE);
+        }
+
     }
 }
