@@ -48,10 +48,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppTheme.Headline6"
                 android:layout_weight="2"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:text="Remind me to"
+                android:text="Remind me to:"
                 android:textColor="#444"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -60,6 +61,9 @@
                 android:id="@+id/bottomSheetText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusedByDefault="true"
+                android:focusable="true"
+                android:nextFocusForward="@id/priorityBottomSheetText"
                 android:ems="10"
                 android:inputType="textCapWords"
                 android:paddingLeft="10dp"
@@ -72,43 +76,126 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:orientation="horizontal"
-            android:padding="5dp">
-
+            android:padding="7dp">
 
             <TextView
                 android:id="@+id/priorityBottomSheetText"
+                style="@style/TextAppearance.AppTheme.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:nextFocusForward="@id/durationBottomSheetText"
+                android:layout_weight="7"
                 android:paddingRight="27dp"
-                android:text="Prioritity -" />
+                android:text="Importance:" />
 
-            <SeekBar
-                android:id="@+id/seekBarPriority"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/priorityLvl1"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority1"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/priorityLvl2"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority2"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/priorityLvl3"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority3"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/priorityLvl4"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority4"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/priorityLvl5"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority5"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/priorityLvl6"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority6"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/priorityLvl7"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority7"
+                    app:elevation="0dp" />
+
+
+            </LinearLayout>
+
+
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:padding="5dp">
 
 
             <TextView
                 android:id="@+id/durationBottomSheetText"
+                style="@style/TextAppearance.AppTheme.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:nextFocusForward="@id/locationTags"
+                android:layout_weight="1"
                 android:paddingRight="35dp"
-                android:text="Duration" />
+                android:text="Duration:" />
 
             <SeekBar
                 android:id="@+id/seekBarDuration"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="4"
                 android:max="60" />
         </LinearLayout>
 
@@ -122,41 +209,52 @@
 
             <TextView
                 android:id="@+id/locationTags"
+                style="@style/TextAppearance.AppTheme.Body1"
+                android:nextFocusForward="@id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:layout_weight="4"
+                android:gravity="center|left"
                 android:text="Location : " />
 
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/bottomSheetChipGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:id="@+id/bottomSheetHomeButton"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:chipBackgroundColor="@color/colorSecondary"
-                    android:text="Home" />
-
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Home"
+                    app:chipBackgroundColor="@color/colorSecondary" />
 
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:id="@+id/bottomSheetWorkButton"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:chipBackgroundColor="@color/colorSecondary"
-                    android:text="Work" />
+                    android:layout_marginStart="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Work"
+                    app:chipBackgroundColor="@color/colorSecondary" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:id="@+id/bottomSheetOtherButton"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:chipBackgroundColor="@color/colorSecondary"
-                    android:text="Other" />
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Other"
+                    app:chipBackgroundColor="@color/colorSecondary" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -172,6 +270,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"

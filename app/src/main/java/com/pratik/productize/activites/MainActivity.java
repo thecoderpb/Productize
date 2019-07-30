@@ -1,8 +1,9 @@
 package com.pratik.productize.activites;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -10,7 +11,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -39,19 +42,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+
+
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.sql.Date;
+import java.util.List;
 
-import static android.graphics.Color.BLACK;
-import static android.graphics.Color.TRANSPARENT;
-import static android.graphics.Color.WHITE;
+
 import static com.pratik.productize.utils.Constants.HIDE;
 import static com.pratik.productize.utils.Constants.SHOW;
 import static com.pratik.productize.utils.Constants.TASK_ID;
@@ -65,10 +72,11 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private BottomAppBar bottomAppBar;
     private EditText bottomSheetString;
-    private boolean doubleBackToExitPressedOnce = false;
+ //   private boolean doubleBackToExitPressedOnce = false;
     private int priority,duration,tags = -1;
     private ChipGroup chipGroup;
-
+    private FloatingActionButton p1,p2,p3,p4,p5,p6,p7;
+    boolean keyEnter = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -78,6 +86,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         prefManager = new PrefManager(this);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         if(!prefManager.isTaskScheduled()){
             startActivity(new Intent(this,ScheduleTask.class));
             finish();
@@ -94,11 +105,13 @@ public class MainActivity extends AppCompatActivity
         bottomAppBar = findViewById(R.id.bottom_app_bar);
         bottomSheetString = findViewById(R.id.bottomSheetText);
         SeekBar bottomSheetDuration = findViewById(R.id.seekBarDuration);
-        SeekBar bottomSheetPriority = findViewById(R.id.seekBarPriority);
+        //SeekBar bottomSheetPriority = findViewById(R.id.seekBarPriority);
         Button bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
         Button bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
         Button bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
         chipGroup = findViewById(R.id.bottomSheetChipGroup);
+
+        initializePriorities();
 
         NotificationHandler notificationHandler = new NotificationHandler(this);
         notificationHandler.createNotificationChannel();
@@ -112,12 +125,16 @@ public class MainActivity extends AppCompatActivity
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
                     fab.setImageResource(R.drawable.ic_arrow_down);
                     bottomSheetBehavior.setState( BottomSheetBehavior.STATE_EXPANDED);
+                    bottomSheetString.requestFocus();
+                    showKeyboard();
+                    dimBackground(true);
 
                 }
                 else{
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                     fab.setImageResource(R.drawable.ic_edit);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    dimBackground(false);
 
                 }
 
@@ -156,23 +173,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        bottomSheetPriority.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                priority = i;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
         bottomSheetWorkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,6 +194,55 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        p1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priority = 1;
+            }
+        });
+
+        p2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priority = 2;
+            }
+        });
+
+        p3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priority = 3;
+            }
+        });
+
+        p4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priority = 4;
+            }
+        });
+
+        p5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priority = 5;
+            }
+        });
+
+        p6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priority = 6;
+            }
+        });
+
+        p7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priority = 7;
+            }
+        });
+
         chipGroup.setSingleSelection(true);
 
         chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
@@ -204,7 +253,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -220,9 +269,17 @@ public class MainActivity extends AppCompatActivity
                 if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED){
                     fab.setImageResource(R.drawable.ic_arrow_down);
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+                    if(!keyEnter){
+                        bottomSheetString.requestFocus();
+                        showKeyboard();
+                    }
+
+                    dimBackground(true);
+
                 }else {
                     fab.setImageResource(R.drawable.ic_edit);
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+                    dimBackground(false);
                 }
             }
 
@@ -231,6 +288,64 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        bottomSheetString.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showKeyboard();
+            }
+        });
+
+        bottomSheetString.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+                if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+                    keyEnter = true;
+                    bottomSheetString.clearFocus();
+
+                }
+
+                return false;
+            }
+        });
+
+    }
+
+    private void initializePriorities() {
+
+
+        p1 = findViewById(R.id.priorityLvl1);
+        p2 = findViewById(R.id.priorityLvl2);
+        p3 = findViewById(R.id.priorityLvl3);
+        p4 = findViewById(R.id.priorityLvl4);
+        p5 = findViewById(R.id.priorityLvl5);
+        p6 = findViewById(R.id.priorityLvl6);
+        p7 = findViewById(R.id.priorityLvl7);
+    }
+
+    private void dimBackground(boolean b) {
+
+        Fragment fragment = getVisibleFragment();
+        View view = fragment.getView().findViewById(R.id.dim_bg);
+        if(b){
+            view.setVisibility(View.VISIBLE);
+        }else
+            view.setVisibility(View.GONE);
+    }
+
+
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
 
 
@@ -287,12 +402,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        toggleBottomBarVisibility(SHOW);
-    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -345,8 +454,38 @@ public class MainActivity extends AppCompatActivity
 
     public void displayFragment(Fragment fragment){
         if(fragment!=null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("FRAG_BACK").commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_main,fragment)
+                    .addToBackStack("FRAG_BACK")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
         }
+    }
+
+    public void resetBottomSheet(){
+
+        bottomSheetString.setText("");
+        chipGroup.clearCheck();
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+    }
+
+    public void showKeyboard(){
+
+
+        final InputMethodManager imm;
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                imm.showSoftInput(bottomSheetString, InputMethodManager.SHOW_FORCED);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+            }
+        },200);
+
+
+
+
     }
 
     public void saveUserDetailBottomSheet(View view){
@@ -364,6 +503,10 @@ public class MainActivity extends AppCompatActivity
             TaskRecyclerAdapter adapter = fragment.getAdapter();
             viewModel.insert(task);
             adapter.notifyItemRangeChanged(0,adapter.getItemCount());
+            resetBottomSheet();
+
+            keyEnter = false;
+
 
         }
 

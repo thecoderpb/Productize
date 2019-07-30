@@ -32,6 +32,8 @@ import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.List;
 
+import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
+import static com.pratik.productize.utils.Constants.REQUEST_CODE_ALARM1;
 import static com.pratik.productize.utils.Constants.TAG;
 import static com.pratik.productize.utils.Constants.TAG1;
 import static com.pratik.productize.utils.Constants.TAG_HOME;
@@ -83,8 +85,9 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
                      view.findViewById(R.id.empty_notes_view).setVisibility(View.INVISIBLE);
 
                 for(Tasks task : tasks){
+                    Alarm alarm = new Alarm();
                      if (task.getTags() == pref.getActiveTag()){
-                         Alarm alarm = new Alarm();
+
                          JobHandler jobHandler = new JobHandler();
 
                          String time = getTagTime();
@@ -95,6 +98,8 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
                          break;
 
+                     }else {
+                         alarm.cancelAlarm(context,REQUEST_CODE_ALARM1,FLAG_ALARM1);
                      }
                 }
 

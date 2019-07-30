@@ -24,6 +24,13 @@
         android:text="@string/empty_task"
         />
 
+    <View
+        android:id="@+id/dim_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#99000000"
+        android:visibility="gone" />
 
 
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.pratik.productize.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView reminderText,durationText,locationText,priorityText,idText;
-        private ImageView deleteTaskImage,editTaskImage,locationTagImage;
+        private ImageView deleteTaskImage,editTaskImage,locationTagImage,priorityImage;
 
         private MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -39,7 +40,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             deleteTaskImage = itemView.findViewById(R.id.deleteNotes);
             editTaskImage = itemView.findViewById(R.id.editNote);
             locationTagImage = itemView.findViewById(R.id.locationCVImage);
-
+            priorityImage = itemView.findViewById(R.id.priorityImageCV);
             editTaskImage.setOnClickListener(this);
             deleteTaskImage.setOnClickListener(this);
 
@@ -81,7 +82,24 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             holder.locationText.setText(convertTagToText(currentTask.getTags()));
             holder.idText.setText(String.valueOf(currentTask.getTimeStamp()));
             holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
+            holder.priorityImage.setBackgroundColor(getColorResource(currentTask.getPriority()));
         }
+    }
+
+    private int getColorResource(int priority) {
+
+        switch (priority){
+            case 1 : return Color.parseColor("#E8F5E9");
+            case 2 : return Color.parseColor("#C8E6C9");
+            case 3 : return Color.parseColor("#81C784");
+            case 4 : return Color.parseColor("#66BB6A");
+            case 5 : return Color.parseColor("#4CAF50");
+            case 6 : return Color.parseColor("#2E7D32");
+            case 7 : return Color.parseColor("#D50000");
+
+            default: return Color.parseColor("#E8F5E9");
+        }
+
     }
 
     @Override

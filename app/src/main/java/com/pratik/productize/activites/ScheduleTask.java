@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -139,17 +140,43 @@ public class ScheduleTask extends AppCompatActivity {
             }
         });
 
+        LinearLayout layout1 = findViewById(R.id.linear_layout1);
+        LinearLayout layout2 = findViewById(R.id.linear_layout2);
+        LinearLayout layout3 = findViewById(R.id.linear_layout3);
+        LinearLayout layout4 = findViewById(R.id.linear_layout4);
+        LinearLayout layout5 = findViewById(R.id.linear_layout5);
+
+//        layout1.setVisibility(View.VISIBLE);
+//        layout2.setVisibility(View.INVISIBLE);
+//        layout3.setVisibility(View.INVISIBLE);
+//        layout4.setVisibility(View.INVISIBLE);
+//        layout5.setVisibility(View.INVISIBLE);
 
 
         if(!prefManager.isTaskScheduled()){
 
             getSupportActionBar().setTitle("Let's Start");
+
             //do some fancy animations
+//            layout1.setY(100f);
+//            layout1.setAlpha(1f);
+//            layout1.animate().translationYBy(-100f).setStartDelay(200).setDuration(600).start();
+
+
+
+
+
         }else {
 
 
             getSupportActionBar().setTitle("Schedule Tasks");
             //user has entered this activity from nav bar. save button should close activity not start new activity
+
+            layout1.setVisibility(View.VISIBLE);
+            layout2.setVisibility(View.VISIBLE);
+            layout3.setVisibility(View.VISIBLE);
+            layout4.setVisibility(View.VISIBLE);
+            layout5.setVisibility(View.VISIBLE);
         }
 
 
