@@ -25,14 +25,13 @@ import com.pratik.productize.utils.Constants;
 import com.pratik.productize.utils.Converters;
 import com.pratik.productize.utils.PrefManager;
 
+import java.util.Objects;
+
 import static com.pratik.productize.adapters.ActiveTaskRecyclerAdapter.tasksList;
 
 public class OnGoingTaskActivitiy extends AppCompatActivity {
 
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
+
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
@@ -140,7 +139,7 @@ public class OnGoingTaskActivitiy extends AppCompatActivity {
 
     private void showTask() {
 
-        getSupportActionBar().setTitle("Task "+(currentTaskCount +1) + "/" + tasksList.size());
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Task "+(currentTaskCount +1) + "/" + tasksList.size());
 
         if(currentTaskCount < tasksList.size()){
 
@@ -189,12 +188,12 @@ public class OnGoingTaskActivitiy extends AppCompatActivity {
                 show();
                 currentTaskActive = false;
                 timeText.setVisibility(View.GONE);
-                int restDuration = 5; //analyzeBreakTime();
-                if(restDuration <= 5)
-                    taskText.setText("Take a break of "+ 5 + "min and start your task");
-                else if( restDuration <= 10 ){
-                    taskText.setText("Phew that must be exhausting. Take a break of 10 min and get back");
-                }
+//                int restDuration = 5; //analyzeBreakTime();
+//                if(restDuration <= 5)
+//                    taskText.setText("Take a break of "+ 5 + "min and start your task");
+//                else if( restDuration <= 10 ){
+//                    taskText.setText("Phew that must be exhausting. Take a break of 10 min and get back");
+//                }
 
             }
         };

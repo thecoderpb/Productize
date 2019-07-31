@@ -1,5 +1,6 @@
 package com.pratik.productize.ui;
 
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,11 +12,13 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.firebase.messaging.RemoteMessage;
 import com.pratik.productize.R;
 import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.activites.MainActivity;
 import com.pratik.productize.activites.WelcomeActivity;
 
+import static androidx.core.app.NotificationCompat.PRIORITY_DEFAULT;
 import static com.pratik.productize.utils.Constants.CHANNEL_ID;
 import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
 import static com.pratik.productize.utils.Constants.FLAG_ALARM2;
@@ -69,14 +72,14 @@ public class NotificationHandler {
                 .setContentText("Looks like you have more tasks and less time. View or make changes to your day plans")
                 .setAutoCancel(true)
                 .setContentIntent(PendingIntent.getActivity(context,9,new Intent(context, MainActivity.class),0))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(PRIORITY_DEFAULT);
 
         builder3 = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Test Notification")
                 .setContentText("Get ready to tackle your first task. Tap to get started")
                 .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(PRIORITY_DEFAULT)
                 .setContentIntent(PendingIntent.getActivity(context, 9, new Intent(context,WelcomeActivity.class), 0));
 
 
@@ -103,6 +106,25 @@ public class NotificationHandler {
                 Log.i(TAG,"error showing notification");
                 break;
         }
+
+
+    }
+
+    public void displayNotification(RemoteMessage.Notification notification){
+
+        String msg = notification.getBody();
+        String title = notification.getTitle();
+        NotificationCompat.Builder builder;
+        builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(title)
+                .setContentText(msg)
+                .setAutoCancel(true)
+                .setPriority(PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        notificationManager.notify(85,builder.build());
 
 
     }

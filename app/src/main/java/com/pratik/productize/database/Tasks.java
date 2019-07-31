@@ -60,11 +60,11 @@ public class Tasks {
         return tags;
     }
 
-    public boolean isTaskComplete() {
+    boolean isTaskComplete() {
         return isTaskComplete;
     }
 
-    public boolean isTaskExpired() {
+    boolean isTaskExpired() {
         return isTaskExpired;
     }
 

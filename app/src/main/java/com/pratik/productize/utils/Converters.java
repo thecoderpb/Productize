@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.pratik.productize.utils.Constants.TAG2;
@@ -35,7 +36,7 @@ public class Converters {
         try {
             java.util.Date date = df.parse(s);
             Log.i(TAG2 , String.valueOf(System.currentTimeMillis()));
-            Log.i(TAG2 , String.valueOf(date.getTime()));
+            Log.i(TAG2 , String.valueOf(Objects.requireNonNull(date).getTime()));
 
             return date.getTime();
         } catch (ParseException e) {

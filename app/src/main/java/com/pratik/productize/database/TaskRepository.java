@@ -100,6 +100,28 @@ public class TaskRepository {
 
     }
 
+    public void update(final Tasks task){
+
+        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                taskDAO.updateTask(task);
+
+                Log.i(Constants.TAG,"task updated");
+            }
+        });
+    }
+
+    public void updateTask(final long id, final String text, final int priority, final long duration){
+
+        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                taskDAO.updateEditTask(text,priority,duration,id);
+            }
+        });
+    }
+
     public LiveData<Tasks> getTaskById(final long id,Application application){
         TasksDB db = TasksDB.getInstance(application);
 

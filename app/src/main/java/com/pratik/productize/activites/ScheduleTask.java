@@ -2,6 +2,7 @@ package com.pratik.productize.activites;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 
@@ -20,8 +21,9 @@ import com.pratik.productize.R;
 import com.pratik.productize.utils.PrefManager;
 
 import java.util.Calendar;
+import java.util.Objects;
 
-import static android.graphics.Color.TRANSPARENT;
+
 import static android.graphics.Color.WHITE;
 import static com.pratik.productize.utils.Constants.TAG_HOME;
 
@@ -36,12 +38,13 @@ public class ScheduleTask extends AppCompatActivity {
     private RadioGroup radioGroup;
     ImageView avatarImage;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_task);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(WHITE));
+        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(WHITE));
         getWindow().setStatusBarColor(WHITE);
 
         prefManager = new PrefManager(this);

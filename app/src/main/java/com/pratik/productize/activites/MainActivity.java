@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +27,7 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import com.pratik.productize.R;
 import com.pratik.productize.fragments.EditFragment;
+import com.pratik.productize.fragments.StatsFragment;
 import com.pratik.productize.utils.Converters;
 import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.adapters.TaskRecyclerAdapter;
@@ -57,6 +59,7 @@ import android.widget.Toast;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 import static com.pratik.productize.utils.Constants.HIDE;
@@ -301,7 +304,9 @@ public class MainActivity extends AppCompatActivity
 
                 if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+                    }
                     keyEnter = true;
                     bottomSheetString.clearFocus();
 
@@ -328,22 +333,23 @@ public class MainActivity extends AppCompatActivity
     private void dimBackground(boolean b) {
 
         Fragment fragment = getVisibleFragment();
-        View view = fragment.getView().findViewById(R.id.dim_bg);
-        if(b){
-            view.setVisibility(View.VISIBLE);
-        }else
-            view.setVisibility(View.GONE);
+        if(fragment != null){
+            View view = Objects.requireNonNull(fragment.getView()).findViewById(R.id.dim_bg);
+            if(b){
+                view.setVisibility(View.VISIBLE);
+            }else
+                view.setVisibility(View.GONE);
+        }
+
     }
 
 
     public Fragment getVisibleFragment(){
         FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
         List<Fragment> fragments = fragmentManager.getFragments();
-        if(fragments != null){
-            for(Fragment fragment : fragments){
-                if(fragment != null && fragment.isVisible())
-                    return fragment;
-            }
+        for(Fragment fragment : fragments){
+            if(fragment != null && fragment.isVisible())
+                return fragment;
         }
         return null;
     }
@@ -412,6 +418,9 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_stats :
+                fragment = new StatsFragment();
+                displayFragment(fragment);
+                toggleBottomBarVisibility(HIDE);
                 break;
 
             case R.id.nav_schedule_task :
@@ -425,31 +434,44 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_home :
                 fragment = new HomeScreenFragment();
                 displayFragment(fragment);
+                toggleBottomBarVisibility(HIDE);
                 break;
 
             case R.id.nav_work :
                 fragment = new WorkScreenFragment();
                 displayFragment(fragment);
+                toggleBottomBarVisibility(HIDE);
                 break;
 
             case R.id.nav_other :
                 fragment = new OtherScreenFragment();
                 displayFragment(fragment);
+                toggleBottomBarVisibility(HIDE);
                 break;
 
             case R.id.nav_share :
+                prefManager.setTaskActive(true);
                 break;
 
             case R.id.nav_about :
-                prefManager.setTaskActive(true);
+                aboutDialog();
                 break;
 
         }
 
-        toggleBottomBarVisibility(HIDE);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void aboutDialog() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("About")
+                .setMessage("Please review the terms and privacy policy here")
+                .setPositiveButton("OK",null)
+                .show();
     }
 
     public void displayFragment(Fragment fragment){
@@ -478,7 +500,9 @@ public class MainActivity extends AppCompatActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                imm.showSoftInput(bottomSheetString, InputMethodManager.SHOW_FORCED);
+                if (imm != null) {
+                    imm.showSoftInput(bottomSheetString, InputMethodManager.SHOW_FORCED);
+                }
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
             }
         },200);
@@ -517,6 +541,7 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = new EditFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        toggleBottomBarVisibility(HIDE);
 
         Bundle args = new Bundle();
         args.putLong(TASK_ID,id);
@@ -537,4 +562,5 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
 }

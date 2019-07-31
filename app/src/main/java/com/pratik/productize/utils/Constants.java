@@ -4,21 +4,21 @@ public class Constants {
 
     public static final String TAG = "com.pratik.debug" ;
     public static final String TAG1 = "com.pratik.debu" ;
-    public static final String TAG2 = "com.pratik.myapp" ;
+    static final String TAG2 = "com.pratik.myapp" ;
 
-    public static final String PREF_NAME = "com.pratik.productize";
+    static final String PREF_NAME = "com.pratik.productize";
 
     public static final String TASK_ID = "taskId";
 
     // Preferences name
-    public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
-    public static final String IS_TASK_ACTIVE = "IsTaskActive";
-    public static final String IS_TASK_SCHEDULED = "IsTaskSchedule";
-    public static final String IS_TASK_ONGOING = "IsTaskOngoing";
-    public static final String ACTIVE_TAG = "activeTag";
-    public static final String HOME_TIME = "homeTime";
-    public static final String WORK_TIME = "workTime";
-    public static final String TASK_HOURS = "taskHours";
+    static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    static final String IS_TASK_ACTIVE = "IsTaskActive";
+    static final String IS_TASK_SCHEDULED = "IsTaskSchedule";
+    static final String IS_TASK_ONGOING = "IsTaskOngoing";
+    static final String ACTIVE_TAG = "activeTag";
+    static final String HOME_TIME = "homeTime";
+    static final String WORK_TIME = "workTime";
+    static final String TASK_HOURS = "taskHours";
 
     //intent request code
     public static final String ALARM_INTENT_RC = "alarmRequestCode";

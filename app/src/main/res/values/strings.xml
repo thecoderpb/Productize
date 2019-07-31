@@ -57,5 +57,7 @@
     <string name="exit">Next</string>
     <string name="task_text">Task Text</string>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

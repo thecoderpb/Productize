@@ -31,6 +31,7 @@ import com.pratik.productize.database.Tasks;
 import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
 import static com.pratik.productize.utils.Constants.REQUEST_CODE_ALARM1;
@@ -60,7 +61,7 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
         final View view = inflater.inflate(R.layout.fragment_main_screen,container,false);
 
-        final BottomAppBar bottomAppBar = ((MainActivity)getActivity()).findViewById(R.id.bottom_app_bar);
+        final BottomAppBar bottomAppBar = ((MainActivity) Objects.requireNonNull(getActivity())).findViewById(R.id.bottom_app_bar);
 
 
         viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
@@ -179,7 +180,7 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
                 break;
             case R.id.editNote:
                 long id = task.getId();
-                ((MainActivity)getActivity()).editTask(id);
+                ((MainActivity) Objects.requireNonNull(getActivity())).editTask(id);
                 Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
                 break;
         }

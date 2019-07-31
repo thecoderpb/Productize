@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pratik.productize.R;
+import com.pratik.productize.asynchronous.FCMService;
 import com.pratik.productize.utils.PrefManager;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -37,6 +38,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         // Checking for first time launch - before calling setContentView()
+
+        startService(new Intent(this, FCMService.class));
+
         prefManager = new PrefManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
             if(prefManager.isTaskActive()){

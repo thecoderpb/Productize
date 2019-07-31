@@ -26,12 +26,11 @@ import com.pratik.productize.database.Tasks;
 import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.pratik.productize.utils.Constants.TAG;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class OtherScreenFragment extends Fragment implements RecyclerViewClickListener {
 
 
@@ -96,7 +95,7 @@ public class OtherScreenFragment extends Fragment implements RecyclerViewClickLi
                 break;
             case R.id.editNote:
                 long id = task.getId();
-                ((MainActivity)getActivity()).editTask(id);
+                ((MainActivity) Objects.requireNonNull(getActivity())).editTask(id);
                 Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
                 break;
         }

@@ -55,6 +55,9 @@ public interface TaskDAO {
     @Query("UPDATE TASKS SET isTaskExpired = 1 WHERE id =:ids")
     void updateTaskExpiryTrue(long ids);
 
+    @Query("UPDATE TASKS SET taskText =:taskText , priority =:priority , duration =:duration WHERE id =:id")
+    void updateEditTask(String taskText,int priority,long duration,long id);
+
 
 
 
