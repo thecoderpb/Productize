@@ -93,7 +93,7 @@ public class EditFragment extends Fragment  {
 
     private void setEditContent(String taskText, long duration, int priority) {
 
-        Toast.makeText(getActivity(), taskText + " " + duration + " " + priority, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), taskText + " " + duration + " " + priority, Toast.LENGTH_SHORT).show();
         editTask.setText(taskText);
     }
 

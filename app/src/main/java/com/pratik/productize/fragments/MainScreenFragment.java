@@ -204,7 +204,7 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
             case R.id.editNote:
                 long id = task.getId();
                 ((MainActivity) Objects.requireNonNull(getActivity())).editTask(id);
-                Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

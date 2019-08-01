@@ -89,14 +89,14 @@ public class OtherScreenFragment extends Fragment implements RecyclerViewClickLi
         Tasks task = adapter.getTaskAtPosition(position);
         switch (v.getId()){
             case R.id.deleteNotes:
-                Toast.makeText(getActivity(), "delete note" + position, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getActivity(), "delete note" + position, Toast.LENGTH_SHORT).show();
                 viewModel.delete(task);
                 adapter.notifyItemRangeChanged(0,adapter.getItemCount());
                 break;
             case R.id.editNote:
                 long id = task.getId();
                 ((MainActivity) Objects.requireNonNull(getActivity())).editTask(id);
-                Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getActivity(), "edit note" + position, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
