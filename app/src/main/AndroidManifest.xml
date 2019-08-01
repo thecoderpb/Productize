@@ -36,7 +36,7 @@
             android:theme="@style/AppTheme.StyledTitleBar" />
         <activity
             android:name=".activites.MainActivity"
-            android:label="@string/app_name"
+            android:label="Productize"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver

@@ -86,7 +86,7 @@
                 android:nextFocusForward="@id/durationBottomSheetText"
                 android:layout_weight="7"
                 android:paddingRight="27dp"
-                android:text="Importance:" />
+                android:text="Priority:" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -59,7 +59,7 @@ public class NotificationHandler {
 
 
         builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_launcher_foreground,3)
                 .setContentTitle("Test Notification")
                 .setContentText("Your productize hours starts in 5 mins")
                 .setAutoCancel(true)

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#388E3C</color>
+    <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#1B5E20</color>
-    <color name="colorAccent">#7CB342</color>
+    <color name="colorAccent">#4CAF50</color>
     <color name="colorSecondary">#D5E9D6</color>
+    <color name="colorWhite">@android:color/white</color>
 
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#FFBB00</color>

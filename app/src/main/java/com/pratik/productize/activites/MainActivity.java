@@ -26,6 +26,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.pratik.productize.R;
+import com.pratik.productize.database.TaskRepository;
 import com.pratik.productize.fragments.EditFragment;
 import com.pratik.productize.fragments.StatsFragment;
 import com.pratik.productize.utils.Converters;
@@ -46,6 +47,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
 
@@ -55,6 +57,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Date;
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity
     private ChipGroup chipGroup;
     private FloatingActionButton p1,p2,p3,p4,p5,p6,p7;
     boolean keyEnter = false;
+    public TextView durationTitleTv, taskTitleTv, titleTv;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -107,12 +111,17 @@ public class MainActivity extends AppCompatActivity
         fab = findViewById(R.id.fab);
         bottomAppBar = findViewById(R.id.bottom_app_bar);
         bottomSheetString = findViewById(R.id.bottomSheetText);
+        durationTitleTv = findViewById(R.id.toolbar_title);
+        taskTitleTv = findViewById(R.id.toolbar_titles2);
+        titleTv = findViewById(R.id.toolbar_title3);
         SeekBar bottomSheetDuration = findViewById(R.id.seekBarDuration);
         //SeekBar bottomSheetPriority = findViewById(R.id.seekBarPriority);
         Button bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
         Button bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
         Button bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
         chipGroup = findViewById(R.id.bottomSheetChipGroup);
+
+
 
         initializePriorities();
 
@@ -358,7 +367,9 @@ public class MainActivity extends AppCompatActivity
     @SuppressLint("RestrictedApi")
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        getSupportActionBar().setTitle("Productize");
         toggleBottomBarVisibility(SHOW);
 
         int backStack = getSupportFragmentManager().getBackStackEntryCount();
@@ -516,21 +527,26 @@ public class MainActivity extends AppCompatActivity
 
         Date date = Converters.toDate(System.currentTimeMillis());
         String taskText = bottomSheetString.getText().toString();
+
+        TaskViewModel viewModel = ViewModelProviders.of(getVisibleFragment()).get(TaskViewModel.class);
+        Tasks task = new Tasks(date,taskText,priority,duration,tags,false,false);
+
         if(taskText.equals("")){
             Toast.makeText(this, "Task cannot be empty", Toast.LENGTH_SHORT).show();
-        }else{
-            final Tasks task = new Tasks(date,taskText,priority,duration,tags,false,false);
+        }else if(getVisibleFragment() instanceof MainScreenFragment){
 
-            MainScreenFragment fragment = (MainScreenFragment) getSupportFragmentManager().findFragmentById(R.id.content_main);
-            assert fragment != null;
-            TaskViewModel viewModel = fragment.getFragmentViewModel();
-            TaskRecyclerAdapter adapter = fragment.getAdapter();
+
             viewModel.insert(task);
-            adapter.notifyItemRangeChanged(0,adapter.getItemCount());
+
             resetBottomSheet();
 
             keyEnter = false;
 
+
+        }else {
+            for(int i =0 ; i< getSupportFragmentManager().getBackStackEntryCount() ; i++)
+            getSupportFragmentManager().popBackStack();
+            viewModel.insert(task);
 
         }
 
@@ -548,6 +564,10 @@ public class MainActivity extends AppCompatActivity
 
         fragment.setArguments(args);
         ft.replace(R.id.content_main,fragment).addToBackStack("FRAG_EDIT").commit();
+
+        final InputMethodManager imm;
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(getVisibleFragment().getView().findViewById(R.id.edit_task), InputMethodManager.SHOW_FORCED);
     }
 
     @SuppressLint("RestrictedApi")

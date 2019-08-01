@@ -52,6 +52,8 @@ public class EditFragment extends Fragment  {
             id = getArguments().getLong(TASK_ID);
         }
 
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Edit Task");
+
         editTask = view.findViewById(R.id.edit_task);
         TaskViewModel viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         LiveData<Tasks> tasks = viewModel.getTask(id);

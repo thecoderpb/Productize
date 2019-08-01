@@ -64,7 +64,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView reminderText,durationText,locationText,priorityText,idText;
+        private TextView reminderText,durationText,locationText;
         private ImageView deleteTaskImage,editTaskImage,locationTagImage;
 
         private MyViewHolder(@NonNull View itemView) {
@@ -72,8 +72,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
             reminderText = itemView.findViewById(R.id.reminderCardView);
             durationText = itemView.findViewById(R.id.durationTextCV);
             locationText = itemView.findViewById(R.id.locationTextCV);
-            priorityText = itemView.findViewById(R.id.priorityTextCV);
-            idText = itemView.findViewById(R.id.IdTextCV);
+
 
             deleteTaskImage = itemView.findViewById(R.id.deleteNotes);
             editTaskImage = itemView.findViewById(R.id.editNote);
@@ -116,9 +115,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
             Tasks currentTask = tasksList.get(position);
             holder.reminderText.setText(currentTask.getTaskText());
             holder.durationText.setText(String.valueOf(currentTask.getDuration()));
-            holder.priorityText.setText(String.valueOf(currentTask.getPriority()));
             holder.locationText.setText(convertTagToText(currentTask.getTags()));
-            holder.idText.setText(String.valueOf(currentTask.getTimeStamp()));
             holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
         }
     }

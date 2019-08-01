@@ -26,21 +26,20 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView reminderText,durationText,locationText,priorityText,idText;
-        private ImageView deleteTaskImage,editTaskImage,locationTagImage,priorityImage;
+        private TextView reminderText,durationText,locationText;
+        private ImageView deleteTaskImage,editTaskImage,locationTagImage;
+        private View view;
 
         private MyViewHolder(@NonNull View itemView) {
             super(itemView);
             reminderText = itemView.findViewById(R.id.reminderCardView);
             durationText = itemView.findViewById(R.id.durationTextCV);
             locationText = itemView.findViewById(R.id.locationTextCV);
-            priorityText = itemView.findViewById(R.id.priorityTextCV);
-            idText = itemView.findViewById(R.id.IdTextCV);
-
             deleteTaskImage = itemView.findViewById(R.id.deleteNotes);
             editTaskImage = itemView.findViewById(R.id.editNote);
             locationTagImage = itemView.findViewById(R.id.locationCVImage);
-            priorityImage = itemView.findViewById(R.id.priorityImageCV);
+            view = itemView.findViewById(R.id.card_border);
+
             editTaskImage.setOnClickListener(this);
             deleteTaskImage.setOnClickListener(this);
 
@@ -78,26 +77,21 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             Tasks currentTask = tasksList.get(position);
             holder.reminderText.setText(currentTask.getTaskText());
             holder.durationText.setText(String.valueOf(currentTask.getDuration()));
-            holder.priorityText.setText(String.valueOf(currentTask.getPriority()));
             holder.locationText.setText(convertTagToText(currentTask.getTags()));
-            holder.idText.setText(String.valueOf(currentTask.getTimeStamp()));
             holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
-            holder.priorityImage.setBackgroundColor(getColorResource(currentTask.getPriority()));
+            holder.view.setBackgroundResource(getColorResource(currentTask.getPriority()));
+
         }
     }
 
     private int getColorResource(int priority) {
 
         switch (priority){
-            case 1 : return Color.parseColor("#E8F5E9");
-            case 2 : return Color.parseColor("#C8E6C9");
-            case 3 : return Color.parseColor("#81C784");
-            case 4 : return Color.parseColor("#66BB6A");
-            case 5 : return Color.parseColor("#4CAF50");
-            case 6 : return Color.parseColor("#2E7D32");
-            case 7 : return Color.parseColor("#D50000");
+            case 6 : return R.drawable.card_border_orange;
 
-            default: return Color.parseColor("#E8F5E9");
+            case 7 : return R.drawable.card_border_red;
+
+            default: return R.drawable.card_border;
         }
 
     }
@@ -127,13 +121,13 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
 
         switch (tag){
             case -1 :
-                resId = R.drawable.ic_nav_other_fill;
+                resId = R.drawable.ic_other_fill_small;
                 break;
             case 0 :
-                resId = R.drawable.ic_nav_home_fill;
+                resId = R.drawable.ic_home_fill_small;
                 break;
             case 1 :
-                resId = R.drawable.ic_nav_work_fill;
+                resId = R.drawable.ic_work_fill_small;
                 break;
             default: resId = R.drawable.ic_nav_other_hollow;
         }

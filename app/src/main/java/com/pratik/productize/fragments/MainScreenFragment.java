@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -107,10 +109,14 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
             }
         });
 
+
         viewModel.getAllTaskCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 Log.i(TAG,"all tasks "+ integer);
+                if(integer != 0){
+                   // animateStatusBar(integer);
+                }
             }
         });
 
@@ -145,6 +151,23 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
         });
 
         return view;
+
+    }
+
+    private void animateStatusBar(Tasks task) {
+
+
+
+
+          ((MainActivity)(getActivity())).taskTitleTv.setText("Total task: " );
+          ((MainActivity)(getActivity())).taskTitleTv.setText("Total duration: " + task.getDuration());
+          ((MainActivity)(getActivity())).titleTv.setText("Productize");
+          Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.slide);
+          Animation anim2 = AnimationUtils.loadAnimation(getActivity(),R.anim.slide2);
+          ((MainActivity)(getActivity())).titleTv.setAnimation(anim1);
+          ((MainActivity)(getActivity())).titleTv.setAnimation(anim2);
+
+
 
     }
 
