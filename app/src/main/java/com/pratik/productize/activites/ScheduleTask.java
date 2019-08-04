@@ -36,6 +36,7 @@ public class ScheduleTask extends AppCompatActivity {
     private static int minutes = 0;
     private int activeTag = TAG_HOME;
     private RadioGroup radioGroup;
+    private Button buttonSave;
     ImageView avatarImage;
 
     @SuppressLint("SetTextI18n")
@@ -56,6 +57,7 @@ public class ScheduleTask extends AppCompatActivity {
         timeHome = findViewById(R.id.setTimeHome);
         timeWork = findViewById(R.id.setTimeWork);
         avatarImage = findViewById(R.id.avatar_img);
+        buttonSave = findViewById(R.id.buttonSave);
 
 
         button15m.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +139,9 @@ public class ScheduleTask extends AppCompatActivity {
                 //clearCheck();
                 radioGroup.check(i);
                 if(radioGroup.getCheckedRadioButtonId() == R.id.work_radio){
-                    avatarImage.setImageResource(R.drawable.work_avatar);
+                    avatarImage.setImageResource(R.drawable.work_man_avatar);
                 }else
-                    avatarImage.setImageResource(R.drawable.home_avatar);
+                    avatarImage.setImageResource(R.drawable.home_man_avatar);
             }
         });
 
@@ -171,7 +173,6 @@ public class ScheduleTask extends AppCompatActivity {
 
         }else {
 
-
             getSupportActionBar().setTitle("Schedule Tasks");
             //user has entered this activity from nav bar. save button should close activity not start new activity
 
@@ -184,7 +185,7 @@ public class ScheduleTask extends AppCompatActivity {
 
 
 
-        findViewById(R.id.buttonSave).setOnClickListener(new View.OnClickListener() {
+        buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -201,15 +202,23 @@ public class ScheduleTask extends AppCompatActivity {
 
                 Intent intent2 = getIntent();
                 Intent intent = new Intent(ScheduleTask.this,MainActivity.class);
-                if(!intent2.hasExtra("nav_schedule")){
+                if(!intent2.hasExtra("nav_schedule") && isAllOptionsSelected()){
                     startActivity(intent);
                     finish();
                 }
-                else
+                else if(!isAllOptionsSelected()){
+                    Toast.makeText(ScheduleTask.this, "Please answer all questions in order to proceed", Toast.LENGTH_SHORT).show();
+                }else
                     finish();
 
             }
         });
+    }
+
+    private boolean isAllOptionsSelected() {
+
+        return prefManager.getHours() != 0 && prefManager.getHomeTime() != null && prefManager.getWorkTime() != null;
+
     }
 
     @Override

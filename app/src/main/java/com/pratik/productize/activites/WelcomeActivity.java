@@ -2,6 +2,7 @@ package com.pratik.productize.activites;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,12 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         // Checking for first time launch - before calling setContentView()
+
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .penaltyDeath()
+                .penaltyLog()
+                .build());
 
         startService(new Intent(this, FCMService.class));
 
@@ -131,7 +139,7 @@ public class WelcomeActivity extends AppCompatActivity {
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
             dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setText(HtmlCompat.fromHtml("&#8226;",HtmlCompat.FROM_HTML_MODE_LEGACY));
             dots[i].setTextSize(35);
             dots[i].setTextColor(colorsInactive[currentPage]);
             dotsLayout.addView(dots[i]);

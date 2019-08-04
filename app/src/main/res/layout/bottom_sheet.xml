@@ -91,14 +91,13 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl1"
                     style="@style/Widget.MaterialComponents.Chip.Filter"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:backgroundTint="@color/priority1"
@@ -107,8 +106,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl2"
                     style="@style/Widget.MaterialComponents.Chip.Filter"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:backgroundTint="@color/priority2"
@@ -117,8 +116,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl3"
                     style="@style/Widget.MaterialComponents.Chip.Filter"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:backgroundTint="@color/priority3"
@@ -127,8 +126,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl4"
                     style="@style/Widget.MaterialComponents.Chip.Filter"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:backgroundTint="@color/priority4"
@@ -137,8 +136,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl5"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:backgroundTint="@color/priority5"
@@ -147,8 +146,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl6"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:backgroundTint="@color/priority6"
@@ -157,8 +156,8 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl7"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:backgroundTint="@color/priority7"
@@ -176,7 +175,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:layout_weight="1"
             android:orientation="horizontal"
             android:padding="5dp">
 
@@ -186,17 +184,15 @@
                 style="@style/TextAppearance.AppTheme.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:gravity="start|center"
                 android:nextFocusForward="@id/locationTags"
-                android:layout_weight="1"
-                android:paddingRight="35dp"
-                android:text="Duration:" />
-
-            <SeekBar
-                android:id="@+id/seekBarDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="Duration:"
                 android:layout_weight="4"
-                android:max="60" />
+                />
+
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -213,9 +209,9 @@
                 android:nextFocusForward="@id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
+                android:layout_gravity="center|start"
                 android:layout_weight="4"
-                android:gravity="center|left"
+                android:gravity="center|start"
                 android:text="Location : " />
 
 

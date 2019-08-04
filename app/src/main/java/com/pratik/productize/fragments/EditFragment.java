@@ -1,6 +1,7 @@
 package com.pratik.productize.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -88,6 +90,11 @@ public class EditFragment extends Fragment  {
             }
         });
 
+        InputMethodManager imm;
+        editTask.requestFocus();
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.SHOW_IMPLICIT);
+
         return view;
     }
 
@@ -96,7 +103,4 @@ public class EditFragment extends Fragment  {
         //Toast.makeText(getActivity(), taskText + " " + duration + " " + priority, Toast.LENGTH_SHORT).show();
         editTask.setText(taskText);
     }
-
-
-
 }

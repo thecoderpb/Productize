@@ -1,7 +1,6 @@
 package com.pratik.productize.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pratik.productize.R;
 import com.pratik.productize.database.Tasks;
 import com.pratik.productize.ui.RecyclerViewClickListener;
+import com.pratik.productize.utils.Converters;
 
 import java.util.List;
 
@@ -72,29 +72,20 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 
+        Converters converters = new Converters();
 
         if(tasksList!=null){
             Tasks currentTask = tasksList.get(position);
             holder.reminderText.setText(currentTask.getTaskText());
-            holder.durationText.setText(String.valueOf(currentTask.getDuration()));
-            holder.locationText.setText(convertTagToText(currentTask.getTags()));
-            holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
-            holder.view.setBackgroundResource(getColorResource(currentTask.getPriority()));
+            holder.durationText.setText(converters.timeLongToMin(currentTask.getDuration()));
+            holder.locationText.setText(converters.convertTagToText(currentTask.getTags()));
+            holder.locationTagImage.setImageResource(converters.getLocationTagImage(currentTask.getTags()));
+            holder.view.setBackgroundResource(converters.getColorResource(currentTask.getPriority()));
 
         }
     }
 
-    private int getColorResource(int priority) {
 
-        switch (priority){
-            case 6 : return R.drawable.card_border_orange;
-
-            case 7 : return R.drawable.card_border_red;
-
-            default: return R.drawable.card_border;
-        }
-
-    }
 
     @Override
     public int getItemCount() {
@@ -115,36 +106,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         return tasksList.get(position);
     }
 
-    private int getLocationTagImage(int tag){
 
-        int resId;
 
-        switch (tag){
-            case -1 :
-                resId = R.drawable.ic_other_fill_small;
-                break;
-            case 0 :
-                resId = R.drawable.ic_home_fill_small;
-                break;
-            case 1 :
-                resId = R.drawable.ic_work_fill_small;
-                break;
-            default: resId = R.drawable.ic_nav_other_hollow;
-        }
 
-        return resId;
-    }
-
-    private String convertTagToText(int tag){
-
-        if( tag == 0){
-            return "Home";
-        }else if( tag == 1){
-            return " Work";
-        }
-
-        return "Others";
-
-    }
 
 }

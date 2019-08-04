@@ -76,6 +76,6 @@ public class PrefManager {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
     public int getActiveTag(){return  pref.getInt(ACTIVE_TAG,TAG_HOME);}
-    public String getHomeTime(){return pref.getString(HOME_TIME,"");}
-    public String getWorkTime(){return pref.getString(WORK_TIME,"");}
+    public String getHomeTime(){return pref.getString(HOME_TIME,null);}
+    public String getWorkTime(){return pref.getString(WORK_TIME,null);}
     public long getHours() { return pref.getLong(TASK_HOURS,0);} }

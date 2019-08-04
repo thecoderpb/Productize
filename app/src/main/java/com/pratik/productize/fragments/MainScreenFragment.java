@@ -142,8 +142,10 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
                 if(dy>0){
                     bottomAppBar.setVisibility(View.INVISIBLE);
                     Log.i(TAG1,"scroll up");
+                  //  bottomAppBar.animate().translationYBy(100).setDuration(200).start();
                 }else {
                     bottomAppBar.setVisibility(View.VISIBLE);
+                 //   bottomAppBar.animate().translationYBy(-100).setDuration(200).start();
                     Log.i(TAG1,"scroll down");
                 }
 

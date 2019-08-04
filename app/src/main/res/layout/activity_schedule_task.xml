@@ -71,7 +71,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:paddingTop="7dp"
-                android:src="@drawable/home_avatar" />
+                android:src="@drawable/home_man_avatar" />
 
         </LinearLayout>
 

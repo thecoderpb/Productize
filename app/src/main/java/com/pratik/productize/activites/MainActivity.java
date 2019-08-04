@@ -26,12 +26,12 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.pratik.productize.R;
-import com.pratik.productize.database.TaskRepository;
+
 import com.pratik.productize.fragments.EditFragment;
 import com.pratik.productize.fragments.StatsFragment;
 import com.pratik.productize.utils.Converters;
 import com.pratik.productize.utils.PrefManager;
-import com.pratik.productize.adapters.TaskRecyclerAdapter;
+
 import com.pratik.productize.database.Tasks;
 import com.pratik.productize.fragments.HomeScreenFragment;
 import com.pratik.productize.fragments.MainScreenFragment;
@@ -56,7 +56,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SeekBar;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,19 +71,18 @@ import static com.pratik.productize.utils.Constants.TASK_ID;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,View.OnKeyListener {
 
     private PrefManager prefManager;
     private BottomSheetBehavior bottomSheetBehavior;
     private FloatingActionButton fab;
     private BottomAppBar bottomAppBar;
     private EditText bottomSheetString;
- //   private boolean doubleBackToExitPressedOnce = false;
     private int priority,duration,tags = -1;
     private ChipGroup chipGroup;
     private FloatingActionButton p1,p2,p3,p4,p5,p6,p7;
-    boolean keyEnter = false;
     public TextView durationTitleTv, taskTitleTv, titleTv;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity
 
         prefManager = new PrefManager(this);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
 
         if(!prefManager.isTaskScheduled()){
             startActivity(new Intent(this,ScheduleTask.class));
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commitNow();
         }
 
-
         CoordinatorLayout layoutBottomSheet = findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         fab = findViewById(R.id.fab);
@@ -114,149 +112,32 @@ public class MainActivity extends AppCompatActivity
         durationTitleTv = findViewById(R.id.toolbar_title);
         taskTitleTv = findViewById(R.id.toolbar_titles2);
         titleTv = findViewById(R.id.toolbar_title3);
-        SeekBar bottomSheetDuration = findViewById(R.id.seekBarDuration);
-        //SeekBar bottomSheetPriority = findViewById(R.id.seekBarPriority);
+
         Button bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
         Button bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
         Button bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
         chipGroup = findViewById(R.id.bottomSheetChipGroup);
-
-
 
         initializePriorities();
 
         NotificationHandler notificationHandler = new NotificationHandler(this);
         notificationHandler.createNotificationChannel();
 
+        fab.setOnClickListener(this);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        bottomSheetHomeButton.setOnClickListener(this);
+        bottomSheetOtherButton.setOnClickListener(this);
+        bottomSheetWorkButton.setOnClickListener(this);
 
-                if(bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER){
-                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
-                    fab.setImageResource(R.drawable.ic_arrow_down);
-                    bottomSheetBehavior.setState( BottomSheetBehavior.STATE_EXPANDED);
-                    bottomSheetString.requestFocus();
-                    showKeyboard();
-                    dimBackground(true);
-
-                }
-                else{
-                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
-                    fab.setImageResource(R.drawable.ic_edit);
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    dimBackground(false);
-
-                }
-
-                bottomAppBar.setVisibility(View.VISIBLE);
-
-            }
-        });
-
-        bottomSheetDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-                if(i <= 5) {
-                    duration = 1;//*60*1000;
-                }else if( i<=15){
-                    duration = 5;
-                }else if(i<25){
-                    duration = 10;
-                }else if(i<35){
-                    duration = 15;
-                }else if(i<45){
-                    duration = 20;
-                }else duration =30;
-
-                duration = duration*60*1000;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        bottomSheetWorkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tags =1;
-            }
-        });
-
-        bottomSheetHomeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tags=0;
-            }
-        });
-
-        bottomSheetOtherButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tags =- 1;
-            }
-        });
-
-        p1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priority = 1;
-            }
-        });
-
-        p2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priority = 2;
-            }
-        });
-
-        p3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priority = 3;
-            }
-        });
-
-        p4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priority = 4;
-            }
-        });
-
-        p5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priority = 5;
-            }
-        });
-
-        p6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priority = 6;
-            }
-        });
-
-        p7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priority = 7;
-            }
-        });
+        p1.setOnClickListener(this);
+        p2.setOnClickListener(this);
+        p3.setOnClickListener(this);
+        p4.setOnClickListener(this);
+        p5.setOnClickListener(this);
+        p6.setOnClickListener(this);
+        p7.setOnClickListener(this);
 
         chipGroup.setSingleSelection(true);
-
         chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup chipGroup, int i) {
@@ -264,7 +145,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -279,19 +159,11 @@ public class MainActivity extends AppCompatActivity
             public void onStateChanged(@NonNull View view, int i) {
 
                 if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED){
-                    fab.setImageResource(R.drawable.ic_arrow_down);
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
-                    if(!keyEnter){
-                        bottomSheetString.requestFocus();
-                        showKeyboard();
-                    }
-
-                    dimBackground(true);
-
+                    showBottomSheet();
                 }else {
-                    fab.setImageResource(R.drawable.ic_edit);
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
-                    dimBackground(false);
+                    hideBottomSheet();
                 }
             }
 
@@ -300,35 +172,49 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        bottomSheetString.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showKeyboard();
-            }
-        });
-
-        bottomSheetString.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-                if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
-                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
-                    }
-                    keyEnter = true;
-                    bottomSheetString.clearFocus();
-
-                }
-
-                return false;
-            }
-        });
+        bottomSheetString.setOnClickListener(this);
+        bottomSheetString.setOnKeyListener(this);
 
     }
 
-    private void initializePriorities() {
+    private void hideBottomSheet() {
 
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        fab.setImageResource(R.drawable.ic_edit);
+        dimBackground(false);
+    }
+
+    private void showBottomSheet() {
+
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+        fab.setImageResource(R.drawable.ic_arrow_down);
+        bottomSheetString.requestFocus();
+        bottomSheetString.requestFocus();
+        showKeyboard();
+
+        dimBackground(true);
+
+    }
+
+    private void fabClick(){
+        if(bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER){
+
+            bottomSheetBehavior.setState( BottomSheetBehavior.STATE_EXPANDED);
+            showBottomSheet();
+
+        }
+        else{
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            hideBottomSheet();
+
+        }
+
+        bottomAppBar.setVisibility(View.VISIBLE);
+    }
+
+    private void initializePriorities() {
 
         p1 = findViewById(R.id.priorityLvl1);
         p2 = findViewById(R.id.priorityLvl2);
@@ -342,16 +228,19 @@ public class MainActivity extends AppCompatActivity
     private void dimBackground(boolean b) {
 
         Fragment fragment = getVisibleFragment();
-        if(fragment != null){
+        if( fragment instanceof MainScreenFragment){
             View view = Objects.requireNonNull(fragment.getView()).findViewById(R.id.dim_bg);
             if(b){
                 view.setVisibility(View.VISIBLE);
-            }else
+                findViewById(R.id.card_layout).setClickable(false);
+            }else{
                 view.setVisibility(View.GONE);
+                findViewById(R.id.card_layout).setClickable(true);
+            }
+
         }
 
     }
-
 
     public Fragment getVisibleFragment(){
         FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
@@ -364,12 +253,11 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @SuppressLint("RestrictedApi")
     @Override
     public void onBackPressed() {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        getSupportActionBar().setTitle("Productize");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Productize");
         toggleBottomBarVisibility(SHOW);
 
         int backStack = getSupportFragmentManager().getBackStackEntryCount();
@@ -382,32 +270,26 @@ public class MainActivity extends AppCompatActivity
                 bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-
             }
             else if(backStack > 1){
                 for(int i=0; i < backStack; i++ ){
                     getSupportFragmentManager().popBackStack();
                 }
             }else{
-
-               super.onBackPressed();
+                super.onBackPressed();
             }
-
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -470,7 +352,6 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -505,7 +386,6 @@ public class MainActivity extends AppCompatActivity
 
     public void showKeyboard(){
 
-
         final InputMethodManager imm;
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         new Handler().postDelayed(new Runnable() {
@@ -517,9 +397,6 @@ public class MainActivity extends AppCompatActivity
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
             }
         },200);
-
-
-
 
     }
 
@@ -535,21 +412,15 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Task cannot be empty", Toast.LENGTH_SHORT).show();
         }else if(getVisibleFragment() instanceof MainScreenFragment){
 
-
             viewModel.insert(task);
-
             resetBottomSheet();
-
-            keyEnter = false;
-
 
         }else {
             for(int i =0 ; i< getSupportFragmentManager().getBackStackEntryCount() ; i++)
-            getSupportFragmentManager().popBackStack();
+                getSupportFragmentManager().popBackStack();
             viewModel.insert(task);
 
         }
-
 
     }
 
@@ -565,9 +436,9 @@ public class MainActivity extends AppCompatActivity
         fragment.setArguments(args);
         ft.replace(R.id.content_main,fragment).addToBackStack("FRAG_EDIT").commit();
 
-        final InputMethodManager imm;
-        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(getVisibleFragment().getView().findViewById(R.id.edit_task), InputMethodManager.SHOW_FORCED);
+//        final InputMethodManager imm;
+//        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.showSoftInput(getVisibleFragment().getView().findViewById(R.id.edit_task), InputMethodManager.SHOW_FORCED);
     }
 
     @SuppressLint("RestrictedApi")
@@ -580,7 +451,42 @@ public class MainActivity extends AppCompatActivity
             bottomAppBar.setVisibility(View.GONE);
             fab.setVisibility(View.GONE);
         }
-
     }
 
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+            case R.id.priorityLvl1: priority = 1; break;
+            case R.id.priorityLvl2: priority = 2; break;
+            case R.id.priorityLvl3: priority = 3; break;
+            case R.id.priorityLvl4: priority = 4; break;
+            case R.id.priorityLvl5: priority = 5; break;
+            case R.id.priorityLvl6: priority = 6; break;
+            case R.id.priorityLvl7: priority = 7; break;
+
+            case R.id.bottomSheetHomeButton: tags=0;break;
+            case R.id.bottomSheetWorkButton: tags=1;break;
+            case R.id.bottomSheetOtherButton: tags=-1;break;
+
+           // case R.id.bottomSheetText: showKeyboard();
+
+            case R.id.fab : fabClick();
+        }
+    }
+
+    @Override
+    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+        if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+            }
+
+            bottomSheetString.clearFocus();
+
+        }
+        return false;
+    }
 }

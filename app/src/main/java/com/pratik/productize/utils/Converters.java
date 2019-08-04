@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.room.TypeConverter;
 
+import com.pratik.productize.R;
+
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,9 +90,62 @@ public class Converters {
 
     }
 
-    public String timeMinToHours(String min){
-
-        return "";
+    @SuppressLint("DefaultLocale")
+    public String timeLongToMin(long l){
+        if(l/(60*1000) > 60 )
+            return String.format("%02d hr:%02d mins",
+                    TimeUnit.MILLISECONDS.toHours(l),
+                    TimeUnit.MILLISECONDS.toMinutes(l) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(l)));
+        else
+            return String.format("%02d mins",
+                    TimeUnit.MILLISECONDS.toMinutes(l) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(l)));
     }
 
+
+    public String convertTagToText(int tag){
+
+        if( tag == 0){
+            return "Home";
+        }else if( tag == 1){
+            return " Work";
+        }
+
+        return "Others";
+
+    }
+
+    public int getColorResource(int priority) {
+
+        switch (priority){
+            case 6 : return R.drawable.card_border_yellow;
+
+            case 7 : return R.drawable.card_border_red;
+
+            default: return R.drawable.card_border;
+        }
+
+    }
+
+
+    public int getLocationTagImage(int tag){
+
+        int resId;
+
+        switch (tag){
+            case -1 :
+                resId = R.drawable.ic_other_fill_small;
+                break;
+            case 0 :
+                resId = R.drawable.ic_home_fill_small;
+                break;
+            case 1 :
+                resId = R.drawable.ic_work_fill_small;
+                break;
+            default: resId = R.drawable.ic_nav_other_hollow;
+        }
+
+        return resId;
+    }
 }

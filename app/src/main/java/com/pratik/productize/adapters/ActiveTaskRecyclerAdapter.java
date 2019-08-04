@@ -166,7 +166,6 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
         }else if( tag == 1){
             return " Work";
         }
-
         return "Others";
 
     }

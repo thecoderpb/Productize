@@ -23,7 +23,7 @@ buildscript {
     }
 
     ext {
-        roomVersion = '2.1.0-alpha06'
+        roomVersion = '2.2.0-alpha01'
         archLifecycleVersion = '2.0.0'
     }
 
@@ -35,6 +35,11 @@ allprojects {
         jcenter()
         
     }
+//    gradle.projectsEvaluated {
+//        tasks.withType(JavaCompile) {
+//            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+//        }
+//    }
 }
 
 task clean(type: Delete) {

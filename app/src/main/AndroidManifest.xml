@@ -16,12 +16,16 @@
 
         <activity
             android:name=".activites.OnGoingTaskActivitiy"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Task -/-"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".activites.ActiveTaskActivity" />
+        <activity android:name=".activites.ActiveTaskActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ActiveTask"/>
         <activity
             android:name=".activites.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,10 +37,12 @@
         <activity
             android:name=".activites.ScheduleTask"
             android:label="Let&apos;s start!"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.StyledTitleBar" />
         <activity
             android:name=".activites.MainActivity"
             android:label="Productize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
