@@ -156,6 +156,14 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+        ((MainActivity)getActivity()).showMainFragment();
+    }
+
     private void animateStatusBar(Tasks task) {
 
 

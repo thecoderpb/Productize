@@ -29,7 +29,7 @@ import java.util.Objects;
 
 import static com.pratik.productize.adapters.ActiveTaskRecyclerAdapter.tasksList;
 
-public class OnGoingTaskActivitiy extends AppCompatActivity {
+public class OnGoingTaskActivity extends AppCompatActivity {
 
 
     private static final int UI_ANIMATION_DELAY = 300;
@@ -139,10 +139,9 @@ public class OnGoingTaskActivitiy extends AppCompatActivity {
 
     private void showTask() {
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Task "+(currentTaskCount +1) + "/" + tasksList.size());
-
         if(currentTaskCount < tasksList.size()){
 
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Task "+(currentTaskCount +1) + "/" + tasksList.size());
             Log.i(Constants.TAG,"current task " + (currentTaskCount +1) + " duration " + tasksList.get(currentTaskCount).getDuration());
 
             taskText.setText(tasksList.get(currentTaskCount).getTaskText());
@@ -151,12 +150,15 @@ public class OnGoingTaskActivitiy extends AppCompatActivity {
             timeText.setText(text);
             startTimer(tasksList.get(currentTaskCount).getDuration());
         }else {
-            for(Tasks task : tasksList)
-                viewModel.delete(task);
+            for(Tasks task : tasksList){
+                viewModel.updateTaskCompleted(task.getId(),true);
+                viewModel.updateTaskPerformed(task.getId(),false);
+            }
 
             stopService(service);
             prefManager.setTaskOngoing(false);
             prefManager.setTaskActive(false);
+            currentTaskCount = 0;
             Toast.makeText(this, "All task(s) done for the day!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,MainActivity.class));
             finish();
@@ -188,13 +190,6 @@ public class OnGoingTaskActivitiy extends AppCompatActivity {
                 show();
                 currentTaskActive = false;
                 timeText.setVisibility(View.GONE);
-//                int restDuration = 5; //analyzeBreakTime();
-//                if(restDuration <= 5)
-//                    taskText.setText("Take a break of "+ 5 + "min and start your task");
-//                else if( restDuration <= 10 ){
-//                    taskText.setText("Phew that must be exhausting. Take a break of 10 min and get back");
-//                }
-
             }
         };
 

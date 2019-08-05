@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +119,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void launchTaskOngoingScreen() {
-        startActivity(new Intent(WelcomeActivity.this,OnGoingTaskActivitiy.class));
+        startActivity(new Intent(WelcomeActivity.this, OnGoingTaskActivity.class));
         finish();
     }
 

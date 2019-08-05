@@ -11,8 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pratik.productize.R;
+import com.pratik.productize.asynchronous.AppExecutor;
 import com.pratik.productize.database.Tasks;
 
+import com.pratik.productize.database.TasksDB;
 import com.pratik.productize.ui.RecyclerViewClickListener;
 
 
@@ -26,6 +28,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
     private Context context;
     public static List<Tasks> tasksList;
     private RecyclerViewClickListener itemClickListener;
+    private MarkItemSwiped itemSwipeListener;
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
@@ -56,8 +59,12 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
 //            }
 //        });
 
+        itemSwipeListener.itemSwiped(tasksList.get(position));
+
         tasksList.remove(position);
         notifyItemRemoved(position);
+
+
     }
 
 
@@ -93,10 +100,10 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
 
     }
 
-    public ActiveTaskRecyclerAdapter(Context context,RecyclerViewClickListener itemListener){
+    public ActiveTaskRecyclerAdapter(Context context,RecyclerViewClickListener itemListener,MarkItemSwiped itemSwipeListener){
         this.context = context;
         this.itemClickListener = itemListener;
-       // this.itemSwipeListener = itemSwipeListener;
+       this.itemSwipeListener = itemSwipeListener;
 
     }
 

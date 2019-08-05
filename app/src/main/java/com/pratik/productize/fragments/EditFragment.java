@@ -30,10 +30,9 @@ import com.pratik.productize.ui.TaskViewModel;
 
 import java.util.Objects;
 
-import static com.pratik.productize.utils.Constants.SHOW;
 import static com.pratik.productize.utils.Constants.TASK_ID;
 
-public class EditFragment extends Fragment  {
+public class EditFragment extends Fragment implements View.OnClickListener {
 
 
     private EditText editTask;
@@ -72,23 +71,7 @@ public class EditFragment extends Fragment  {
             }
         });
 
-        view.findViewById(R.id.saveEditTaskButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final TasksDB db = TasksDB.getInstance(getActivity());
-
-                AppExecutor.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        db.taskDAO().updateEditTask(editTask.getText().toString(),task.getPriority(),task.getDuration(),task.getId());
-                    }
-                });
-
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
-                ((MainActivity)getActivity()).toggleBottomBarVisibility(SHOW);
-            }
-        });
+        view.findViewById(R.id.saveEditTaskButton).setOnClickListener(this);
 
         InputMethodManager imm;
         editTask.requestFocus();
@@ -102,5 +85,21 @@ public class EditFragment extends Fragment  {
 
         //Toast.makeText(getActivity(), taskText + " " + duration + " " + priority, Toast.LENGTH_SHORT).show();
         editTask.setText(taskText);
+    }
+
+    @Override
+    public void onClick(View view) {
+        final TasksDB db = TasksDB.getInstance(getActivity());
+
+        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                db.taskDAO().updateEditTask(editTask.getText().toString(),task.getPriority(),task.getDuration(),task.getId());
+            }
+        });
+
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+        ((MainActivity)getActivity()).showMainFragment();
     }
 }

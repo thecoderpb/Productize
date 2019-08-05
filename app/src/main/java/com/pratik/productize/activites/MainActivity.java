@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -78,7 +81,8 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private BottomAppBar bottomAppBar;
     private EditText bottomSheetString;
-    private int priority,duration,tags = -1;
+    private int priority,tags = 0;
+    private static int duration = 0;
     private ChipGroup chipGroup;
     private FloatingActionButton p1,p2,p3,p4,p5,p6,p7;
     public TextView durationTitleTv, taskTitleTv, titleTv;
@@ -113,9 +117,13 @@ public class MainActivity extends AppCompatActivity
         taskTitleTv = findViewById(R.id.toolbar_titles2);
         titleTv = findViewById(R.id.toolbar_title3);
 
-        Button bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
-        Button bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
-        Button bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
+        Chip bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
+        Chip bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
+        Chip bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
+        Chip add5m = findViewById(R.id.add5min);
+        Chip add15m = findViewById(R.id.add15min);
+        Chip add30m = findViewById(R.id.add30min);
+
         chipGroup = findViewById(R.id.bottomSheetChipGroup);
 
         initializePriorities();
@@ -137,7 +145,12 @@ public class MainActivity extends AppCompatActivity
         p6.setOnClickListener(this);
         p7.setOnClickListener(this);
 
+        add5m.setOnClickListener(this);
+        add15m.setOnClickListener(this);
+        add30m.setOnClickListener(this);
+
         chipGroup.setSingleSelection(true);
+        chipGroup.check(R.id.bottomSheetHomeButton);
         chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup chipGroup, int i) {
@@ -232,10 +245,10 @@ public class MainActivity extends AppCompatActivity
             View view = Objects.requireNonNull(fragment.getView()).findViewById(R.id.dim_bg);
             if(b){
                 view.setVisibility(View.VISIBLE);
-                findViewById(R.id.card_layout).setClickable(false);
+//                findViewById(R.id.card_layout).setClickable(false);
             }else{
                 view.setVisibility(View.GONE);
-                findViewById(R.id.card_layout).setClickable(true);
+//                findViewById(R.id.card_layout).setClickable(true);
             }
 
         }
@@ -352,7 +365,6 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -379,8 +391,19 @@ public class MainActivity extends AppCompatActivity
     public void resetBottomSheet(){
 
         bottomSheetString.setText("");
-        chipGroup.clearCheck();
+        chipGroup.check(R.id.bottomSheetHomeButton);
+        tags = 0;
+        duration = 0;
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        p1.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E8F5E9")));
+        p2.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#C8E6C9")));
+        p3.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#81C784")));
+        p4.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#66BB6A")));
+        p5.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+        p6.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2E7D32")));
+        p7.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));
+
 
     }
 
@@ -400,11 +423,23 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void showMainFragment(){
+        for(int i=0 ; i<getSupportFragmentManager().getBackStackEntryCount();i++){
+            getSupportFragmentManager().popBackStack();
+        }
+        getSupportActionBar().setTitle("Productize");
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        toggleBottomBarVisibility(SHOW);
+    }
+
     public void saveUserDetailBottomSheet(View view){
 
         Date date = Converters.toDate(System.currentTimeMillis());
         String taskText = bottomSheetString.getText().toString();
 
+        Toast.makeText( this, "duration " + duration + " min", Toast.LENGTH_SHORT).show();
+
+        duration = duration*60*1000;
         TaskViewModel viewModel = ViewModelProviders.of(getVisibleFragment()).get(TaskViewModel.class);
         Tasks task = new Tasks(date,taskText,priority,duration,tags,false,false);
 
@@ -430,15 +465,38 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         toggleBottomBarVisibility(HIDE);
 
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
         Bundle args = new Bundle();
         args.putLong(TASK_ID,id);
 
         fragment.setArguments(args);
         ft.replace(R.id.content_main,fragment).addToBackStack("FRAG_EDIT").commit();
 
-//        final InputMethodManager imm;
-//        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.showSoftInput(getVisibleFragment().getView().findViewById(R.id.edit_task), InputMethodManager.SHOW_FORCED);
+    }
+
+    private void selectedPriority(int priority){
+
+        this.priority = priority;
+
+        p1.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#74E8F5E9")));
+        p2.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6DC8E6C9")));
+        p3.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6B81C784")));
+        p4.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6D66BB6A")));
+        p5.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6F4CAF50")));
+        p6.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6A2E7D32")));
+        p7.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6D0E2510")));
+
+        switch (priority){
+            case 1: p1.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));break;
+            case 2: p2.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));break;
+            case 3: p3.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));break;
+            case 4: p4.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));break;
+            case 5: p5.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));break;
+            case 6: p6.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));break;
+            case 7: p7.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));break;
+        }
+        
     }
 
     @SuppressLint("RestrictedApi")
@@ -457,21 +515,23 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View view) {
 
         switch (view.getId()){
-            case R.id.priorityLvl1: priority = 1; break;
-            case R.id.priorityLvl2: priority = 2; break;
-            case R.id.priorityLvl3: priority = 3; break;
-            case R.id.priorityLvl4: priority = 4; break;
-            case R.id.priorityLvl5: priority = 5; break;
-            case R.id.priorityLvl6: priority = 6; break;
-            case R.id.priorityLvl7: priority = 7; break;
+            case R.id.priorityLvl1: selectedPriority(1); break;
+            case R.id.priorityLvl2: selectedPriority(2); break;
+            case R.id.priorityLvl3: selectedPriority(3); break;
+            case R.id.priorityLvl4: selectedPriority(4); break;
+            case R.id.priorityLvl5: selectedPriority(5); break;
+            case R.id.priorityLvl6: selectedPriority(6); break;
+            case R.id.priorityLvl7: selectedPriority(7); break;
 
             case R.id.bottomSheetHomeButton: tags=0;break;
             case R.id.bottomSheetWorkButton: tags=1;break;
             case R.id.bottomSheetOtherButton: tags=-1;break;
 
-           // case R.id.bottomSheetText: showKeyboard();
+            case R.id.add5min: duration+=5;break;
+            case R.id.add15min: duration+=15;break;
+            case R.id.add30min: duration+=30;break;
 
-            case R.id.fab : fabClick();
+            case R.id.fab : fabClick();break;
         }
     }
 

@@ -26,6 +26,17 @@
     <color name="priority6">#2E7D32</color>
     <color name="priority7">#0E2510</color>
 
+
+    <color name="priority_dull1">#FFF59D</color>
+    <color name="priority_dull2">#FFD54F</color>
+    <color name="priority_dull3">#FFCA28</color>
+    <color name="priority_dull4">#FF9800</color>
+    <color name="priority_dull5">#F57C00</color>
+    <color name="priority_dull6">#D84315</color>
+    <color name="priority_dull7">#B71C1C</color>
+
+
+
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen2</item>

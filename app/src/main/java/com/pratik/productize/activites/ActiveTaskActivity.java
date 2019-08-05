@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.pratik.productize.R;
+import com.pratik.productize.adapters.MarkItemSwiped;
 import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.adapters.ActiveTaskRecyclerAdapter;
 import com.pratik.productize.ui.RecyclerViewClickListener;
@@ -25,7 +26,7 @@ import java.util.List;
 
 import static com.pratik.productize.utils.Constants.TAG_HOME;
 
-public class ActiveTaskActivity extends AppCompatActivity implements RecyclerViewClickListener {
+public class ActiveTaskActivity extends AppCompatActivity implements RecyclerViewClickListener, MarkItemSwiped {
 
     private TaskViewModel viewModel;
     private ActiveTaskRecyclerAdapter adapter;
@@ -39,7 +40,7 @@ public class ActiveTaskActivity extends AppCompatActivity implements RecyclerVie
 
         viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         RecyclerView recyclerView  = findViewById(R.id.taskRecyclerView);
-        adapter = new ActiveTaskRecyclerAdapter(this,this);
+        adapter = new ActiveTaskRecyclerAdapter(this,this,this);
         LinearLayoutManager layout = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layout);
         recyclerView.setHasFixedSize(true);
@@ -72,7 +73,7 @@ public class ActiveTaskActivity extends AppCompatActivity implements RecyclerVie
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(ActiveTaskActivity.this,OnGoingTaskActivitiy.class);
+                Intent intent = new Intent(ActiveTaskActivity.this, OnGoingTaskActivity.class);
                 startActivity(intent);
                 prefManager.setTaskOngoing(true);
                 finish();
@@ -93,14 +94,13 @@ public class ActiveTaskActivity extends AppCompatActivity implements RecyclerVie
             case R.id.editNote:
                 Toast.makeText(this, "edit note" + position, Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.card_layout:
-                Tasks tasks = adapter.getTaskAtPosition(position);
-                viewModel.delete(tasks);
-                adapter.notifyItemRangeChanged(0,adapter.getItemCount());
-                break;
-
         }
     }
 
+    @Override
+    public void itemSwiped(Tasks task) {
 
+        viewModel.updateTaskPerformed(task.getId(),false);
+        viewModel.updateTaskCompleted(task.getId(),false);
+    }
 }

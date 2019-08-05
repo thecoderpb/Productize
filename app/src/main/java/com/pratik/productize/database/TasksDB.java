@@ -3,11 +3,14 @@ package com.pratik.productize.database;
 import android.content.Context;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 
 
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 
 @Database(entities = Tasks.class,exportSchema = false,version = 1)
@@ -28,6 +31,16 @@ public abstract class TasksDB extends RoomDatabase {
         }
         return instance;
     }
+
+    private static final Migration migration = new Migration(1,3){
+
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+
+            database.execSQL("ALTER TABLE TASKS ADD COLUMN isTaskPerformed INTEGER DEFAULT NULL");
+
+        }
+    };
 
     public abstract TaskDAO taskDAO();
 

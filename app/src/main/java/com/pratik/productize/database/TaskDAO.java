@@ -7,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.google.android.gms.tasks.Task;
+
 import java.util.List;
 
 @Dao
@@ -25,10 +27,13 @@ public interface TaskDAO {
     @Query("SELECT * FROM TASKS WHERE id=:id AND isTaskExpired = 0 AND isTaskComplete = 0")
     LiveData<Tasks> getActiveTask(long id);
 
-    @Query("SELECT * FROM TASKS WHERE tags=:tag AND isTaskExpired = 0 AND isTaskComplete = 0 ORDER BY priority DESC")
-    LiveData<List<Tasks>> getTaskByTag(int tag);
+    @Query("SELECT * FROM TASKS WHERE isTaskExpired = 1 AND isTaskComplete = 0 ORDER BY timeStamp")
+    LiveData<List<Tasks>> getIncompleteTasks();
 
-    @Query("SELECT * FROM TASKS WHERE tags=:tag AND isTaskExpired = 0 AND isTaskComplete = 0 ORDER BY priority DESC, duration DESC ")
+    @Query("SELECT * FROM TASKS WHERE isTaskExpired = 1 AND isTaskComplete = 1 ORDER BY timeStamp")
+    LiveData<List<Tasks>> getCompleteTasks();
+
+    @Query("SELECT * FROM TASKS WHERE tags=:tag AND isTaskExpired = 0 AND isTaskComplete = 0  ORDER BY priority DESC, duration DESC ")
     LiveData<List<Tasks>> getSortedTaskByTag(int tag);
 
     @Query("SELECT COUNT(taskText) FROM TASKS WHERE isTaskExpired = 0")
@@ -52,8 +57,11 @@ public interface TaskDAO {
     @Query("DELETE FROM TASKS")
     void nukeTable();
 
-    @Query("UPDATE TASKS SET isTaskExpired = 1 WHERE id =:ids")
-    void updateTaskExpiryTrue(long ids);
+    @Query("UPDATE TASKS SET isTaskExpired =:flag  WHERE id =:ids")
+    void updateTaskExpiry(long ids, int flag);
+
+    @Query("UPDATE TASKS SET isTaskComplete =:flag WHERE id =:ids")
+    void updateTaskCompleted(long ids,int flag);
 
     @Query("UPDATE TASKS SET taskText =:taskText , priority =:priority , duration =:duration WHERE id =:id")
     void updateEditTask(String taskText,int priority,long duration,long id);

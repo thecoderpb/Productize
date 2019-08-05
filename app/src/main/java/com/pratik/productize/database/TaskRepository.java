@@ -17,7 +17,7 @@ import static com.pratik.productize.utils.Constants.TAG_WORK;
 public class TaskRepository {
 
     private TaskDAO taskDAO;
-    private LiveData<List<Tasks>> allTasks,homeTasks,workTasks,otherTasks;
+    private LiveData<List<Tasks>> allTasks,homeTasks,workTasks,otherTasks,completeTasks,incompleteTasks;
     private LiveData<Integer> allTaskCount,homeTaskCount,workTaskCount,otherTaskCount;
     private LiveData<Long> allDurationCount,homeDurationCount,workDurationCount,otherDurationCount;
 
@@ -40,6 +40,9 @@ public class TaskRepository {
         homeDurationCount = taskDAO.getTaskDurationByTag(TAG_HOME);
         workDurationCount = taskDAO.getTaskDurationByTag(TAG_WORK);
         otherDurationCount = taskDAO.getTaskDurationByTag(TAG_OTHER);
+
+        completeTasks = taskDAO.getCompleteTasks();
+        incompleteTasks = taskDAO.getIncompleteTasks();
 
     }
 
@@ -74,6 +77,13 @@ public class TaskRepository {
     public LiveData<Long> getOtherDurationCount() { return otherDurationCount; }
 
 
+    public LiveData<List<Tasks>> getCompleteTasks() {
+        return completeTasks;
+    }
+
+    public LiveData<List<Tasks>> getIncompleteTasks() {
+        return incompleteTasks;
+    }
 
     public void delete(final Tasks tasks){
 
@@ -131,5 +141,30 @@ public class TaskRepository {
 
     }
 
+    public void updateTaskPerformed(final long id , final boolean flag){
 
+        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if(flag)
+                    taskDAO.updateTaskExpiry(id,0);
+                else
+                    taskDAO.updateTaskExpiry(id,1);
+            }
+        });
+    }
+
+
+    public void updateTaskCompleted(final long id, final boolean flag) {
+
+        AppExecutor.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if(flag)
+                    taskDAO.updateTaskCompleted(id,1);
+                else
+                    taskDAO.updateTaskCompleted(id,0);
+            }
+        });
+    }
 }

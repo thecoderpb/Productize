@@ -14,7 +14,7 @@ import java.util.List;
 public class TaskViewModel extends AndroidViewModel {
 
     private TaskRepository repository;
-    private LiveData<List<Tasks>> tasks,homeTasks,workTasks,otherTasks;
+    private LiveData<List<Tasks>> tasks,homeTasks,workTasks,otherTasks,completeTasks,incompleteTasks;
     private LiveData<Integer> allTaskCount,homeTaskCount,workTaskCount,otherTaskCount;
     private LiveData<Long> allDurationCount,homeDurationCount,workDurationCount,otherDurationCount;
 
@@ -37,6 +37,9 @@ public class TaskViewModel extends AndroidViewModel {
         homeDurationCount = repository.getHomeDurationCount();
         workDurationCount = repository.getWorkDurationCount();
         otherDurationCount = repository.getOtherDurationCount();
+
+        completeTasks = repository.getCompleteTasks();
+        incompleteTasks = repository.getIncompleteTasks();
 
 
     }
@@ -70,12 +73,21 @@ public class TaskViewModel extends AndroidViewModel {
     public LiveData<Long> getOtherDurationCount() { return otherDurationCount; }
 
 
+    public LiveData<List<Tasks>> getCompleteTasks() { return completeTasks; }
+
+    public LiveData<List<Tasks>> getIncompleteTasks() { return incompleteTasks; }
+
+
 
     public void insert(Tasks task){ repository.insert(task);}
 
     public void update(Tasks task){ repository.update(task);}
 
+    public void updateTaskPerformed(long id,boolean flag){ repository.updateTaskPerformed(id,flag);}
+
     public void delete(Tasks task){ repository.delete(task);}
 
     public LiveData<Tasks> getTask(long id){ return repository.getTaskById(id,getApplication());}
+
+    public void updateTaskCompleted(long id, boolean flag) { repository.updateTaskCompleted(id,flag);}
 }
