@@ -1,8 +1,7 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">#E7E7E7</item>
         <item name="colorAccent">@color/colorAccent</item>
