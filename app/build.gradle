@@ -3,18 +3,19 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 28
+
+    compileSdkVersion 29
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.pratik.productize"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 3
-        versionName "1.2"
+        targetSdkVersion 29
+        versionCode 5
+        versionName "1.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     packagingOptions {
-        pickFirst  'META-INF/*'
+        pickFirst 'META-INF/*'
     }
     buildTypes {
         release {

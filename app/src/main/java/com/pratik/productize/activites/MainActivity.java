@@ -2,10 +2,12 @@ package com.pratik.productize.activites;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -57,7 +59,6 @@ import android.view.Menu;
 
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.TextView;
@@ -74,7 +75,7 @@ import static com.pratik.productize.utils.Constants.TASK_ID;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,View.OnKeyListener {
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,View.OnKeyListener,DialogInterface.OnClickListener {
 
     private PrefManager prefManager;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -375,7 +376,10 @@ public class MainActivity extends AppCompatActivity
                 .setTitle("About")
                 .setMessage("Please review the terms and privacy policy here")
                 .setPositiveButton("OK",null)
+                .setNeutralButton("Privacy Policy", this)
                 .show();
+
+
     }
 
     public void displayFragment(Fragment fragment){
@@ -548,5 +552,11 @@ public class MainActivity extends AppCompatActivity
 
         }
         return false;
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://productize.flycricket.io/privacy.html"));
+        startActivity(browserIntent);
     }
 }
