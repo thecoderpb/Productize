@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:nextFocusForward="@id/durationBottomSheetText"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:paddingRight="27dp"
                 android:text="Priority:" />
 
@@ -97,7 +97,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl1"
-                     style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
@@ -107,7 +106,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl2"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
@@ -117,7 +115,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl3"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
@@ -127,7 +124,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl4"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
@@ -137,7 +133,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl5"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
@@ -147,7 +142,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl6"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
@@ -157,7 +151,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/priorityLvl7"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginStart="5dp"
@@ -196,48 +189,81 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/sub15min"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:padding="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority5"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/sub5min"
+                    android:padding="5dp"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority5"
+                    app:elevation="0dp" />
+
+                <TextView
+                    android:id="@+id/bottom_sheet_tot_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="14sp"
+                    android:text="999 min"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add5min"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority5"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add15min"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority5"
+                    app:elevation="0dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add30min"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:backgroundTint="@color/priority5"
+                    app:elevation="0dp" />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:paddingEnd="5dp"
                 android:paddingStart="2dp"
-                android:layout_weight="1">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/add5min"
-                    style="@style/Widget.MaterialComponents.Chip.Action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="+5min"
-                    android:textStyle="bold"
-                    app:chipBackgroundColor="@color/colorSecondary"
-                     />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/add15min"
-                    style="@style/Widget.MaterialComponents.Chip.Action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="+15min"
-                    app:chipBackgroundColor="@color/colorSecondary"
-                     />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/add30min"
-                    style="@style/Widget.MaterialComponents.Chip.Action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="+30min"
-                    app:chipBackgroundColor="@color/colorSecondary"
-                     />
-
-
-            </LinearLayout>
+                />
 
 
 
@@ -259,7 +285,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:gravity="center|start"
                 android:text="Location : " />
 

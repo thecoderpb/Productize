@@ -75,7 +75,10 @@ import static com.pratik.productize.utils.Constants.TASK_ID;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,View.OnKeyListener,DialogInterface.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener,
+        View.OnKeyListener,
+        DialogInterface.OnClickListener {
 
     private PrefManager prefManager;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -88,6 +91,7 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton p1,p2,p3,p4,p5,p6,p7;
     public TextView durationTitleTv, taskTitleTv, titleTv;
     private DrawerLayout drawer;
+    private TextView totDurationTv;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -117,13 +121,16 @@ public class MainActivity extends AppCompatActivity
         durationTitleTv = findViewById(R.id.toolbar_title);
         taskTitleTv = findViewById(R.id.toolbar_titles2);
         titleTv = findViewById(R.id.toolbar_title3);
+        totDurationTv = findViewById(R.id.bottom_sheet_tot_duration);
 
         Chip bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
         Chip bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
         Chip bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
-        Chip add5m = findViewById(R.id.add5min);
-        Chip add15m = findViewById(R.id.add15min);
-        Chip add30m = findViewById(R.id.add30min);
+        FloatingActionButton add5m = findViewById(R.id.add5min);
+        FloatingActionButton add15m = findViewById(R.id.add15min);
+        FloatingActionButton add30m = findViewById(R.id.add30min);
+        FloatingActionButton sub5m = findViewById(R.id.sub5min);
+        FloatingActionButton sub15m = findViewById(R.id.sub15min);
 
         chipGroup = findViewById(R.id.bottomSheetChipGroup);
 
@@ -149,6 +156,8 @@ public class MainActivity extends AppCompatActivity
         add5m.setOnClickListener(this);
         add15m.setOnClickListener(this);
         add30m.setOnClickListener(this);
+        sub5m.setOnClickListener(this);
+        sub15m.setOnClickListener(this);
 
         chipGroup.setSingleSelection(true);
         chipGroup.check(R.id.bottomSheetHomeButton);
@@ -531,12 +540,24 @@ public class MainActivity extends AppCompatActivity
             case R.id.bottomSheetWorkButton: tags=1;break;
             case R.id.bottomSheetOtherButton: tags=-1;break;
 
-            case R.id.add5min: duration+=5;break;
-            case R.id.add15min: duration+=15;break;
-            case R.id.add30min: duration+=30;break;
+            case R.id.add5min: duration+=5  ;setDurationText(duration) ;break;
+            case R.id.add15min: duration+=15;setDurationText(duration) ;break;
+            case R.id.add30min: duration+=30;setDurationText(duration) ;break;
+            case R.id.sub5min: duration-=5  ;setDurationText(duration) ;break;
+            case R.id.sub15min: duration-=15;setDurationText(duration) ;break;
 
             case R.id.fab : fabClick();break;
         }
+    }
+
+    private void setDurationText(int duration){
+
+        if(duration < 0 ) {
+            MainActivity.duration =0;
+            duration = 0;
+        }
+        totDurationTv.setText(duration+" min");
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.pratik.productize.utils;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.room.TypeConverter;
@@ -11,11 +12,13 @@ import com.pratik.productize.R;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.pratik.productize.utils.Constants.TAG2;
+import static com.pratik.productize.utils.Constants.TAG_HOME;
 
 
 public class Converters {
@@ -50,15 +53,7 @@ public class Converters {
 
     public long time24HrToMillSec(String s) {
 
-        java.util.Date currdate = GregorianCalendar.getInstance().getTime();
-
-        Log.i(TAG2, currdate.toString());
-
-        String s1 = currdate.toString().substring(0, 11);
-        String s2 = currdate.toString().substring(16);
-        String newVal = s1 + s + s2;
-        Log.i(TAG2, newVal);
-        long newTime = strFormatToMill(newVal);
+        long newTime = timeStrToMillSec(s);
 
         if (newTime < System.currentTimeMillis()) {
             Log.i(TAG2, "Day has passed. Setting alarm for next day");
@@ -68,6 +63,22 @@ public class Converters {
         }
 
         return newTime ;//- (1000 * 60 * 5);
+    }
+
+    private long timeStrToMillSec(String s){
+
+
+        java.util.Date currdate = GregorianCalendar.getInstance().getTime();
+
+        Log.i(TAG2, currdate.toString());
+
+        String s1 = currdate.toString().substring(0, 11);
+        String s2 = currdate.toString().substring(16);
+        String newVal = s1 + s + s2;
+        Log.i(TAG2, newVal);
+
+        return strFormatToMill(newVal);
+
     }
 
     @SuppressLint("DefaultLocale")
@@ -114,6 +125,27 @@ public class Converters {
 
         return "Others";
 
+    }
+
+    public String calculateResetTime(Context context){
+
+        PrefManager prefManager = new PrefManager(context);
+        String time;
+        if(prefManager.getActiveTag() == TAG_HOME)
+            time = prefManager.getHomeTime();
+        else
+            time = prefManager.getWorkTime();
+
+        long millsecTime = timeStrToMillSec(time);
+        millsecTime += prefManager.getHours();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millsecTime);
+        String fullTime = calendar.getTime().toString();
+
+
+
+     return fullTime;
     }
 
     public int getColorResource(int priority) {

@@ -13,7 +13,7 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 
-@Database(entities = Tasks.class,exportSchema = false,version = 1)
+@Database(entities = Tasks.class,exportSchema = false,version = 3)
 public abstract class TasksDB extends RoomDatabase {
 
     private static final String DB_NAME = "tasks_db";

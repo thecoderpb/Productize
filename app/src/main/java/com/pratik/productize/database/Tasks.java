@@ -34,12 +34,8 @@ public class Tasks {
         this.isTaskComplete = isTaskComplete;
         this.isTaskExpired = isTaskExpired;
 
-
     }
 
-    public Date date(){
-        return getTimeStamp();
-    }
 
     public long getId() {
         return id;

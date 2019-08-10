@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.pratik.productize.R;
+import com.pratik.productize.utils.Converters;
 import com.pratik.productize.utils.PrefManager;
 
 import java.util.Calendar;
@@ -27,7 +28,7 @@ import java.util.Objects;
 import static android.graphics.Color.WHITE;
 import static com.pratik.productize.utils.Constants.TAG_HOME;
 
-public class ScheduleTask extends AppCompatActivity {
+public class ScheduleTask extends AppCompatActivity implements View.OnClickListener{
 
     PrefManager prefManager;
     Button button15m,button30m,button60m;
@@ -90,9 +91,9 @@ public class ScheduleTask extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Calendar mcurrentDate = Calendar.getInstance();
-                int mHours = mcurrentDate.get(Calendar.HOUR_OF_DAY);
-                int mMin = mcurrentDate.get(Calendar.MINUTE);
+                Calendar mCurrentDate = Calendar.getInstance();
+                int mHours = mCurrentDate.get(Calendar.HOUR_OF_DAY);
+                int mMin = mCurrentDate.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
 
@@ -185,34 +186,7 @@ public class ScheduleTask extends AppCompatActivity {
 
 
 
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if(radioGroup.getCheckedRadioButtonId() == R.id.home_radio)
-                    activeTag = 0;
-                else
-                    activeTag = 1;
-
-
-                prefManager.setTaskScheduled(true);
-                prefManager.setActiveTag(activeTag);
-                prefManager.setHours(minutes*60*1000);
-
-                Intent intent2 = getIntent();
-                Intent intent = new Intent(ScheduleTask.this,MainActivity.class);
-                if(!intent2.hasExtra("nav_schedule") && isAllOptionsSelected()){
-                    startActivity(intent);
-                    finish();
-                }
-                else if(!isAllOptionsSelected()){
-                    Toast.makeText(ScheduleTask.this, "Please answer all questions in order to proceed", Toast.LENGTH_SHORT).show();
-                }else
-                    finish();
-
-            }
-        });
+        buttonSave.setOnClickListener(this);
     }
 
     private boolean isAllOptionsSelected() {
@@ -225,5 +199,34 @@ public class ScheduleTask extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(radioGroup.getCheckedRadioButtonId() == R.id.home_radio)
+            activeTag = 0;
+        else
+            activeTag = 1;
+
+
+        prefManager.setTaskScheduled(true);
+        prefManager.setActiveTag(activeTag);
+        prefManager.setHours(minutes*60*1000);
+
+        Converters converters = new Converters();
+        String resetTime = converters.calculateResetTime(this);
+
+        Toast.makeText(this, "res time "+ resetTime, Toast.LENGTH_SHORT).show();
+
+        Intent intent2 = getIntent();
+        Intent intent = new Intent(ScheduleTask.this,MainActivity.class);
+        if(!intent2.hasExtra("nav_schedule") && isAllOptionsSelected()){
+            startActivity(intent);
+            finish();
+        }
+        else if(!isAllOptionsSelected()){
+            Toast.makeText(ScheduleTask.this, "Please answer all questions in order to proceed", Toast.LENGTH_SHORT).show();
+        }else
+            finish();
     }
 }

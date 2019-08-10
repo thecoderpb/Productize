@@ -15,14 +15,11 @@
         android:id="@+id/empty_notes_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textSize="@dimen/msg_no_task"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif-light"
         android:layout_gravity="center"
-        android:text="@string/empty_task"
-        />
+        android:fontFamily="sans-serif-light"
+        android:layout_marginBottom="60dp"
+        android:text="Add some tasks!"
+        android:textSize="@dimen/msg_no_task" />
 
     <View
         android:id="@+id/dim_bg"
