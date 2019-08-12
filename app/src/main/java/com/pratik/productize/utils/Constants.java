@@ -19,6 +19,7 @@ public class Constants {
     static final String HOME_TIME = "homeTime";
     static final String WORK_TIME = "workTime";
     static final String TASK_HOURS = "taskHours";
+    static final String IS_PRO_MODE = "proMode";
 
     //intent request code
     public static final String ALARM_INTENT_RC = "alarmRequestCode";

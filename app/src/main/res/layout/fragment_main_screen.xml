@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="sans-serif-light"
-        android:layout_marginBottom="60dp"
         android:text="Add some tasks!"
         android:textSize="@dimen/msg_no_task" />
 

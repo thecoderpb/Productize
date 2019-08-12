@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.pratik.productize.R;
 import com.pratik.productize.asynchronous.FCMService;
 import com.pratik.productize.utils.PrefManager;
+import com.pratik.productize.utils.ProMode;
 
 public class WelcomeActivity extends AppCompatActivity {
 

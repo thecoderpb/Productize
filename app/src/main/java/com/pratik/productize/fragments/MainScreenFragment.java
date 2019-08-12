@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -42,7 +43,7 @@ import static com.pratik.productize.utils.Constants.TAG1;
 import static com.pratik.productize.utils.Constants.TAG_HOME;
 import static com.pratik.productize.utils.Constants.TAG_WORK;
 
-public class MainScreenFragment extends Fragment implements RecyclerViewClickListener{
+public class MainScreenFragment extends Fragment implements RecyclerViewClickListener {
 
     private TaskViewModel viewModel;
     private TaskRecyclerAdapter adapter;
@@ -115,7 +116,7 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
             public void onChanged(Integer integer) {
                 Log.i(TAG,"all tasks "+ integer);
                 if(integer != 0){
-                   // animateStatusBar(integer);
+                  //  animateStatusBar(integer);
                 }
             }
         });
@@ -164,13 +165,11 @@ public class MainScreenFragment extends Fragment implements RecyclerViewClickLis
         ((MainActivity)getActivity()).showMainFragment();
     }
 
-    private void animateStatusBar(Tasks task) {
+    private void animateStatusBar(Tasks task,int count) {
 
 
-
-
-          ((MainActivity)(getActivity())).taskTitleTv.setText("Total task: " );
-          ((MainActivity)(getActivity())).taskTitleTv.setText("Total duration: " + task.getDuration());
+          ((MainActivity)(getActivity())).taskTitleTv.setText("Total task: " + count );
+          ((MainActivity)(getActivity())).durationTitleTv.setText("Total duration: " + task.getDuration());
           ((MainActivity)(getActivity())).titleTv.setText("Productize");
           Animation anim1 = AnimationUtils.loadAnimation(getActivity(),R.anim.slide);
           Animation anim2 = AnimationUtils.loadAnimation(getActivity(),R.anim.slide2);

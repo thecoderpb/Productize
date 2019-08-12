@@ -82,6 +82,9 @@ public class HomeScreenFragment extends Fragment implements RecyclerViewClickLis
             }
         });
 
+        ((MainActivity)(getActivity())).getSupportActionBar().setTitle("Home Tasks");
+
+
         return view;
     }
 

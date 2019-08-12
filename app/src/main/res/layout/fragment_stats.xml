@@ -5,36 +5,85 @@
     android:layout_height="match_parent"
     tools:context=".fragments.StatsFragment">
 
-    <TextView
-        android:id="@+id/stats_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="312dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Comming Soon" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/stats_tv2"
-        android:layout_width="175dp"
-        android:layout_height="147dp"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:text="Comming Soon" />
+        <ImageButton
+            android:id="@+id/week_button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_chevron_left"
+            android:layout_weight="2"
+            android:clickable="true"
+            />
 
-    <TextView
-        android:id="@+id/stats_tv3"
-        android:layout_width="175dp"
-        android:layout_height="292dp"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:text="Comming Soon" />
+        <TextView
+            android:id="@+id/week_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This week"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            style="@style/TextAppearance.AppTheme.Body2"/>
 
-    <TextView
-        android:id="@+id/stats_tv4"
-        android:layout_width="174dp"
-        android:layout_height="420dp"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:text="Comming Soon" />
+        <ImageButton
+            android:id="@+id/week_button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_chevron_right"
+            android:layout_weight="2"
+            android:clickable="true"
+            />
+
+    </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/stats_tv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="312dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="bottom"-->
+        <!--android:text="Comming Soon" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/stats_tv2"-->
+        <!--android:layout_width="175dp"-->
+        <!--android:layout_height="147dp"-->
+        <!--android:layout_gravity="bottom|center"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="Comming Soon" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/stats_tv3"-->
+        <!--android:layout_width="175dp"-->
+        <!--android:layout_height="292dp"-->
+        <!--android:layout_gravity="bottom|center"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="Comming Soon" />-->
+
+    <!--<com.github.mikephil.charting.charts.BarChart-->
+        <!--android:id="@+id/chart1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_marginTop="75dp"-->
+        <!--android:layout_gravity="top" />-->
+
+
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_marginTop="75dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
 
 </FrameLayout>

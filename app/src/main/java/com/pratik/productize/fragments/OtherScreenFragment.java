@@ -80,6 +80,9 @@ public class OtherScreenFragment extends Fragment implements RecyclerViewClickLi
                 Log.i(TAG,"all duration "+ aLong);
             }
         });
+
+        ((MainActivity)(getActivity())).getSupportActionBar().setTitle("Other Tasks");
+
         return view;
     }
 

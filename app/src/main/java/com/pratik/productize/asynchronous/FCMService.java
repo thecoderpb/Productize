@@ -26,8 +26,6 @@ public class FCMService extends FirebaseMessagingService {
         notificationHandler.createNotificationChannel();
         notificationHandler.displayNotification(notification);
 
-
-
     }
 
     @Override

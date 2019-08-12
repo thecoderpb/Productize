@@ -199,21 +199,26 @@ public class OnGoingTaskActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if(currentTaskActive){
-            new AlertDialog.Builder(this)
-                    .setTitle("Task Active")
-                    .setMessage("are you sure you want to quit?")
-                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    })
-                    .setNegativeButton("NO",null)
-                    .show();
-
-        }else
+//        if(currentTaskActive){
+//            new AlertDialog.Builder(this)
+//                    .setTitle("Task Active")
+//                    .setMessage("are you sure you want to quit?")
+//                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                        }
+//                    })
+//                    .setNegativeButton("NO",null)
+//                    .show();
+//
+//        }else
             super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

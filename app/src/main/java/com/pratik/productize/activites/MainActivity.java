@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
@@ -59,6 +60,7 @@ import android.view.Menu;
 
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.TextView;
@@ -91,7 +93,8 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton p1,p2,p3,p4,p5,p6,p7;
     public TextView durationTitleTv, taskTitleTv, titleTv;
     private DrawerLayout drawer;
-    private TextView totDurationTv;
+    private Button totDurationButton;
+    private CoordinatorLayout layoutBottomSheet;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -113,24 +116,23 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commitNow();
         }
 
-        CoordinatorLayout layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         fab = findViewById(R.id.fab);
         bottomAppBar = findViewById(R.id.bottom_app_bar);
         bottomSheetString = findViewById(R.id.bottomSheetText);
         durationTitleTv = findViewById(R.id.toolbar_title);
         taskTitleTv = findViewById(R.id.toolbar_titles2);
-        titleTv = findViewById(R.id.toolbar_title3);
-        totDurationTv = findViewById(R.id.bottom_sheet_tot_duration);
+        titleTv = findViewById(R.id.toolbar_titles3);
+        totDurationButton = findViewById(R.id.bottom_sheet_tot_duration);
 
         Chip bottomSheetHomeButton = findViewById(R.id.bottomSheetHomeButton);
         Chip bottomSheetWorkButton = findViewById(R.id.bottomSheetWorkButton);
         Chip bottomSheetOtherButton = findViewById(R.id.bottomSheetOtherButton);
-        FloatingActionButton add5m = findViewById(R.id.add5min);
-        FloatingActionButton add15m = findViewById(R.id.add15min);
-        FloatingActionButton add30m = findViewById(R.id.add30min);
-        FloatingActionButton sub5m = findViewById(R.id.sub5min);
-        FloatingActionButton sub15m = findViewById(R.id.sub15min);
+        Button add5m = findViewById(R.id.add5min);
+        Button add15m = findViewById(R.id.add15min);
+        Button add30m = findViewById(R.id.add30min);
+
 
         chipGroup = findViewById(R.id.bottomSheetChipGroup);
 
@@ -156,8 +158,7 @@ public class MainActivity extends AppCompatActivity
         add5m.setOnClickListener(this);
         add15m.setOnClickListener(this);
         add30m.setOnClickListener(this);
-        sub5m.setOnClickListener(this);
-        sub15m.setOnClickListener(this);
+
 
         chipGroup.setSingleSelection(true);
         chipGroup.check(R.id.bottomSheetHomeButton);
@@ -197,6 +198,8 @@ public class MainActivity extends AppCompatActivity
 
         bottomSheetString.setOnClickListener(this);
         bottomSheetString.setOnKeyListener(this);
+
+
 
     }
 
@@ -281,6 +284,7 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Productize");
+        getSupportActionBar().show();
         toggleBottomBarVisibility(SHOW);
 
         int backStack = getSupportFragmentManager().getBackStackEntryCount();
@@ -417,7 +421,7 @@ public class MainActivity extends AppCompatActivity
         p6.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2E7D32")));
         p7.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0E2510")));
 
-
+        totDurationButton.setText("--");
     }
 
     public void showKeyboard(){
@@ -518,9 +522,12 @@ public class MainActivity extends AppCompatActivity
         if(flag){
             bottomAppBar.setVisibility(View.VISIBLE);
             fab.setVisibility(View.VISIBLE);
+            layoutBottomSheet.setVisibility(View.VISIBLE);
+
         }else {
             bottomAppBar.setVisibility(View.GONE);
             fab.setVisibility(View.GONE);
+            layoutBottomSheet.setVisibility(View.GONE);
         }
     }
 
@@ -543,8 +550,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.add5min: duration+=5  ;setDurationText(duration) ;break;
             case R.id.add15min: duration+=15;setDurationText(duration) ;break;
             case R.id.add30min: duration+=30;setDurationText(duration) ;break;
-            case R.id.sub5min: duration-=5  ;setDurationText(duration) ;break;
-            case R.id.sub15min: duration-=15;setDurationText(duration) ;break;
+
 
             case R.id.fab : fabClick();break;
         }
@@ -556,7 +562,7 @@ public class MainActivity extends AppCompatActivity
             MainActivity.duration =0;
             duration = 0;
         }
-        totDurationTv.setText(duration+" min");
+        totDurationButton.setText(duration+" min");
 
     }
 

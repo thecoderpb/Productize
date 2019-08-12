@@ -16,6 +16,7 @@ import com.pratik.productize.database.Tasks;
 
 import com.pratik.productize.database.TasksDB;
 import com.pratik.productize.ui.RecyclerViewClickListener;
+import com.pratik.productize.utils.Converters;
 
 
 import java.util.Collections;
@@ -29,6 +30,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
     public static List<Tasks> tasksList;
     private RecyclerViewClickListener itemClickListener;
     private MarkItemSwiped itemSwipeListener;
+    private Converters converter;
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
@@ -49,44 +51,22 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
     @Override
     public void onItemDismiss(int position) {
 
-//        Tasks task = tasksList.get(position);
-//        final long id = task.getId();
-//        AppExecutor.getInstance().diskIO().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                TasksDB db = TasksDB.getInstance(context);
-//                db.taskDAO().updateTaskExpiryTrue(id);
-//            }
-//        });
-
         itemSwipeListener.itemSwiped(tasksList.get(position));
 
         tasksList.remove(position);
         notifyItemRemoved(position);
 
-
     }
-
 
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView reminderText,durationText,locationText;
-        private ImageView deleteTaskImage,editTaskImage,locationTagImage;
+        private TextView reminderText,durationText;
 
         private MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            reminderText = itemView.findViewById(R.id.reminderCardView);
-            durationText = itemView.findViewById(R.id.durationTextCV);
-            locationText = itemView.findViewById(R.id.locationTextCV);
-
-
-            deleteTaskImage = itemView.findViewById(R.id.deleteNotes);
-            editTaskImage = itemView.findViewById(R.id.editNote);
-            locationTagImage = itemView.findViewById(R.id.locationCVImage);
-
-            deleteTaskImage.setOnClickListener(this);
-            editTaskImage.setOnClickListener(this);
+            reminderText = itemView.findViewById(R.id.currentReminderCardView);
+            durationText = itemView.findViewById(R.id.currentDurationTextCV);
 
         }
 
@@ -97,13 +77,14 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
         }
 
 
-
     }
 
     public ActiveTaskRecyclerAdapter(Context context,RecyclerViewClickListener itemListener,MarkItemSwiped itemSwipeListener){
         this.context = context;
         this.itemClickListener = itemListener;
-       this.itemSwipeListener = itemSwipeListener;
+        this.itemSwipeListener = itemSwipeListener;
+
+        converter = new Converters();
 
     }
 
@@ -111,7 +92,7 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.card_layout, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_layout2, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -121,9 +102,8 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
         if(tasksList!=null){
             Tasks currentTask = tasksList.get(position);
             holder.reminderText.setText(currentTask.getTaskText());
-            holder.durationText.setText(String.valueOf(currentTask.getDuration()));
-            holder.locationText.setText(convertTagToText(currentTask.getTags()));
-            holder.locationTagImage.setImageResource(getLocationTagImage(currentTask.getTags()));
+            holder.durationText.setText(String.valueOf(converter.timeLongToMin(currentTask.getDuration())));
+
         }
     }
 
@@ -145,39 +125,5 @@ public class ActiveTaskRecyclerAdapter extends RecyclerView.Adapter<ActiveTaskRe
             return 0;
 
     }
-
-    private int getLocationTagImage(int tag){
-
-        int resId;
-
-        switch (tag){
-            case -1 :
-                resId = R.drawable.ic_nav_other_fill;
-                break;
-            case 0 :
-                resId = R.drawable.ic_nav_home_fill;
-                break;
-            case 1 :
-                resId = R.drawable.ic_nav_work_fill;
-                break;
-            default: resId = R.drawable.ic_nav_other_hollow;
-        }
-
-        return resId;
-    }
-
-    private String convertTagToText(int tag){
-
-        if( tag == 0){
-            return "Home";
-        }else if( tag == 1){
-            return " Work";
-        }
-        return "Others";
-
-    }
-
-
-
 
 }

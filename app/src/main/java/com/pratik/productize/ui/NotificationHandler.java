@@ -18,6 +18,7 @@ import com.pratik.productize.utils.PrefManager;
 import com.pratik.productize.activites.MainActivity;
 import com.pratik.productize.activites.WelcomeActivity;
 
+import static androidx.core.app.NotificationCompat.BADGE_ICON_LARGE;
 import static androidx.core.app.NotificationCompat.PRIORITY_DEFAULT;
 import static com.pratik.productize.utils.Constants.CHANNEL_ID;
 import static com.pratik.productize.utils.Constants.FLAG_ALARM1;
@@ -117,7 +118,7 @@ public class NotificationHandler {
         String title = notification.getTitle();
         NotificationCompat.Builder builder;
         builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_launcher_foreground,BADGE_ICON_LARGE)
                 .setContentTitle(title)
                 .setContentText(msg)
                 .setAutoCancel(true)

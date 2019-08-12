@@ -14,7 +14,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import static com.pratik.productize.utils.Constants.TAG2;
@@ -101,15 +103,18 @@ public class Converters {
 
     }
 
-    @SuppressLint("DefaultLocale")
     public String timeLongToMin(long l){
         if(l/(60*1000) > 60 )
-            return String.format("%02d hr:%02d mins",
+            return String.format(Locale.getDefault(),"%01d hr %2d mins",
                     TimeUnit.MILLISECONDS.toHours(l),
                     TimeUnit.MILLISECONDS.toMinutes(l) -
                             TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(l)));
-        else
-            return String.format("%02d mins",
+        else if( l/(60*1000) == 60 ){
+
+            return String.format(Locale.getDefault(),"%2d hr",TimeUnit.MILLISECONDS.toHours(l));
+
+        }else
+            return String.format(Locale.getDefault(),"%2d mins",
                     TimeUnit.MILLISECONDS.toMinutes(l) -
                             TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(l)));
     }

@@ -13,16 +13,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3743107418930087~5318416923" />
 
         <activity
             android:name=".activites.OnGoingTaskActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Task -/-"
-            android:theme="@style/FullscreenTheme" />
-        <activity android:name=".activites.ActiveTaskActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ActiveTask"/>
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activites.ActiveTaskActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ActiveTask" />
         <activity
             android:name=".activites.WelcomeActivity"
             android:screenOrientation="portrait"
@@ -68,7 +76,6 @@
             android:name=".asynchronous.OnGoingTaskService"
             android:enabled="true"
             android:exported="true" />
-
         <service android:name=".asynchronous.FCMService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

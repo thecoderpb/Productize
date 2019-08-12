@@ -11,6 +11,7 @@ import static com.pratik.productize.utils.Constants.IS_TASK_ACTIVE;
 import static com.pratik.productize.utils.Constants.IS_TASK_ONGOING;
 import static com.pratik.productize.utils.Constants.IS_TASK_SCHEDULED;
 import static com.pratik.productize.utils.Constants.PREF_NAME;
+import static com.pratik.productize.utils.Constants.IS_PRO_MODE;
 import static com.pratik.productize.utils.Constants.TAG_HOME;
 import static com.pratik.productize.utils.Constants.TASK_HOURS;
 import static com.pratik.productize.utils.Constants.WORK_TIME;
@@ -69,13 +70,27 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void setProMode(boolean flag){
+        editor.putBoolean(IS_PRO_MODE,flag);
+        editor.commit();
+    }
+
     public boolean isTaskOngoing(){return pref.getBoolean(IS_TASK_ONGOING,false);}
+
     public boolean isTaskScheduled(){return pref.getBoolean(IS_TASK_SCHEDULED,false);}
+
     public boolean isTaskActive(){ return pref.getBoolean(IS_TASK_ACTIVE,false);}
+
     public boolean isFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
+
+    public boolean isProMode(){return pref.getBoolean(IS_PRO_MODE,false);}
+
     public int getActiveTag(){return  pref.getInt(ACTIVE_TAG,TAG_HOME);}
+
     public String getHomeTime(){return pref.getString(HOME_TIME,null);}
+
     public String getWorkTime(){return pref.getString(WORK_TIME,null);}
+
     public long getHours() { return pref.getLong(TASK_HOURS,0);} }

@@ -80,6 +80,8 @@ public class WorkScreenFragment extends Fragment implements RecyclerViewClickLis
             }
         });
 
+        ((MainActivity)(getActivity())).getSupportActionBar().setTitle("Work Tasks");
+
         return view;
     }
 
