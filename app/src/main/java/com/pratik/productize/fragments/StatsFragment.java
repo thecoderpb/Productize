@@ -112,7 +112,7 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
             if(i % 3 == 0) {
                 list.add(new LineChartItem(generateDataLine(), getActivity()));
             } else if(i % 3 == 1) {
-                list.add(new BarChartItem(generateDataBar(i + 1), getActivity()));
+                list.add(new BarChartItem(generateDataBar(), getActivity()));
             } else if(i % 3 == 2) {
                 list.add(new PieChartItem(generateDataPie(), getActivity()));
             }
@@ -140,7 +140,7 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
 
         ArrayList<Entry> values2 = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 7; i++) {
             values2.add(new Entry(i, values1.get(i).getY() - 30));
         }
 
@@ -160,17 +160,18 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private BarData generateDataBar(int cnt) {
+    private BarData generateDataBar() {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 7; i++) {
             entries.add(new BarEntry(i, (int) (Math.random() * 70) + 30));
         }
 
-        BarDataSet d = new BarDataSet(entries, "New DataSet " + cnt);
+        BarDataSet d = new BarDataSet(entries, "");
         d.setColors(ColorTemplate.MATERIAL_COLORS);
         d.setHighLightAlpha(255);
+        d.setLabel("Week trends");
 
         BarData cd = new BarData(d);
         cd.setBarWidth(0.9f);
@@ -182,9 +183,8 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Quarter " + (i+1)));
-        }
+        entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Home " ));
+        entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Work " ));
 
         PieDataSet d = new PieDataSet(entries, "");
 
@@ -200,7 +200,7 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        Toast.makeText(getContext(), "clicked view", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Comming soon", Toast.LENGTH_SHORT).show();
 
         switch (view.getId()){
             case R.id.week_button_left : changeWeekText(-1,currentWeek--);break;

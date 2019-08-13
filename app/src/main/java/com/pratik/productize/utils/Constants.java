@@ -10,6 +10,9 @@ public class Constants {
 
     public static final String TASK_ID = "taskId";
 
+    public static final String[] weeks = new String[]{ "Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
+    public static final String[] hours = new String[]{ "1","4","5","3","2.5","2","1.5"};
+
     // Preferences name
     static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     static final String IS_TASK_ACTIVE = "IsTaskActive";

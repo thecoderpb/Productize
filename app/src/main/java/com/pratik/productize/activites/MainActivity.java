@@ -339,6 +339,7 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_stats :
                 fragment = new StatsFragment();
+                Toast.makeText(this, "More features coming soon", Toast.LENGTH_SHORT).show();
                 displayFragment(fragment);
                 toggleBottomBarVisibility(HIDE);
                 break;
