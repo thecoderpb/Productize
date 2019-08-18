@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.pratik.productize.database.TaskRepository;
 import com.pratik.productize.database.Tasks;
 
+import java.sql.Date;
 import java.util.List;
 
 public class TaskViewModel extends AndroidViewModel {
@@ -77,7 +78,7 @@ public class TaskViewModel extends AndroidViewModel {
 
     public LiveData<List<Tasks>> getIncompleteTasks() { return incompleteTasks; }
 
-
+    public LiveData<List<Tasks>> getTasksFromDateRange(long startDate, long endDate){ return repository.getTaskFromDateRange(startDate, endDate);}
 
     public void insert(Tasks task){ repository.insert(task);}
 

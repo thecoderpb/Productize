@@ -8,7 +8,9 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.google.android.gms.tasks.Task;
+import com.pratik.productize.utils.Converters;
 
+import java.sql.Date;
 import java.util.List;
 
 @Dao
@@ -53,6 +55,9 @@ public interface TaskDAO {
 
     @Query("SELECT SUM(duration) FROM TASKS WHERE tags=:tag AND isTaskExpired = 0")
     long getTaskDurationByTags(int tag);
+
+    @Query("SELECT * FROM TASKS WHERE timeStamp BETWEEN :startDate AND :endDate")
+    LiveData<List<Tasks>> getTaskFromDateRange(long startDate, long endDate);
 
     @Query("DELETE FROM TASKS")
     void nukeTable();

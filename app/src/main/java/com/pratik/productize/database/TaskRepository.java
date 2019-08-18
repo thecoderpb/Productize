@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.pratik.productize.utils.Constants;
 import com.pratik.productize.asynchronous.AppExecutor;
 
+import java.sql.Date;
 import java.util.List;
 
 import static com.pratik.productize.utils.Constants.TAG_HOME;
@@ -43,7 +44,6 @@ public class TaskRepository {
 
         completeTasks = taskDAO.getCompleteTasks();
         incompleteTasks = taskDAO.getIncompleteTasks();
-
     }
 
     public LiveData<List<Tasks>> getAllTasks(){
@@ -166,5 +166,11 @@ public class TaskRepository {
                     taskDAO.updateTaskCompleted(id,0);
             }
         });
+    }
+
+    public LiveData<List<Tasks>> getTaskFromDateRange(final long d1, final long d2){
+
+        return taskDAO.getTaskFromDateRange(d1,d2);
+
     }
 }

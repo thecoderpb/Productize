@@ -57,8 +57,11 @@ public class Constants {
     //notification ID
     public static final int NOTIFICATION_ID = 32;
 
+    //bottom sheet flags
     public static final boolean SHOW = true;
     public static final boolean HIDE = false;
 
+    //day converters
+    public static final long WEEK_IN_LONG = 1000*60*60*24*7;
 
 }

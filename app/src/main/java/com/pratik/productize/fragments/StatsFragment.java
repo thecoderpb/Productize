@@ -1,25 +1,24 @@
 package com.pratik.productize.fragments;
 
 
-import android.content.Context;
+
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
+import android.widget.ImageButton;
+import android.widget.ListView;
+
+import android.widget.TextView;
+
+
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -29,28 +28,37 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
 import com.pratik.productize.R;
 import com.pratik.productize.activites.MainActivity;
 import com.pratik.productize.adapters.ChartDataAdapter;
-import com.pratik.productize.database.Tasks;
 import com.pratik.productize.ui.TaskViewModel;
 import com.pratik.productize.ui.chartItems.BarChartItem;
 import com.pratik.productize.ui.chartItems.ChartItem;
 import com.pratik.productize.ui.chartItems.LineChartItem;
 import com.pratik.productize.ui.chartItems.PieChartItem;
 
+
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+
+import static com.pratik.productize.utils.Constants.WEEK_IN_LONG;
 
 
 public class StatsFragment extends Fragment implements View.OnClickListener {
 
 
-    private TextView textView,textView2,textView3,weekText;
     private int currentWeek = 0;
+    private TaskViewModel viewModel;
+    private TextView weekText;
+    private ImageButton leftButton,rightButton;
+    private View view;
+    private  long startDate = System.currentTimeMillis() - WEEK_IN_LONG;
+    private long endDate = System.currentTimeMillis();
 
     public StatsFragment() {
         // Required empty public constructor
@@ -61,62 +69,37 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_stats, container, false);
-        TaskViewModel viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        view = inflater.inflate(R.layout.fragment_stats, container, false);
+        viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
 
-        viewModel.getCompleteTasks().observe(this, new Observer<List<Tasks>>() {
-            @Override
-            public void onChanged(List<Tasks> tasks) {
-//                textView = view.findViewById(R.id.stats_tv);
-//                textView.setText("Completed tasks " + tasks.size());
-            }
-        });
+        Objects.requireNonNull(((MainActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Statistics");
 
-        viewModel.getIncompleteTasks().observe(this, new Observer<List<Tasks>>() {
-            @Override
-            public void onChanged(List<Tasks> tasks) {
-//                textView2 = view.findViewById(R.id.stats_tv2);
-//                textView2.setText("Incomplete tasks " + tasks.size());
-            }
-        });
+        setChart(view,currentWeek);
 
-        viewModel.getAllTaskCount().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-//                textView3 = view.findViewById(R.id.stats_tv3);
-//                textView3.setText("Tasks remaining today: " + integer);
+        leftButton = view.findViewById(R.id.week_button_left);
+        rightButton = view.findViewById(R.id.week_button_right);
+        weekText = view.findViewById(R.id.week_text);
 
-            }
-        });
+        leftButton.setOnClickListener(this);
+        rightButton.setOnClickListener(this);
 
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Statistics");
-
-        setChart(view);
-
-      //  weekText = view.findViewById(R.id.week_text);
-        ((MainActivity)(getActivity())).getSupportActionBar().hide();
+        Objects.requireNonNull(((MainActivity) (getActivity())).getSupportActionBar()).hide();
 
         return view;
     }
 
 
 
-    private void setChart(View view) {
+    private void setChart(View view,int weekInt) {
+
+       // view.findViewById(R.id.no_stats_view).setVisibility(View.INVISIBLE);
 
         ListView lv = view.findViewById(R.id.listView1);
-
         ArrayList<ChartItem> list = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-
-            if(i % 3 == 0) {
-                list.add(new LineChartItem(generateDataLine(), getActivity()));
-            } else if(i % 3 == 1) {
-                list.add(new BarChartItem(generateDataBar(), getActivity()));
-            } else if(i % 3 == 2) {
-                list.add(new PieChartItem(generateDataPie(), getActivity()));
-            }
-        }
+        list.add(new LineChartItem(generateDataLine(weekInt), Objects.requireNonNull(getActivity())));
+        list.add(new BarChartItem(generateDataBar(weekInt), getActivity()));
+        list.add(new PieChartItem(generateDataPie(weekInt), getActivity()));
 
         ChartDataAdapter cda = new ChartDataAdapter(getContext(), list);
         lv.setAdapter(cda);
@@ -124,13 +107,17 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private LineData generateDataLine() {
+
+
+    private LineData generateDataLine(int currentWeek) {
 
         ArrayList<Entry> values1 = new ArrayList<>();
 
         for (int i = 0; i < 7; i++) {
             values1.add(new Entry(i, (int) (Math.random() * 65) + 40));
         }
+
+        
 
         LineDataSet d1 = new LineDataSet(values1, "Last week");
         d1.setLineWidth(2.5f);
@@ -160,7 +147,8 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private BarData generateDataBar() {
+
+    private BarData generateDataBar(int currentWeek) {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
@@ -179,7 +167,7 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private PieData generateDataPie() {
+    private PieData generateDataPie(int currentWeek) {
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
@@ -200,11 +188,9 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        Toast.makeText(getContext(), "Comming soon", Toast.LENGTH_SHORT).show();
-
         switch (view.getId()){
-            case R.id.week_button_left : changeWeekText(-1,currentWeek--);break;
-            case R.id.week_button_right : changeWeekText(1,currentWeek++);break;
+            case R.id.week_button_left : changeWeekText(-1,--currentWeek);break;
+            case R.id.week_button_right : changeWeekText(1,++currentWeek);break;
         }
 
     }
@@ -212,12 +198,14 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
     private void changeWeekText(int i , int currWeek) {
 
         if(i == 1){
-            //positive week change
+            if(currWeek <= 0){
+                weekText.setText("Week " + currWeek);
+                setChart(view,currWeek);
+            }else currentWeek = 0;
         }else {
-            //negative week change
+            weekText.setText("Week " + currWeek);
+            setChart(view,currWeek);
         }
-
-        Toast.makeText(getContext(), "week changed " + currWeek, Toast.LENGTH_SHORT).show();
 
     }
 
