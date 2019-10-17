@@ -117,7 +117,7 @@ public class StatsFragment extends Fragment implements View.OnClickListener {
             values1.add(new Entry(i, (int) (Math.random() * 65) + 40));
         }
 
-        
+
 
         LineDataSet d1 = new LineDataSet(values1, "Last week");
         d1.setLineWidth(2.5f);
